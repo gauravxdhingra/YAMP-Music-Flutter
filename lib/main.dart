@@ -8,5 +8,4 @@ void main() {
       statusBarColor:  Colors.blue
   ));
   runApp(MusicPlayerApp());
-
 }
