@@ -27,8 +27,8 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.deepPurpleAccent,
-        color: Colors.yellowAccent,
+        backgroundColor: backgroundColor,
+        color: Colors.blue[50],
         // animationDuration: Duration(seconds: 3),
         index: 4,
         items: <Widget>[
@@ -49,6 +49,11 @@ class _MainPageState extends State<MainPage> {
             MdiIcons.magnify,
           ),
         ],
+        onTap: (index) {
+          if (index == 2)
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => PlayPage()));
+        },
       ),
       backgroundColor: backgroundColor,
       body: Stack(
