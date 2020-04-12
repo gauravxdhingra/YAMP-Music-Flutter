@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import './play_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 Color backgroundColor = Color(0xff7800ee);
 
@@ -22,6 +26,30 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.deepPurpleAccent,
+        color: Colors.yellowAccent,
+        // animationDuration: Duration(seconds: 3),
+        index: 4,
+        items: <Widget>[
+          Icon(
+            MdiIcons.musicNote,
+          ),
+          Icon(
+            MdiIcons.heart,
+          ),
+          Icon(
+            MdiIcons.playPause,
+            // size: 36,
+          ),
+          Icon(
+            MdiIcons.playlistMusic,
+          ),
+          Icon(
+            MdiIcons.magnify,
+          ),
+        ],
+      ),
       backgroundColor: backgroundColor,
       body: Stack(
         children: <Widget>[
@@ -30,50 +58,52 @@ class _MainPageState extends State<MainPage> {
             top: 0,
             right: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height / 2.1,
+              height: MediaQuery.of(context).size.height / 8,
               decoration: BoxDecoration(
-                  color: Colors.yellow,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(42),
-                  ),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          "https://media0.giphy.com/media/DzVNG1mBlIPEQ/giphy.gif?cid=790b7611c56e7e124f919b235eb3057982e4cdaeee62b52e&rid=giphy.gif"),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-//          6e00db
-          Positioned(
-            right: 48,
-            top: MediaQuery.of(context).size.height / 2.4,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => PlayPage()));
-              },
-              child: Container(
-                height: 84,
-                width: 84,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
+                color: Colors.yellow,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(42),
                 ),
-                child: Center(
-                  child: Icon(
-                    Icons.play_arrow,
-                    color: backgroundColor,
-                    size: 48,
-                  ),
-                ),
+                // image: DecorationImage(
+                //     image: NetworkImage(
+                //         "https://media0.giphy.com/media/DzVNG1mBlIPEQ/giphy.gif?cid=790b7611c56e7e124f919b235eb3057982e4cdaeee62b52e&rid=giphy.gif"),
+                //     fit: BoxFit.cover),
               ),
             ),
           ),
+//          6e00db
+          // Positioned(
+          //   right: 48,
+          //   top: MediaQuery.of(context).size.height / 2.4,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       Navigator.of(context)
+          //           .push(MaterialPageRoute(builder: (context) => PlayPage()));
+          //     },
+          //     child: Container(
+          //       height: 84,
+          //       width: 84,
+          //       decoration: BoxDecoration(
+          //         color: Colors.white,
+          //         shape: BoxShape.circle,
+          //       ),
+          //       child: Center(
+          //         child: Icon(
+          //           Icons.play_arrow,
+          //           color: backgroundColor,
+          //           size: 48,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Positioned(
-            bottom: 0,
+            // bottom: 0,
+            top: 150,
             right: 0,
             left: 48,
             child: Container(
-              height: MediaQuery.of(context).size.height / 2.7,
+              height: MediaQuery.of(context).size.height / 2.0,
               padding: EdgeInsets.only(left: 24, top: 24),
               decoration: BoxDecoration(
                   color: Color(0xff6e00db),
@@ -200,7 +230,7 @@ class _MainPageState extends State<MainPage> {
           ),
           Positioned(
             left: 42,
-            top: MediaQuery.of(context).size.height / 1.95,
+            top: MediaQuery.of(context).size.height / 7,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -237,4 +267,3 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
-
