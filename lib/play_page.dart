@@ -60,7 +60,7 @@ class _PlayPageState extends State<PlayPage> {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (_) => PlayPage()));
         },
-        height: 55,
+        height: 52,
         animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
       backgroundColor: Colors.yellow,
