@@ -1,9 +1,11 @@
 import 'dart:math' as math;
 import 'dart:math';
 
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:test_player/main_page.dart';
 
 class PlayPage extends StatefulWidget {
@@ -30,6 +32,37 @@ class _PlayPageState extends State<PlayPage> {
   Widget build(BuildContext context) {
     int i = 0;
     return Scaffold(
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.yellow,
+        color: Colors.blue[50],
+        // animationDuration: Duration(seconds: 3),
+        index: 4,
+        items: <Widget>[
+          Icon(
+            MdiIcons.musicNote,
+          ),
+          Icon(
+            MdiIcons.heart,
+          ),
+          Icon(
+            MdiIcons.playPause,
+            // size: 36,
+          ),
+          Icon(
+            MdiIcons.playlistMusic,
+          ),
+          Icon(
+            MdiIcons.magnify,
+          ),
+        ],
+        onTap: (index) {
+          if (index == 2)
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (_) => PlayPage()));
+        },
+        height: 55,
+        animationCurve: Curves.fastLinearToSlowEaseIn,
+      ),
       backgroundColor: Colors.yellow,
       body: Stack(
         children: <Widget>[

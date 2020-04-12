@@ -54,6 +54,8 @@ class _MainPageState extends State<MainPage> {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (_) => PlayPage()));
         },
+        height: 55,
+        animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
       backgroundColor: backgroundColor,
       body: Stack(
