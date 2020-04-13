@@ -29,6 +29,7 @@ dependencies:
   material_design_icons_flutter: ^4.0.5045
   fading_edge_scrollview: ^1.1.0
   sleek_circular_slider: ^1.1.0
+  flute_music_player: ^0.0.6
 
 dev_dependencies:
   flutter_test:
@@ -43,10 +44,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
-
   # To add assets to your application, add an assets section, like this:
-  assets:
-    - assets/
+  # assets:
+  #   - assets/
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

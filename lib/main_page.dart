@@ -1,4 +1,4 @@
-// import 'package:flute_music_player/flute_music_player.dart';
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -32,6 +32,33 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final _controller = ScrollController();
   final _controller1 = ScrollController();
+
+  List<Song> _songs;
+  MusicFinder audioPlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    initPlayer();
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+  }
+
+  void initPlayer() async {
+    audioPlayer = new MusicFinder();
+    var songs = await MusicFinder.allSongs();
+    songs = new List<Song>.from(songs);
+    setState(() {
+      _songs = songs;
+    });
+  }
+
+  Future _playLocal(String url) async {
+    final result = await audioPlayer.play(url, isLocal: true);
+  }
 
   // Duration duration;
   // Duration position;
@@ -266,6 +293,7 @@ class _MainPageState extends State<MainPage> {
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.zero,
+                              // itemCount: _songs.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Container(
                                   height: 84,
@@ -334,40 +362,47 @@ class _MainPageState extends State<MainPage> {
                         controller: _controller1,
                         physics: BouncingScrollPhysics(),
                         padding: EdgeInsets.zero,
+                        itemCount: _songs.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
                             margin: EdgeInsets.only(bottom: 16),
                             decoration: BoxDecoration(
                                 // color: Colors.purple,
                                 ),
-                            child: Row(
-                              children: <Widget>[
-                                CircleAvatar(
-                                  radius: 32,
-                                ),
-                                SizedBox(
-                                  width: 12,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Text(
-                                      "Secrets",
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.white, fontSize: 18),
-                                    ),
-                                    SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      "Not a Hobby 2020",
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.grey.shade200),
-                                    )
-                                  ],
-                                )
-                              ],
+                            child: GestureDetector(
+                              onTap: () => _playLocal(_songs[index].uri),
+                              child: Row(
+                                children: <Widget>[
+                                  CircleAvatar(
+                                    radius: 32,
+                                  ),
+                                  SizedBox(
+                                    width: 12,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        // "Secrets",
+                                        _songs[index].title,
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        // "Not a Hobby 2020",
+                                        _songs[index].uri,
+                                        style: GoogleFonts.montserrat(
+                                            color: Colors.grey.shade200),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         },
