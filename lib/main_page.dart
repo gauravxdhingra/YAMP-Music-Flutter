@@ -1,4 +1,4 @@
-import 'package:flute_music_player/flute_music_player.dart';
+// import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -10,10 +10,10 @@ import 'dart:async';
 
 Color backgroundColor = Color(0xff7800ee);
 
-enum PlayerState { stopped, playing, paused }
+// enum PlayerState { stopped, playing, paused }
 
-typedef void OnError(Exception exception);
-const kUrl = "Any Url Here !";
+// typedef void OnError(Exception exception);
+// const kUrl = "Any Url Here !";
 
 class MusicPlayerApp extends StatelessWidget {
   @override
@@ -33,114 +33,114 @@ class _MainPageState extends State<MainPage> {
   final _controller = ScrollController();
   final _controller1 = ScrollController();
 
-  Duration duration;
-  Duration position;
+  // Duration duration;
+  // Duration position;
 
-  MusicFinder audioPlayer;
+  // MusicFinder audioPlayer;
 
-  String localFilePath;
+  // String localFilePath;
 
-  PlayerState playerState = PlayerState.stopped;
+  // PlayerState playerState = PlayerState.stopped;
 
-  get isPlaying => playerState == PlayerState.playing;
-  get isPaused => playerState == PlayerState.paused;
+  // get isPlaying => playerState == PlayerState.playing;
+  // get isPaused => playerState == PlayerState.paused;
 
-  get durationText =>
-      duration != null ? duration.toString().split('.').first : '';
-  get positionText =>
-      position != null ? position.toString().split('.').first : '';
+  // get durationText =>
+  //     duration != null ? duration.toString().split('.').first : '';
+  // get positionText =>
+  //     position != null ? position.toString().split('.').first : '';
 
-  bool isMuted = false;
+  // bool isMuted = false;
 
-  @override
-  void initState() {
-    super.initState();
-    initAudioPlayer();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   initAudioPlayer();
+  // }
 
-  Future initAudioPlayer() async {
-    audioPlayer = new MusicFinder();
-    var songs;
-    try {
-      songs = await MusicFinder.allSongs();
-    } catch (e) {
-      print(e.toString());
-    }
+  // Future initAudioPlayer() async {
+  //   audioPlayer = new MusicFinder();
+  //   var songs;
+  //   try {
+  //     songs = await MusicFinder.allSongs();
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
 
-    print(songs);
-    audioPlayer.setDurationHandler((d) => setState(() {
-          duration = d;
-        }));
+  //   print(songs);
+  //   audioPlayer.setDurationHandler((d) => setState(() {
+  //         duration = d;
+  //       }));
 
-    audioPlayer.setPositionHandler((p) => setState(() {
-          position = p;
-        }));
+  //   audioPlayer.setPositionHandler((p) => setState(() {
+  //         position = p;
+  //       }));
 
-    audioPlayer.setCompletionHandler(() {
-      onComplete();
-      setState(() {
-        position = duration;
-      });
-    });
+  //   audioPlayer.setCompletionHandler(() {
+  //     onComplete();
+  //     setState(() {
+  //       position = duration;
+  //     });
+  //   });
 
-    audioPlayer.setErrorHandler((msg) {
-      setState(() {
-        playerState = PlayerState.stopped;
-        duration = new Duration(seconds: 0);
-        position = new Duration(seconds: 0);
-      });
-    });
+  //   audioPlayer.setErrorHandler((msg) {
+  //     setState(() {
+  //       playerState = PlayerState.stopped;
+  //       duration = new Duration(seconds: 0);
+  //       position = new Duration(seconds: 0);
+  //     });
+  //   });
 
-    setState(() {
-      print(songs.toString());
-    });
-  }
+  //   setState(() {
+  //     print(songs.toString());
+  //   });
+  // }
 
-  Future play() async {
-    final result = await audioPlayer.play(kUrl);
-    if (result == 1)
-      setState(() {
-        print('_AudioAppState.play... PlayerState.playing');
-        playerState = PlayerState.playing;
-      });
-  }
+  // Future play() async {
+  //   final result = await audioPlayer.play(kUrl);
+  //   if (result == 1)
+  //     setState(() {
+  //       print('_AudioAppState.play... PlayerState.playing');
+  //       playerState = PlayerState.playing;
+  //     });
+  // }
 
-  Future _playLocal() async {
-    final result = await audioPlayer.play(localFilePath, isLocal: true);
-    if (result == 1) setState(() => playerState = PlayerState.playing);
-  }
+  // Future _playLocal() async {
+  //   final result = await audioPlayer.play(localFilePath, isLocal: true);
+  //   if (result == 1) setState(() => playerState = PlayerState.playing);
+  // }
 
-  Future pause() async {
-    final result = await audioPlayer.pause();
-    if (result == 1) setState(() => playerState = PlayerState.paused);
-  }
+  // Future pause() async {
+  //   final result = await audioPlayer.pause();
+  //   if (result == 1) setState(() => playerState = PlayerState.paused);
+  // }
 
-  Future stop() async {
-    final result = await audioPlayer.stop();
-    if (result == 1)
-      setState(() {
-        playerState = PlayerState.stopped;
-        position = new Duration();
-      });
-  }
+  // Future stop() async {
+  //   final result = await audioPlayer.stop();
+  //   if (result == 1)
+  //     setState(() {
+  //       playerState = PlayerState.stopped;
+  //       position = new Duration();
+  //     });
+  // }
 
-  Future mute(bool muted) async {
-    final result = await audioPlayer.mute(muted);
-    if (result == 1)
-      setState(() {
-        isMuted = muted;
-      });
-  }
+  // Future mute(bool muted) async {
+  //   final result = await audioPlayer.mute(muted);
+  //   if (result == 1)
+  //     setState(() {
+  //       isMuted = muted;
+  //     });
+  // }
 
-  void onComplete() {
-    setState(() => playerState = PlayerState.stopped);
-  }
+  // void onComplete() {
+  //   setState(() => playerState = PlayerState.stopped);
+  // }
 
-  @override
-  void dispose() {
-    super.dispose();
-    audioPlayer.stop();
-  }
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  //   audioPlayer.stop();
+  // }
 
   @override
   Widget build(BuildContext context) {
