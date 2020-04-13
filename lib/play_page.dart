@@ -19,6 +19,7 @@ class _PlayPageState extends State<PlayPage> {
   double barWidth = 5.0;
   double soundPosition = 0.0;
   double nextSoundPosition = 140.0;
+  
   Random r = math.Random();
 
   @override
