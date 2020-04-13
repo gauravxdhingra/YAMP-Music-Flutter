@@ -1,3 +1,4 @@
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -5,8 +6,14 @@ import './play_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+import 'dart:async';
 
 Color backgroundColor = Color(0xff7800ee);
+
+enum PlayerState { stopped, playing, paused }
+
+typedef void OnError(Exception exception);
+const kUrl = "Any Url Here !";
 
 class MusicPlayerApp extends StatelessWidget {
   @override
@@ -25,9 +32,120 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final _controller = ScrollController();
   final _controller1 = ScrollController();
+
+  Duration duration;
+  Duration position;
+
+  MusicFinder audioPlayer;
+
+  String localFilePath;
+
+  PlayerState playerState = PlayerState.stopped;
+
+  get isPlaying => playerState == PlayerState.playing;
+  get isPaused => playerState == PlayerState.paused;
+
+  get durationText =>
+      duration != null ? duration.toString().split('.').first : '';
+  get positionText =>
+      position != null ? position.toString().split('.').first : '';
+
+  bool isMuted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initAudioPlayer();
+  }
+
+  Future initAudioPlayer() async {
+    audioPlayer = new MusicFinder();
+    var songs;
+    try {
+      songs = await MusicFinder.allSongs();
+    } catch (e) {
+      print(e.toString());
+    }
+
+    print(songs);
+    audioPlayer.setDurationHandler((d) => setState(() {
+          duration = d;
+        }));
+
+    audioPlayer.setPositionHandler((p) => setState(() {
+          position = p;
+        }));
+
+    audioPlayer.setCompletionHandler(() {
+      onComplete();
+      setState(() {
+        position = duration;
+      });
+    });
+
+    audioPlayer.setErrorHandler((msg) {
+      setState(() {
+        playerState = PlayerState.stopped;
+        duration = new Duration(seconds: 0);
+        position = new Duration(seconds: 0);
+      });
+    });
+
+    setState(() {
+      print(songs.toString());
+    });
+  }
+
+  Future play() async {
+    final result = await audioPlayer.play(kUrl);
+    if (result == 1)
+      setState(() {
+        print('_AudioAppState.play... PlayerState.playing');
+        playerState = PlayerState.playing;
+      });
+  }
+
+  Future _playLocal() async {
+    final result = await audioPlayer.play(localFilePath, isLocal: true);
+    if (result == 1) setState(() => playerState = PlayerState.playing);
+  }
+
+  Future pause() async {
+    final result = await audioPlayer.pause();
+    if (result == 1) setState(() => playerState = PlayerState.paused);
+  }
+
+  Future stop() async {
+    final result = await audioPlayer.stop();
+    if (result == 1)
+      setState(() {
+        playerState = PlayerState.stopped;
+        position = new Duration();
+      });
+  }
+
+  Future mute(bool muted) async {
+    final result = await audioPlayer.mute(muted);
+    if (result == 1)
+      setState(() {
+        isMuted = muted;
+      });
+  }
+
+  void onComplete() {
+    setState(() => playerState = PlayerState.stopped);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    audioPlayer.stop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: backgroundColor,
         color: Colors.blue[50],
@@ -59,7 +177,6 @@ class _MainPageState extends State<MainPage> {
         height: 52,
         animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
-      backgroundColor: backgroundColor,
       body: Stack(
         children: <Widget>[
           Positioned(
@@ -115,11 +232,12 @@ class _MainPageState extends State<MainPage> {
               height: MediaQuery.of(context).size.height / 1.32,
               padding: EdgeInsets.only(left: 24, top: 24),
               decoration: BoxDecoration(
-                  color: Color(0xff6e00db),
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(42),
-                    bottomRight: Radius.circular(42),
-                  )),
+                color: Color(0xff6e00db),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(42),
+                  bottomRight: Radius.circular(42),
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.start,
@@ -133,16 +251,18 @@ class _MainPageState extends State<MainPage> {
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height / 8,
-                    child: FadingEdgeScrollView.fromScrollView(
-                      child: ListView(
-                        controller: _controller,
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(top: 16, left: 0),
-                            width: MediaQuery.of(context).size.width / 1.2,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 16, left: 0),
+                          width: MediaQuery.of(context).size.width / 1.2,
 //                          decoration: BoxDecoration(color: Colors.yellow),
+                          child: FadingEdgeScrollView.fromScrollView(
+                            gradientFractionOnStart: 0.07,
+                            gradientFractionOnEnd: 0.07,
                             child: ListView.builder(
+                              controller: _controller,
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               padding: EdgeInsets.zero,
@@ -190,8 +310,8 @@ class _MainPageState extends State<MainPage> {
                               },
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   Text(
@@ -208,6 +328,8 @@ class _MainPageState extends State<MainPage> {
                     // decoration: BoxDecoration(color: Colors.yellow),
                     // child: Text('data'),
                     child: FadingEdgeScrollView.fromScrollView(
+                      gradientFractionOnStart: 0.07,
+                      gradientFractionOnEnd: 0.07,
                       child: ListView.builder(
                         controller: _controller1,
                         physics: BouncingScrollPhysics(),

@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:test_player/main_page.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class PlayPage extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _PlayPageState extends State<PlayPage> {
   double soundPosition = 0.0;
   double nextSoundPosition = 140.0;
   Random r = math.Random();
+
   @override
   void initState() {
     super.initState();
@@ -28,9 +30,32 @@ class _PlayPageState extends State<PlayPage> {
     }
   }
 
+  final slider = SleekCircularSlider(
+    appearance: CircularSliderAppearance(
+      startAngle: 180,
+      angleRange: 180,
+      counterClockwise: true,
+      size: 330,
+      customWidths: CustomSliderWidths(
+          trackWidth: 3, handlerSize: 10, progressBarWidth: 10, shadowWidth: 5),
+      // customColors: CustomSliderColors(),
+    ),
+    min: 0,
+    max: 100,
+    initialValue: 50,
+    onChange: (double value) {
+      // callback providing a value while its being changed (with a pan gesture)
+    },
+
+    // innerWidget: (double value) {
+    //   // use your custom widget inside the slider (gets a slider value from the callback)
+    // },
+  );
+
   @override
   Widget build(BuildContext context) {
     int i = 0;
+    setState(() {});
     return Scaffold(
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Colors.yellow,
@@ -56,9 +81,12 @@ class _PlayPageState extends State<PlayPage> {
           ),
         ],
         onTap: (index) {
-          if (index == 2)
+          if (index == 0)
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (_) => PlayPage()));
+                .push(MaterialPageRoute(builder: (_) => MusicPlayerApp()));
+          // if (index == 2)
+          //   Navigator.of(context)
+          //       .push(MaterialPageRoute(builder: (_) => PlayPage()));
         },
         height: 52,
         animationCurve: Curves.fastLinearToSlowEaseIn,
@@ -82,6 +110,11 @@ class _PlayPageState extends State<PlayPage> {
                 Icon(Icons.favorite_border),
               ],
             ),
+          ),
+          Positioned(
+            top: 70,
+            left: MediaQuery.of(context).size.width / 2 - 165,
+            child: slider,
           ),
           Positioned(
             left: 64,
@@ -115,12 +148,9 @@ class _PlayPageState extends State<PlayPage> {
               child: CustomPaint(
                 size: Size(300, 300),
                 painter: ArcPainter(),
-
               ),
             ),
-            
           ),
-          
           Positioned(
             left: 16,
             right: 16,
@@ -194,13 +224,12 @@ class _PlayPageState extends State<PlayPage> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   icon: Icon(Icons.refresh),
-                  onPressed: (){
-                      soundBars.clear();
-                      for (int i = 0; i < 72; i++) {
-                        soundBars.add(r.nextInt((52)));
-                      }
-                      setState(() {
-                      });
+                  onPressed: () {
+                    soundBars.clear();
+                    for (int i = 0; i < 72; i++) {
+                      soundBars.add(r.nextInt((52)));
+                    }
+                    setState(() {});
                   },
                 ),
                 Icon(Icons.skip_previous),
@@ -230,7 +259,7 @@ class _PlayPageState extends State<PlayPage> {
   }
 }
 
-class ArcPainter extends CustomPainter{
+class ArcPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // TODO: implement paint
@@ -238,14 +267,12 @@ class ArcPainter extends CustomPainter{
     final startAngle = -math.pi;
     final sweepAngle = -math.pi;
     final useCenter = false;
-    final paint = Paint()..
-    color = Colors.black..
-    style = PaintingStyle.stroke
-    ..strokeWidth = 2;
+    final paint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
 
     canvas.drawArc(rect, startAngle, sweepAngle, useCenter, paint);
-
-
   }
 
   @override
@@ -254,29 +281,3 @@ class ArcPainter extends CustomPainter{
     return false;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
