@@ -28,7 +28,7 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
   @override
   Widget build(BuildContext context) {
     final songsData = Provider.of<Songs>(context);
-    final _songs = songsData.songgsget;
+    List<Song> _songs = songsData.songgsget;
     return Stack(
       children: <Widget>[
         Positioned(
@@ -94,7 +94,7 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                               return Container(
                                 height: 84,
                                 margin: EdgeInsets.only(bottom: 16),
-                                child: RecentsTile(songs: _songs, index: index),
+                                child: RecentsTile(),
                               );
                             },
                           ),
@@ -136,10 +136,7 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                               ),
                           child: GestureDetector(
                             onTap: () => {},
-                            child: MusicTile(
-                              songs: _songs,
-                              index: index,
-                            ),
+                            child: MusicTile(),
                           ),
                         );
                       },

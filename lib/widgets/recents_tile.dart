@@ -2,14 +2,10 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main_page.dart';
+import 'package:provider/provider.dart';
+import '../provider/songs_provider.dart';
 
 class RecentsTile extends StatefulWidget {
-final List<Song> songs;
-   RecentsTile({
-    @required this.songs,
-    int index,
-  })  ;
-
   @override
   _RecentsTileState createState() => _RecentsTileState();
 }
@@ -17,19 +13,20 @@ final List<Song> songs;
 class _RecentsTileState extends State<RecentsTile> {
   final index = 0;
 
-   static List<Song> _songs = [];
+  // static List<Song> _songs = [];
   @override
   void initState() {
     super.initState();
     // _songs = widget.songs;
-    widget.songs.forEach((ele) => _songs.add(ele));
+    // widget.songs.forEach((ele) => _songs.add(ele));
     // print(_songs.length);
     // print(_songs[25].title);
-    
   }
 
   @override
   Widget build(BuildContext context) {
+    final songsData = Provider.of<Songs>(context);
+    List<Song> _songs = songsData.songgsget;
     return Row(
       children: <Widget>[
         CircleAvatar(

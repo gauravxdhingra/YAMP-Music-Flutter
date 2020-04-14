@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main_page.dart';
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:provider/provider.dart';
+import '../provider/songs_provider.dart';
 
 class MusicTile extends StatelessWidget {
   final int index = 0;
 
-  const MusicTile({
-    Key key,
-    @required List<Song> songs,
-    @required int index,
-  })  : _songs = songs,
-        super(key: key);
-
-  final List<Song> _songs;
-
   @override
   Widget build(BuildContext context) {
+    final songsData = Provider.of<Songs>(context);
+    List<Song> _songs = songsData.songgsget;
+
     return Row(
       children: <Widget>[
         CircleAvatar(
