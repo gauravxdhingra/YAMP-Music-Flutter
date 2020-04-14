@@ -61,94 +61,103 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                 bottomRight: Radius.circular(42),
               ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  "Recent Songs",
-                  style: GoogleFonts.montserrat(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height / 11,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(top: 16, left: 0),
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        //  decoration: BoxDecoration(color: Colors.yellow),
-                        child: FadingEdgeScrollView.fromScrollView(
-                          gradientFractionOnStart: 0.05,
-                          gradientFractionOnEnd: 0.03,
-                          child: ListView.builder(
-                            controller: _controller,
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.zero,
-                            itemCount: _songs.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Container(
-                                height: 84,
-                                margin: EdgeInsets.only(bottom: 16),
-                                child: RecentsTile(
-                                  index: index,
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    "Recent Songs",
+                    style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
                   ),
-                ),
-                Divider(
-                  thickness: 1,
-                ),
-                Text(
-                  "My Music",
-                  style: GoogleFonts.montserrat(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 16, left: 0),
-                  height: MediaQuery.of(context).size.height / 1.7415,
-                  width: MediaQuery.of(context).size.width / 1.15,
-                  // decoration: BoxDecoration(color: Colors.yellow),
-                  // child: Text('data'),
-                  child: FadingEdgeScrollView.fromScrollView(
-                    gradientFractionOnStart: 0.04,
-                    gradientFractionOnEnd: 0.02,
-                    child: ListView.builder(
-                      controller: _controller1,
-                      physics: BouncingScrollPhysics(),
-                      padding: EdgeInsets.zero,
-                      itemCount: _songs.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          margin: EdgeInsets.only(bottom: 11),
-                          width: MediaQuery.of(context).size.width / 1.3,
-                          decoration: BoxDecoration(
-                              // color: Colors.purple,
-                              ),
-                          child: GestureDetector(
-                            onTap: () =>
-                                {songsData.playLocal(_songs[index].uri)},
-                            child: MusicTile(
-                              index: index,
+                  Container(
+                    height: MediaQuery.of(context).size.height / 11,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 16, left: 0),
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          //  decoration: BoxDecoration(color: Colors.yellow),
+                          child: FadingEdgeScrollView.fromScrollView(
+                            gradientFractionOnStart: 0.05,
+                            gradientFractionOnEnd: 0.03,
+                            child: ListView.builder(
+                              controller: _controller,
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              padding: EdgeInsets.zero,
+                              itemCount: _songs.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Container(
+                                  height: 84,
+                                  margin: EdgeInsets.only(bottom: 18),
+                                  child: RecentsTile(
+                                    index: index,
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(right: 24),
+                    child: Divider(
+                      thickness: 2,
+                      color: Color(0xff7800ee),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    "My Music",
+                    style: GoogleFonts.montserrat(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 16, left: 0),
+                    height: MediaQuery.of(context).size.height / 1.7415,
+                    width: MediaQuery.of(context).size.width / 1.15,
+                    // decoration: BoxDecoration(color: Colors.yellow),
+                    // child: Text('data'),
+                    child: FadingEdgeScrollView.fromScrollView(
+                      gradientFractionOnStart: 0.04,
+                      gradientFractionOnEnd: 0.02,
+                      child: ListView.builder(
+                        controller: _controller1,
+                        physics: BouncingScrollPhysics(),
+                        padding: EdgeInsets.zero,
+                        itemCount: _songs.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 11),
+                            width: MediaQuery.of(context).size.width / 1.3,
+                            decoration: BoxDecoration(
+                                // color: Colors.purple,
+                                ),
+                            child: GestureDetector(
+                              onTap: () =>
+                                  {songsData.playLocal(_songs[index].uri)},
+                              child: MusicTile(
+                                index: index,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

@@ -22,5 +22,20 @@ class Songs with ChangeNotifier {
     // _songs = songs;
   }
 
+  play(url) async {
+    final result = await audioPlayer.play(url);
+    // if (result == 1) setState(() => playerState = PlayerState.playing);
+  }
+
+  pause() async {
+    final result = await audioPlayer.pause();
+    // if (result == 1) setState(() => playerState = PlayerState.paused);
+  }
+
+  stop() async {
+    final result = await audioPlayer.stop();
+    // if (result == 1) setState(() => playerState = PlayerState.stopped);
+  }
+
   List<Song> get songgsget => [...songgs];
 }

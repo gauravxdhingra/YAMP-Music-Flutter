@@ -122,7 +122,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
         Positioned(
           left: 16,
           right: 16,
-          top: 410,
+          top: 500,
           child: Container(
             height: 180,
             child: Column(
@@ -201,21 +201,24 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                 },
               ),
               Icon(Icons.skip_previous),
-              Card(
-                  color: backgroundColor,
-                  elevation: 12,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Container(
-                    height: 84,
-                    width: 48,
-                    child: Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
+              GestureDetector(
+                // onTap: songData.play(url),
+                child: Card(
+                    color: backgroundColor,
+                    elevation: 12,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Container(
+                      height: 84,
+                      width: 48,
+                      child: Center(
+                        child: Icon(
+                          Icons.play_arrow,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
-                  )),
+                    )),
+              ),
               Icon(Icons.skip_next),
               Icon(Icons.shuffle),
             ],
