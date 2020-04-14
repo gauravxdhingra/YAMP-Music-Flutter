@@ -2,21 +2,33 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:test_player/provider/songs_provider.dart';
 import '../widgets/music_tile.dart';
 import '../widgets/recents_tile.dart';
 
-class MainTracksScreen extends StatelessWidget {
-  final List<Song> songs;
+class MainTracksScreen extends StatefulWidget {
+  @override
+  _MainTracksScreenState createState() => _MainTracksScreenState();
+}
 
+class _MainTracksScreenState extends State<MainTracksScreen> {
   final _controller = ScrollController();
   final _controller1 = ScrollController();
+// List<Song> tracks = widget.songs;
+  // static List<Song> _songs;
 
-  MainTracksScreen(
-    this.songs,
-  );
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _songs = widget.songs;
+  //   print(_songs.length);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final songsData = Provider.of<Songs>(context);
+    final _songs = songsData.songgsget;
     return Stack(
       children: <Widget>[
         Positioned(
@@ -77,12 +89,12 @@ class MainTracksScreen extends StatelessWidget {
                             physics: BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.zero,
-                            itemCount: songs.length,
+                            itemCount: _songs.length,
                             itemBuilder: (BuildContext context, int index) {
                               return Container(
                                 height: 84,
                                 margin: EdgeInsets.only(bottom: 16),
-                                child: RecentsTile(songs: songs, index: index),
+                                child: RecentsTile(songs: _songs, index: index),
                               );
                             },
                           ),
@@ -114,7 +126,7 @@ class MainTracksScreen extends StatelessWidget {
                       controller: _controller1,
                       physics: BouncingScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      itemCount: songs.length,
+                      itemCount: _songs.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Container(
                           margin: EdgeInsets.only(bottom: 11),
@@ -125,7 +137,7 @@ class MainTracksScreen extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () => {},
                             child: MusicTile(
-                              songs: songs,
+                              songs: _songs,
                               index: index,
                             ),
                           ),

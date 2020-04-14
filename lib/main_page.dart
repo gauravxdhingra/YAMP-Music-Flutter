@@ -1,48 +1,70 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import './screens/main_tracks_screen.dart';
-import 'screens/favourites_screen.dart';
-import 'screens/now_playing_screen.dart';
-import 'screens/playlist_screen.dart';
-import 'screens/search_screen.dart';
-import 'screens/loading_spinner.dart';
+import 'package:test_player/screens/favourites_screen.dart';
+import 'package:test_player/screens/loading_spinner.dart';
+import 'package:test_player/screens/main_tracks_screen.dart';
+import 'package:test_player/screens/now_playing_screen.dart';
+import 'package:test_player/screens/playlist_screen.dart';
+import 'package:test_player/screens/search_screen.dart';
+import 'package:test_player/widgets/music_tile.dart';
+import 'package:test_player/widgets/recents_tile.dart';
+
+// import './screens/loading_spinner.dart';
+// import './widgets/music_tile.dart';
+// import './widgets/recents_tile.dart';
+import 'package:provider/provider.dart';
+import './provider/songs_provider.dart';
 
 Color backgroundColor = Color(0xff7800ee);
 
 class MusicPlayerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoadingScreen(),
+    return ChangeNotifierProvider(
+      create: (ctx) => Songs(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (ctx) => LoadingScreen(),
+          MainPage.routeName: (ctx) => MainPage(),
+          NowPlayingScreen.routeName: (ctx) => NowPlayingScreen(),
+        },
+        // home: LoadingScreen(),
+      ),
     );
   }
 }
 
 class MainPage extends StatefulWidget {
-  final List<Song> songs;
-
-  MainPage({this.songs});
+  static const routeName = '/main-page';
 
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  static List<Song> _songs;
+  // final _controller = ScrollController();
+  // final _controller1 = ScrollController();
+  // static List<Song> _songs = [];
   @override
   void initState() {
     super.initState();
     // _songs = widget.songs;
+    // widget.songs.forEach((ele) => _songs.add(ele));
+    // print(_songs.length);
+    // print(_songs[25].title);
+    _setPage(0);
   }
 
+  // List get songs => _songs;
+
   List<Widget> _pages = [
-    MainTracksScreen(
-      _songs,
-    ),
+    MainTracksScreen(),
     FavouritesScreen(),
     NowPlayingScreen(),
     PlaylistScreen(),
@@ -63,8 +85,12 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final songData = Provider.of<Songs>(context);
     return Scaffold(
       backgroundColor: backgroundColor,
+      body: _pages[_selectedpageindex],
+      // MainTracksScreen(),
+
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: backgroundColor,
         color: Colors.blue[50],
@@ -88,8 +114,8 @@ class _MainPageState extends State<MainPage> {
             MdiIcons.magnify,
           ),
         ],
-        onTap: (index) {
-          _setPage(index);
+        onTap: (i) {
+          _setPage(i);
           // if (index == 2)
           // Navigator.of(context)
           //     .push(MaterialPageRoute(builder: (_) => PlayPage(),),);
@@ -97,7 +123,6 @@ class _MainPageState extends State<MainPage> {
         height: 52,
         animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
-      body: _pages[_selectedpageindex],
     );
   }
 }

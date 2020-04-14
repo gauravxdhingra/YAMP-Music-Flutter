@@ -3,17 +3,30 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main_page.dart';
 
-class RecentsTile extends StatelessWidget {
+class RecentsTile extends StatefulWidget {
+final List<Song> songs;
+   RecentsTile({
+    @required this.songs,
+    int index,
+  })  ;
+
+  @override
+  _RecentsTileState createState() => _RecentsTileState();
+}
+
+class _RecentsTileState extends State<RecentsTile> {
   final index = 0;
 
-  const RecentsTile({
-    Key key,
-    @required List<Song> songs,
-    int index,
-  })  : _songs = songs,
-        super(key: key);
-
-  final List<Song> _songs;
+   static List<Song> _songs = [];
+  @override
+  void initState() {
+    super.initState();
+    // _songs = widget.songs;
+    widget.songs.forEach((ele) => _songs.add(ele));
+    // print(_songs.length);
+    // print(_songs[25].title);
+    
+  }
 
   @override
   Widget build(BuildContext context) {

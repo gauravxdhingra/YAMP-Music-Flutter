@@ -7,6 +7,7 @@ import 'package:test_player/main_page.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class NowPlayingScreen extends StatefulWidget {
+  static const routeName='/now-playing';
   @override
   _NowPlayingScreenState createState() => _NowPlayingScreenState();
 }
