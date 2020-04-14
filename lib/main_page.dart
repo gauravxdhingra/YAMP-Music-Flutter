@@ -8,6 +8,7 @@ import 'screens/favourites_screen.dart';
 import 'screens/now_playing_screen.dart';
 import 'screens/playlist_screen.dart';
 import 'screens/search_screen.dart';
+import 'screens/loading_spinner.dart';
 
 Color backgroundColor = Color(0xff7800ee);
 
@@ -16,7 +17,7 @@ class MusicPlayerApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: LoadingScreen(),
     );
   }
 }
@@ -35,8 +36,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-
-    _songs = widget.songs;
+    // _songs = widget.songs;
   }
 
   List<Widget> _pages = [

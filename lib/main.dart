@@ -8,5 +8,5 @@ import './main_page.dart';
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(statusBarColor: Colors.blue));
-  runApp(LoadingScreen());
+  runApp(MusicPlayerApp());
 }
