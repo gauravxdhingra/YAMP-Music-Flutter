@@ -5,9 +5,11 @@ import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:test_player/main_page.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
+import 'package:provider/provider.dart';
+import '../provider/songs_provider.dart';
 
 class NowPlayingScreen extends StatefulWidget {
-  static const routeName='/now-playing';
+  static const routeName = '/now-playing';
   @override
   _NowPlayingScreenState createState() => _NowPlayingScreenState();
 }
@@ -53,6 +55,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Songs songData = Provider.of<Songs>(context);
+
     int i = 0;
 
     // backgroundColor: Colors.yellow,
@@ -92,7 +96,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                     image: NetworkImage(
-                        "https://cdn.pixabay.com/photo/2017/08/30/12/45/girl-2696947__340.jpg"),
+                        "https://instagram.fdel1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/66426324_2390068234647773_650296368312614912_n.jpg?_nc_ht=instagram.fdel1-1.fna.fbcdn.net&_nc_ohc=drKdY2Es2esAX8whKU1&oh=789b9193573d389aff31582e1e88a20f&oe=5EBFF35B"),
                     fit: BoxFit.cover)),
             child: Center(
               child: CircleAvatar(
@@ -102,19 +106,19 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
             ),
           ),
         ),
-        Positioned(
-          left: 24,
-          right: 24,
-          top: 100,
-          child: Container(
-            height: 300,
-            color: Colors.grey.shade50.withOpacity(0.2),
-            child: CustomPaint(
-              size: Size(300, 300),
-              painter: ArcPainter(),
-            ),
-          ),
-        ),
+        // Positioned(
+        //   left: 24,
+        //   right: 24,
+        //   top: 100,
+        //  child: Container(
+        //     height: 300,
+        //     // color: Colors.grey.shade50.withOpacity(0.2),
+        //     child: CustomPaint(
+        //       size: Size(300, 300),
+        //       painter: ArcPainter(),
+        //     ),
+        //   ),
+        // ),
         Positioned(
           left: 16,
           right: 16,
@@ -147,7 +151,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                     children: soundBars.map((h) {
                       Color color = i >= soundPosition / barWidth &&
                               i <= nextSoundPosition / barWidth
-                          ? backgroundColor
+                          ? Colors.yellow
                           : Colors.grey;
                       i++;
                       return Container(

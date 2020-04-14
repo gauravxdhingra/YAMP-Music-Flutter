@@ -49,6 +49,7 @@ class _RecentsTileState extends State<RecentsTile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            
             Text(
               // "Secrets",
               _songs[index].title,
