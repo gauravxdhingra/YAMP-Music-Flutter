@@ -94,7 +94,9 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                               return Container(
                                 height: 84,
                                 margin: EdgeInsets.only(bottom: 16),
-                                child: RecentsTile(),
+                                child: RecentsTile(
+                                  index: index,
+                                ),
                               );
                             },
                           ),
@@ -135,8 +137,11 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                               // color: Colors.purple,
                               ),
                           child: GestureDetector(
-                            onTap: () => {},
-                            child: MusicTile(),
+                            onTap: () =>
+                                {songsData.playLocal(_songs[index].uri)},
+                            child: MusicTile(
+                              index: index,
+                            ),
                           ),
                         );
                       },

@@ -7,12 +7,16 @@ class Songs with ChangeNotifier {
 
   MusicFinder audioPlayer;
 
+  playLocal(kurl) async {
+    final result = await audioPlayer.play(kurl);
+  }
+
   void initPlayer() async {
     audioPlayer = new MusicFinder();
     List<Song> _songs = await MusicFinder.allSongs();
     songgs = _songs;
     notifyListeners();
-    
+
     //  List get songs => _songs;
     // songs = new List<Song>.from(_songs);
     // _songs = songs;

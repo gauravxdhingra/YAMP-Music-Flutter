@@ -6,12 +6,16 @@ import 'package:provider/provider.dart';
 import '../provider/songs_provider.dart';
 
 class RecentsTile extends StatefulWidget {
+  final int index;
+
+  const RecentsTile({Key key, this.index}) : super(key: key);
+
   @override
   _RecentsTileState createState() => _RecentsTileState();
 }
 
 class _RecentsTileState extends State<RecentsTile> {
-  final index = 0;
+  // final index = 0;
 
   // static List<Song> _songs = [];
   @override
@@ -27,11 +31,16 @@ class _RecentsTileState extends State<RecentsTile> {
   Widget build(BuildContext context) {
     final songsData = Provider.of<Songs>(context);
     List<Song> _songs = songsData.songgsget;
+    // int index = ModalRoute.of(context).settings.arguments as int;
+    int index = widget.index;
     return Row(
       children: <Widget>[
         CircleAvatar(
           radius: 24,
           backgroundColor: Colors.yellow,
+          backgroundImage: (_songs[index].albumArt != null)
+              ? NetworkImage(_songs[index].albumArt)
+              : null,
         ),
         SizedBox(
           width: 12,
