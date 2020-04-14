@@ -3,13 +3,24 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_player/data/song_data.dart';
 import 'package:test_player/main_page.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:provider/provider.dart';
 import '../provider/songs_provider.dart';
+import 'package:flute_music_player/flute_music_player.dart';
+
+enum PlayerState { stopped, playing, paused }
 
 class NowPlayingScreen extends StatefulWidget {
   static const routeName = '/now-playing';
+
+  final Song song;
+  final SongData songData;
+  final bool nowPlayTap;
+
+  const NowPlayingScreen({Key key, this.song, this.songData, this.nowPlayTap})
+      : super(key: key);
   @override
   _NowPlayingScreenState createState() => _NowPlayingScreenState();
 }
@@ -25,7 +36,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
   @override
   void initState() {
     super.initState();
-
+    initPlayer();
     for (int i = 0; i < 72; i++) {
       soundBars.add(r.nextInt((52)));
     }
@@ -52,6 +63,113 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     //   // use your custom widget inside the slider (gets a slider value from the callback)
     // },
   );
+
+  PlayerState playerState;
+  MusicFinder audioPlayer;
+  Duration duration;
+  Duration position;
+  Song song;
+
+  get isPlaying => playerState == PlayerState.playing;
+  get isPaused => playerState == PlayerState.paused;
+
+  get durationText =>
+      duration != null ? duration.toString().split('.').first : '';
+  get positionText =>
+      position != null ? position.toString().split('.').first : '';
+
+  bool isMuted = false;
+
+  void onComplete() {
+    setState(() => playerState = PlayerState.stopped);
+    play(widget.songData.nextSong);
+  }
+
+  initPlayer() async {
+    if (audioPlayer == null) {
+      audioPlayer = widget.songData.audioPlayer;
+    }
+    setState(() {
+      song = widget.song;
+      if (widget.nowPlayTap == null || widget.nowPlayTap == false) {
+        if (playerState != PlayerState.stopped) {
+          stop();
+        }
+      }
+      play(song);
+      //  else {
+      //   widget._song;
+      //   playerState = PlayerState.playing;
+      // }
+    });
+    audioPlayer.setDurationHandler((d) => setState(() {
+          duration = d;
+        }));
+
+    audioPlayer.setPositionHandler((p) => setState(() {
+          position = p;
+        }));
+
+    audioPlayer.setCompletionHandler(() {
+      onComplete();
+      setState(() {
+        position = duration;
+      });
+    });
+
+    audioPlayer.setErrorHandler((msg) {
+      setState(() {
+        playerState = PlayerState.stopped;
+        duration = new Duration(seconds: 0);
+        position = new Duration(seconds: 0);
+      });
+    });
+  }
+
+  Future play(Song s) async {
+    if (s != null) {
+      final result = await audioPlayer.play(s.uri, isLocal: true);
+      if (result == 1)
+        setState(() {
+          playerState = PlayerState.playing;
+          song = s;
+        });
+    }
+  }
+
+  Future pause() async {
+    final result = await audioPlayer.pause();
+    if (result == 1) setState(() => playerState = PlayerState.paused);
+  }
+
+  Future stop() async {
+    final result = await audioPlayer.stop();
+    if (result == 1)
+      setState(() {
+        playerState = PlayerState.stopped;
+        position = new Duration();
+      });
+  }
+
+  Future next(SongData s) async {
+    stop();
+    setState(() {
+      play(s.nextSong);
+    });
+  }
+
+  Future prev(SongData s) async {
+    stop();
+    play(s.prevSong);
+  }
+
+  Future mute(bool muted) async {
+    final result = await audioPlayer.mute(muted);
+    if (result == 1)
+      setState(() {
+        isMuted = muted;
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,12 +210,14 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
             height: 260,
             width: MediaQuery.of(context).size.width - 100,
             decoration: BoxDecoration(
-                color: Colors.blue,
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://instagram.fdel1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/66426324_2390068234647773_650296368312614912_n.jpg?_nc_ht=instagram.fdel1-1.fna.fbcdn.net&_nc_ohc=drKdY2Es2esAX8whKU1&oh=789b9193573d389aff31582e1e88a20f&oe=5EBFF35B"),
-                    fit: BoxFit.cover)),
+              color: Colors.blue,
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: NetworkImage(
+                    "https://instagram.fdel1-1.fna.fbcdn.net/v/t51.2885-19/s150x150/66426324_2390068234647773_650296368312614912_n.jpg?_nc_ht=instagram.fdel1-1.fna.fbcdn.net&_nc_ohc=drKdY2Es2esAX8whKU1&oh=789b9193573d389aff31582e1e88a20f&oe=5EBFF35B"),
+                fit: BoxFit.cover,
+              ),
+            ),
             child: Center(
               child: CircleAvatar(
                 radius: 24,
@@ -106,19 +226,6 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
             ),
           ),
         ),
-        // Positioned(
-        //   left: 24,
-        //   right: 24,
-        //   top: 100,
-        //  child: Container(
-        //     height: 300,
-        //     // color: Colors.grey.shade50.withOpacity(0.2),
-        //     child: CustomPaint(
-        //       size: Size(300, 300),
-        //       painter: ArcPainter(),
-        //     ),
-        //   ),
-        // ),
         Positioned(
           left: 16,
           right: 16,
@@ -132,14 +239,16 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                   height: 16,
                 ),
                 Text(
-                  "Sam Fischer",
+                  // "Sam Fischer",
+                  song.title,
                   style: GoogleFonts.montserrat(
                     fontSize: 19,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  "This City",
+                  // "This City",
+                  song.artist,
                   style: GoogleFonts.montserrat(),
                 ),
                 SizedBox(
@@ -200,27 +309,37 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                   setState(() {});
                 },
               ),
-              Icon(Icons.skip_previous),
               GestureDetector(
-                // onTap: songData.play(url),
+                  onTap: () => prev(widget.songData),
+                  child: Icon(Icons.skip_previous)),
+              GestureDetector(
+                onTap: isPlaying ? () => pause() : play(widget.song),
+                // songData.play(url),
                 child: Card(
-                    color: backgroundColor,
-                    elevation: 12,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Container(
-                      height: 84,
-                      width: 48,
-                      child: Center(
-                        child: Icon(
-                          Icons.play_arrow,
-                          color: Colors.white,
-                        ),
+                  color: backgroundColor,
+                  elevation: 12,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Container(
+                    height: 84,
+                    width: 48,
+                    child: Center(
+                      child: Icon(
+                        isPlaying ? Icons.pause : Icons.play_arrow,
+                        color: Colors.white,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ),
-              Icon(Icons.skip_next),
-              Icon(Icons.shuffle),
+              GestureDetector(
+                  onTap: () => next(widget.songData),
+                  child: Icon(Icons.skip_next)),
+              GestureDetector(
+                onTap: () {},
+                // () => shuffleSongs(),
+                child: Icon(Icons.shuffle),
+              ),
             ],
           ),
         )
