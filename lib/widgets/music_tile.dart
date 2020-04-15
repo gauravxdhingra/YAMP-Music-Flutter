@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../main_page.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:provider/provider.dart';
 import '../provider/songs_provider.dart';

@@ -10,15 +10,16 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:provider/provider.dart';
 import '../provider/songs_provider.dart';
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:volume_watcher/volume_watcher.dart';
 
 enum PlayerState { stopped, playing, paused }
 
 class NowPlayingScreen extends StatefulWidget {
   static const routeName = '/now-playing';
 
-  Song song;
-  Songs songData;
-  bool nowPlayTap;
+  final Song song;
+  final Songs songData;
+  final bool nowPlayTap;
 
   NowPlayingScreen({this.song, this.songData, this.nowPlayTap});
   @override
@@ -205,8 +206,8 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Songs songData = Provider.of<Songs>(context);
-    int i = 0;
+    // Songs songData = Provider.of<Songs>(context);
+    // int i = 0;
     // backgroundColor: Colors.yellow,
 
     return Scaffold(

@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:test_player/provider/songs_provider.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import 'package:test_player/widgets/music_tile.dart';
-import 'package:test_player/widgets/recents_tile.dart';
+
 
 class FavouritesScreen extends StatefulWidget {
   const FavouritesScreen({Key key}) : super(key: key);

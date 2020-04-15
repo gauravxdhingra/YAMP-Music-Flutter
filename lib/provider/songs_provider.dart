@@ -8,7 +8,7 @@ enum PlayerState { stopped, playing, paused }
 
 class Songs with ChangeNotifier {
   List<Song> songgs = [];
-  var _currentSongIndex = -1;
+  var _currentSongIndex = 0;
   MusicFinder musicFinder;
   MusicFinder audioPlayer;
   // Songs songData;
@@ -32,9 +32,9 @@ class Songs with ChangeNotifier {
     notifyListeners();
   }
 
-  playLocal(kurl) async {
-    final result = await audioPlayer.play(kurl);
-  }
+  // playLocal(kurl) async {
+  //   final result = await audioPlayer.play(kurl);
+  // }
 
   void initPlayer() async {
     audioPlayer = new MusicFinder();

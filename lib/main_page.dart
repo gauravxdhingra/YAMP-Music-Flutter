@@ -1,9 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
-import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:test_player/screens/favourites_screen.dart';
 import 'package:test_player/screens/loading_spinner.dart';
@@ -11,8 +8,6 @@ import 'package:test_player/screens/main_tracks_screen.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import 'package:test_player/screens/playlist_screen.dart';
 import 'package:test_player/screens/search_screen.dart';
-import 'package:test_player/widgets/music_tile.dart';
-import 'package:test_player/widgets/recents_tile.dart';
 
 // import './screens/loading_spinner.dart';
 // import './widgets/music_tile.dart';
@@ -60,15 +55,15 @@ class _MainPageState extends State<MainPage> {
   }
 
   // List get songs => _songs;
-  static BuildContext ctx;
+  // static BuildContext ctx;
   List<Widget> pages = [
     MainTracksScreen(),
     FavouritesScreen(),
     NowPlayingScreen(
-      song: Provider.of<Songs>(ctx)
-          .songgsget[Provider.of<Songs>(ctx).currentIndex],
-      songData: Provider.of<Songs>(ctx),
-      nowPlayTap: false,
+      // song: Provider.of<Songs>(ctx)
+      //     .songgsget[Provider.of<Songs>(ctx).currentIndex],
+      // songData: Provider.of<Songs>(ctx),
+      // nowPlayTap: true,
     ),
     PlaylistScreen(),
     SearchScreen(),

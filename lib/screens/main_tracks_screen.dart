@@ -39,12 +39,12 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    _controller1.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _controller.dispose();
+  //   _controller1.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +147,8 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                   Container(
                     margin: EdgeInsets.only(top: 16, left: 0),
                     // height: MediaQuery.of(context).size.height / 1.7415,
-                    height: MediaQuery.of(context).size.height / 1.7415 +
-                        MediaQuery.of(context).size.height / 7.85,
+                    height: MediaQuery.of(context).size.height / 1.7415,
+                    // + MediaQuery.of(context).size.height / 12.85,
 
                     width: MediaQuery.of(context).size.width / 1.15,
                     // decoration: BoxDecoration(color: Colors.yellow),
