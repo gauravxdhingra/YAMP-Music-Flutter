@@ -49,8 +49,7 @@ class Songs with ChangeNotifier {
 
   Song get nextSong {
     if (_currentSongIndex < length) {
-      setCurrentIndex(_currentSongIndex++);
-
+      _currentSongIndex++;
       notifyListeners();
     }
     if (_currentSongIndex >= length) return null;

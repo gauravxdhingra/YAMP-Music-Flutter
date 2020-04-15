@@ -190,6 +190,11 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     play(songs.prevSong);
   }
 
+  Future random(Songs songs) async {
+    stop();
+    play(songs.randomSong);
+  }
+
   Future mute(bool muted) async {
     final result = await audioPlayer.mute(muted);
     if (result == 1)
