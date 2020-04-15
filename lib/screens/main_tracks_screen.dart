@@ -82,7 +82,7 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                 bottomRight: Radius.circular(42),
               ),
             ),
-            child: NestedScrollView(
+            child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 // mainAxisAlignment: MainAxisAlignment.start,
