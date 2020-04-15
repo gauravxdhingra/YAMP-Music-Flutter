@@ -93,7 +93,8 @@ class _MainPageState extends State<MainPage> {
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: backgroundColor,
-        color: Colors.blue[50],
+        color: Colors.yellow,
+        // Colors.blue[50],
         // animationDuration: Duration(seconds: 3),
         // index: 3,
         items: <Widget>[
@@ -133,5 +134,34 @@ class _MainPageState extends State<MainPage> {
         animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
     );
+  }
+}
+
+class SongsSearch extends SearchDelegate<String> {
+ 
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    // TODO: implement buildActions
+    final songs = Provider.of<Songs>(context).songgsget;
+    return null;
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    // TODO: implement buildLeading
+    return null;
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    return null;
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    return null;
   }
 }
