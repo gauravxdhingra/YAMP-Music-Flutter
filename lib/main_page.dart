@@ -32,9 +32,7 @@ class MusicPlayerApp extends StatelessWidget {
         routes: {
           '/': (ctx) => LoadingScreen(),
           MainPage.routeName: (ctx) => MainPage(),
-          // NowPlayingScreen.routeName: (ctx) => NowPlayingScreen(),
         },
-        // home: LoadingScreen(),
       ),
     );
   }
@@ -62,11 +60,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   // List get songs => _songs;
-
+  static BuildContext ctx;
   List<Widget> pages = [
     MainTracksScreen(),
     FavouritesScreen(),
-    NowPlayingScreen(),
+    NowPlayingScreen(
+      song: Provider.of<Songs>(ctx)
+          .songgsget[Provider.of<Songs>(ctx).currentIndex],
+      songData: Provider.of<Songs>(ctx),
+      nowPlayTap: false,
+    ),
     PlaylistScreen(),
     SearchScreen(),
   ];
@@ -120,11 +123,10 @@ class _MainPageState extends State<MainPage> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => NowPlayingScreen(
-                    // song: Provider.of<Songs>(context)
-                    //     .songgsget[Provider.of<Songs>(context).currentIndex],
-                    // songData: Provider.of<Songs>(context),
-                    // nowPlayTap: false,
-                    ),
+                  song: songData.songgsget[songData.currentIndex],
+                  songData: Provider.of<Songs>(context),
+                  nowPlayTap: false,
+                ),
               ),
             );
           else

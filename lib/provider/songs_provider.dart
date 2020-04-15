@@ -40,6 +40,9 @@ class Songs with ChangeNotifier {
     audioPlayer = new MusicFinder();
     List<Song> _songs = await MusicFinder.allSongs();
     songgs = _songs;
+    songgs.sort((a, b) {
+      return a.title.toLowerCase().compareTo(b.title.toLowerCase());
+    });
     notifyListeners();
 
     //  List get songs => _songs;
