@@ -46,6 +46,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
 
   @override
   Widget build(BuildContext context) {
+      //  if (_isReady) Navigator.pushReplacementNamed(context, MainPage.routeName);
     final songData = Provider.of<Songs>(context);
     songData.initPlayer();
     _isReady = true;

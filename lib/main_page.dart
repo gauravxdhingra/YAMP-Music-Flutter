@@ -26,13 +26,13 @@ class MusicPlayerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (ctx) => Songs(),
+      create: (ctx) => Songs(null),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
           '/': (ctx) => LoadingScreen(),
           MainPage.routeName: (ctx) => MainPage(),
-          NowPlayingScreen.routeName: (ctx) => NowPlayingScreen(),
+          // NowPlayingScreen.routeName: (ctx) => NowPlayingScreen(),
         },
         // home: LoadingScreen(),
       ),
@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage> {
 
   // List get songs => _songs;
 
-  List<Widget> _pages = [
+  List<Widget> pages = [
     MainTracksScreen(),
     FavouritesScreen(),
     NowPlayingScreen(),
@@ -88,14 +88,14 @@ class _MainPageState extends State<MainPage> {
     final songData = Provider.of<Songs>(context);
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: _pages[_selectedpageindex],
+      body: pages[_selectedpageindex],
       // MainTracksScreen(),
 
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: backgroundColor,
         color: Colors.blue[50],
         // animationDuration: Duration(seconds: 3),
-        index: 4,
+        // index: 3,
         items: <Widget>[
           Icon(
             MdiIcons.musicNote,
@@ -115,10 +115,19 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
         onTap: (i) {
-          _setPage(i);
-          // if (index == 2)
-          // Navigator.of(context)
-          //     .push(MaterialPageRoute(builder: (_) => PlayPage(),),);
+          if (i == 2)
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => NowPlayingScreen(
+                    // song: Provider.of<Songs>(context)
+                    //     .songgsget[Provider.of<Songs>(context).currentIndex],
+                    // songData: Provider.of<Songs>(context),
+                    // nowPlayTap: false,
+                    ),
+              ),
+            );
+          else
+            _setPage(i);
         },
         height: 52,
         animationCurve: Curves.fastLinearToSlowEaseIn,

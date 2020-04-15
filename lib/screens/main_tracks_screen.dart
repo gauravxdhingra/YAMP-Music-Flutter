@@ -3,7 +3,6 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:test_player/data/song_data.dart';
 import 'package:test_player/provider/songs_provider.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import '../widgets/music_tile.dart';
@@ -32,8 +31,8 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
       context,
       MaterialPageRoute(
         builder: (context) => NowPlayingScreen(
-          songData: Provider.of<Songs>(context).songData,
           song: s,
+          songData: Provider.of<Songs>(context),
           nowPlayTap: nowPlayTap,
         ),
       ),
@@ -162,7 +161,6 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                             child: GestureDetector(
                               onTap: () => goToNowPlaying(
                                 _songs[index],
-                                nowPlayTap: true,
                               ),
                               // {songsData.playLocal(_songs[index].uri)},
                               child: MusicTile(

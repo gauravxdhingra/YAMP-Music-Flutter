@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main_page.dart';
@@ -5,30 +7,27 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:provider/provider.dart';
 import '../provider/songs_provider.dart';
 
-class MusicTile extends StatefulWidget {
+class MusicTile extends StatelessWidget {
   final int index;
 
   const MusicTile({Key key, this.index}) : super(key: key);
 
   @override
-  _MusicTileState createState() => _MusicTileState();
-}
-
-class _MusicTileState extends State<MusicTile> {
-  @override
   Widget build(BuildContext context) {
     final songsData = Provider.of<Songs>(context);
     List<Song> _songs = songsData.songgsget;
     // int index = ModalRoute.of(context).settings.arguments as int;
-    int index = widget.index;
-
+    // int index = widget.index;
     return Row(
       children: <Widget>[
         CircleAvatar(
           radius: 24,
-          backgroundImage: (_songs[index].albumArt != null)
-              ? NetworkImage(_songs[index].albumArt)
-              : null,
+          backgroundImage: _songs[index].albumArt == null
+              ? null
+              : FileImage(File.fromUri(Uri.parse(_songs[index].albumArt))),
+          // backgroundImage: (_songs[index].albumArt != null)
+          //     ? NetworkImage(_songs[index].albumArt)
+          //     : null,
           // child:
           //     Image.network(_songs[index].albumArt),
         ),

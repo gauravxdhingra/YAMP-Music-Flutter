@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,9 +40,12 @@ class _RecentsTileState extends State<RecentsTile> {
         CircleAvatar(
           radius: 24,
           backgroundColor: Colors.yellow,
-          backgroundImage: (_songs[index].albumArt != null)
-              ? NetworkImage(_songs[index].albumArt)
-              : null,
+          backgroundImage: _songs[index].albumArt == null
+              ? null
+              : FileImage(File.fromUri(Uri.parse(_songs[index].albumArt))),
+          // backgroundImage: (_songs[index].albumArt != null)
+          //     ? NetworkImage(_songs[index].albumArt)
+          //     : null,
         ),
         SizedBox(
           width: 12,
@@ -49,7 +54,6 @@ class _RecentsTileState extends State<RecentsTile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            
             Text(
               // "Secrets",
               _songs[index].title,
