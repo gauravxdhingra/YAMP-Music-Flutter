@@ -117,7 +117,7 @@ class PlaylistScreen extends StatelessWidget {
                     width: MediaQuery.of(context).size.width / 1.15,
                     // decoration: BoxDecoration(color: Colors.yellow),
                     // child: Text('data'),
-                    child: null,
+                    // child: null,
                   ),
                 ],
               ),

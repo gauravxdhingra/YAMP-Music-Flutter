@@ -131,37 +131,35 @@ class _MainPageState extends State<MainPage> {
             _setPage(i);
         },
         height: 52,
-        animationCurve: Curves.fastLinearToSlowEaseIn,
+        // animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
     );
   }
 }
 
-class SongsSearch extends SearchDelegate<String> {
- 
+// class SongsSearch extends SearchDelegate<String> {
+//   @override
+//   List<Widget> buildActions(BuildContext context) {
+//     // TODO: implement buildActions
+//     final songs = Provider.of<Songs>(context).songgsget;
+//     return null;
+//   }
 
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    // TODO: implement buildActions
-    final songs = Provider.of<Songs>(context).songgsget;
-    return null;
-  }
+//   @override
+//   Widget buildLeading(BuildContext context) {
+//     // TODO: implement buildLeading
+//     return null;
+//   }
 
-  @override
-  Widget buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
-    return null;
-  }
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     // TODO: implement buildResults
+//     return null;
+//   }
 
-  @override
-  Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
-    return null;
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    // TODO: implement buildSuggestions
-    return null;
-  }
-}
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     // TODO: implement buildSuggestions
+//     return null;
+//   }
+// }
