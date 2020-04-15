@@ -169,9 +169,12 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                                 // color: Colors.purple,
                                 ),
                             child: GestureDetector(
-                              onTap: () => goToNowPlaying(
-                                _songs[index],
-                              ),
+                              onTap: () {
+                                songsData.setCurrentIndex(index);
+                                goToNowPlaying(
+                                  _songs[index],
+                                );
+                              },
                               // {songsData.playLocal(_songs[index].uri)},
                               child: MusicTile(
                                 index: index,

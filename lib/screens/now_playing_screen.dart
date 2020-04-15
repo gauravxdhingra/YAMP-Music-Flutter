@@ -126,6 +126,32 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     });
   }
 
+  var _currentSongIndex = -1;
+  int get length => widget.songData.songgsget.length;
+  int get songNumber => _currentSongIndex + 1;
+  int get currentIndex => _currentSongIndex;
+
+  Song get nextSong {
+    if (_currentSongIndex < length) {
+      _currentSongIndex++;
+    }
+    if (_currentSongIndex >= length) return null;
+    return widget.songData.songgsget[_currentSongIndex];
+  }
+
+  Song get randomSong {
+    Random r = new Random();
+    return widget.songData.songgsget[r.nextInt(length)];
+  }
+
+  Song get prevSong {
+    if (_currentSongIndex > 0) {
+      _currentSongIndex--;
+    }
+    if (_currentSongIndex < 0) return null;
+    return widget.songData.songgsget[_currentSongIndex];
+  }
+
   Future play(Song s) async {
     if (s != null) {
       final result = await audioPlayer.play(s.uri, isLocal: true);
@@ -171,7 +197,6 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
         isMuted = muted;
       });
   }
-
 
   @override
   Widget build(BuildContext context) {

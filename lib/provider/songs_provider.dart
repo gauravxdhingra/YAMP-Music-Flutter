@@ -8,7 +8,7 @@ enum PlayerState { stopped, playing, paused }
 
 class Songs with ChangeNotifier {
   List<Song> songgs = [];
-  int _currentSongIndex;
+  var _currentSongIndex = -1;
   MusicFinder musicFinder;
   MusicFinder audioPlayer;
   // Songs songData;
@@ -26,8 +26,10 @@ class Songs with ChangeNotifier {
   int get length => songgsget.length;
   int get songNumber => _currentSongIndex + 1;
   int get currentIndex => _currentSongIndex;
+
   setCurrentIndex(int index) {
     _currentSongIndex = index;
+    notifyListeners();
   }
 
   playLocal(kurl) async {
@@ -46,11 +48,13 @@ class Songs with ChangeNotifier {
   }
 
   Song get nextSong {
-    if (_currentSongIndex > 0 && _currentSongIndex < length) {
-      _currentSongIndex++;
+    if (_currentSongIndex < length) {
+      setCurrentIndex(_currentSongIndex++);
+
+      notifyListeners();
     }
     if (_currentSongIndex >= length) return null;
-    return songgs[_currentSongIndex];
+    return songgsget[_currentSongIndex];
   }
 
   Song get randomSong {
@@ -61,9 +65,10 @@ class Songs with ChangeNotifier {
   Song get prevSong {
     if (_currentSongIndex > 0) {
       _currentSongIndex--;
+      notifyListeners();
     }
     if (_currentSongIndex < 0) return null;
-    return songgs[_currentSongIndex];
+    return songgsget[_currentSongIndex];
   }
 
   // MusicFinder get audioPlayer => musicFinder;
