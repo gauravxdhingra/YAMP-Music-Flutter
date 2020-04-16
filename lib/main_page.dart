@@ -1,6 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:test_player/screens/favourites_screen.dart';
 import 'package:test_player/screens/loading_spinner.dart';
@@ -55,11 +56,10 @@ class _MainPageState extends State<MainPage> {
   }
 
   // List get songs => _songs;
-  static BuildContext ctx;
+  // static BuildContext ctx;
   List<Widget> pages = [
     MainTracksScreen(),
     FavouritesScreen(),
-    null,
     // NowPlayingScreen(
     //     // song: Provider.of<Songs>(ctx)
     //     //     .songgsget[Provider.of<Songs>(ctx).currentIndex],
@@ -87,7 +87,59 @@ class _MainPageState extends State<MainPage> {
     final songData = Provider.of<Songs>(context);
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: pages[_selectedpageindex],
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            left: 48,
+            top: 0,
+            right: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 9.5,
+              decoration: BoxDecoration(
+                color: Colors.yellow,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(42),
+                ),
+              ),
+
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 35,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        Icons.play_circle_outline,
+                        size: 40,
+                      ),
+                      FlatButton(
+                          child: Text(
+                            'Now Playing',
+                            style: GoogleFonts.montserrat(
+                              color: Colors.black,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            // textAlign: TextAlign.center,
+                          ),
+                          onPressed: () => {}
+                          //  showSearch(// context: context, delegate: CustomSearchDelegate()),
+                          ),
+                    ],
+                  ),
+                ],
+              ),
+
+              // showSearch(context: context, delegate: CustomSearchDelegate()),
+            ),
+          ),
+          pages[_selectedpageindex],
+        ],
+      ),
+
       // MainTracksScreen(),
 
       bottomNavigationBar: CurvedNavigationBar(
@@ -103,10 +155,10 @@ class _MainPageState extends State<MainPage> {
           Icon(
             MdiIcons.heart,
           ),
-          Icon(
-            MdiIcons.playPause,
-            // size: 36,
-          ),
+          // Icon(
+          //   MdiIcons.playPause,
+          //   // size: 36,
+          // ),
           Icon(
             MdiIcons.playlistMusic,
           ),
@@ -114,23 +166,21 @@ class _MainPageState extends State<MainPage> {
             MdiIcons.magnify,
           ),
         ],
-        height: 52,
         onTap: (i) {
-          if (i == 2) {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => NowPlayingScreen(
-                  song: songData.songgsget[songData.currentIndex],
-                  songData: Provider.of<Songs>(context),
-                  nowPlayTap: false,
-                ),
-              ),
-            );
-            return;
-          } else
-            _setPage(i);
+          // if (i == 2)
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (_) => NowPlayingScreen(
+          //         song: songData.songgsget[songData.currentIndex],
+          //         songData: Provider.of<Songs>(context),
+          //         nowPlayTap: false,
+          //       ),
+          //     ),
+          //   );
+          // else
+          _setPage(i);
         },
-
+        height: 52,
         // animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
     );
