@@ -7,6 +7,7 @@ import 'package:test_player/provider/songs_provider.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import '../widgets/music_tile.dart';
 import '../widgets/recents_tile.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class MainTracksScreen extends StatefulWidget {
   @override
@@ -64,6 +65,13 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                 bottomLeft: Radius.circular(42),
               ),
             ),
+            child: FlatButton(
+              child: Text('Search'),
+              onPressed: () => showSearch(
+                  context: context, delegate: CustomSearchDelegate()),
+            ),
+
+            // showSearch(context: context, delegate: CustomSearchDelegate()),
           ),
         ),
 //          6e00db
@@ -194,3 +202,61 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
     );
   }
 }
+
+// class CustomSearchDelegate extends SearchDelegate {
+//   List<String> searchList = [];
+
+//   @override
+//   List<Widget> buildActions(BuildContext context) {
+//     List<Song> listSongs = Provider.of<Songs>(context).songgsget;
+//     listSongs.forEach((ele) {
+//       searchList.add(ele.title);
+//     });
+
+//     return [
+//       IconButton(
+//         icon: Icon(Icons.clear),
+//         onPressed: () {
+//           query = '';
+//         },
+//       ),
+//     ];
+//   }
+
+//   @override
+//   Widget buildLeading(BuildContext context) {
+//     return IconButton(
+//       icon: AnimatedIcon(
+//         icon: AnimatedIcons.menu_arrow,
+//         progress: transitionAnimation,
+//       ),
+//       //  Icon(Icons.arrow_back),
+//       onPressed: () {
+//         close(context, null);
+//       },
+//     );
+//   }
+
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     return Column(
+//       children: <Widget>[],
+//     );
+//   }
+
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     final suggestionList = query.isEmpty
+//         ? []
+//         : searchList.where((p) => p.contains(query)).toList();
+//     return ListView.builder(
+//       itemCount: suggestionList.length,
+//       itemBuilder: (BuildContext context, int index) {
+//         return ListTile(
+//           leading: Icon(Icons.music_note),
+//           title: Text(suggestionList[index]),
+//         );
+//       },
+//     );
+//   }
+// }

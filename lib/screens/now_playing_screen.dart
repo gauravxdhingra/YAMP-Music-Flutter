@@ -10,7 +10,7 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:provider/provider.dart';
 import '../provider/songs_provider.dart';
 import 'package:flute_music_player/flute_music_player.dart';
-import 'package:volume_watcher/volume_watcher.dart';
+import 'package:volume/volume.dart';
 
 enum PlayerState { stopped, playing, paused }
 
@@ -34,13 +34,45 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
 
   Random r = math.Random();
 
+  static num currentVol = 0;
+  // num initVol = 0;
+  static num maxVol = 0;
+
+  AudioManager audioManager;
+  // int maxVol, currentVol;
+  ShowVolumeUI showVolumeUI = ShowVolumeUI.SHOW;
+
   @override
   void initState() {
     super.initState();
     initPlayer();
-    for (int i = 0; i < 72; i++) {
-      soundBars.add(r.nextInt((52)));
-    }
+    // for (int i = 0; i < 72; i++) {
+    //   soundBars.add(r.nextInt((52)));
+    // }
+
+    audioManager = AudioManager.STREAM_MUSIC;
+    initAudioStreamType();
+    updateVolumes();
+  }
+// await Volume.controlVolume(AudioManager audioManager);
+
+// await Volume.getMaxVol; await Volume.getVol;await Volume.setVol(int i, {ShowVolumeUI showVolumeUI});
+  Future<void> initAudioStreamType() async {
+    await Volume.controlVolume(AudioManager.STREAM_MUSIC);
+  }
+
+  updateVolumes() async {
+    // get Max Volume
+    maxVol = await Volume.getMaxVol;
+    // get Current Volume
+    currentVol = await Volume.getVol;
+    setState(() {});
+  }
+
+  setVol(int i) async {
+    await Volume.setVol(i, showVolumeUI: ShowVolumeUI.SHOW);
+    // or
+    // await Volume.setVol(i, showVolumeUI: ShowVolumeUI.HIDE);
   }
 
   final slider = SleekCircularSlider(
@@ -49,14 +81,20 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
       angleRange: 180,
       counterClockwise: true,
       size: 330,
+      // customColors: CustomSliderColors(
+      //   dotColor: Colors.black54,
+      // ),
       customWidths: CustomSliderWidths(
           trackWidth: 3, handlerSize: 10, progressBarWidth: 10, shadowWidth: 5),
       // customColors: CustomSliderColors(),
     ),
     min: 0,
-    max: 100,
-    initialValue: 50,
+    max: maxVol.toDouble(),
+    initialValue: currentVol.toDouble(),
     onChange: (double value) {
+      // setVol(value.toInt());
+      // updateVolumes();
+      // changedvol(value);
       // callback providing a value while its being changed (with a pan gesture)
     },
 
@@ -64,6 +102,10 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     //   // use your custom widget inside the slider (gets a slider value from the callback)
     // },
   );
+
+  // void changedvol(value) {
+  //   setVol(value.toInt);
+  // }
 
   PlayerState playerState;
   MusicFinder audioPlayer;
@@ -209,7 +251,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     // Songs songData = Provider.of<Songs>(context);
     // int i = 0;
     // backgroundColor: Colors.yellow,
-
+    print(maxVol);
     return Scaffold(
       body: Stack(
         children: <Widget>[
