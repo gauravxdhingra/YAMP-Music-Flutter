@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_player/db/database_client.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({Key key}) : super(key: key);
+  final DatabaseClient db;
+  SearchScreen(this.db);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();

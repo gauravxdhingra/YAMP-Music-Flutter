@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:test_player/db/database_client.dart';
 
-class PlaylistScreen extends StatelessWidget {
-  const PlaylistScreen({Key key}) : super(key: key);
+class PlaylistScreen extends StatefulWidget {
+  final DatabaseClient db;
 
+  PlaylistScreen(this.db);
+
+  @override
+  _PlaylistScreenState createState() => _PlaylistScreenState();
+}
+
+class _PlaylistScreenState extends State<PlaylistScreen> {
   @override
   Widget build(BuildContext context) {
     return

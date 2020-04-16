@@ -3,13 +3,14 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:test_player/db/database_client.dart';
 import 'package:test_player/provider/songs_provider.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import 'package:test_player/widgets/music_tile.dart';
 
 class FavouritesScreen extends StatefulWidget {
-  const FavouritesScreen({Key key}) : super(key: key);
-
+  final DatabaseClient db;
+  FavouritesScreen(this.db);
   @override
   _FavouritesScreenState createState() => _FavouritesScreenState();
 }

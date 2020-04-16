@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +15,9 @@ import 'package:test_player/screens/search_screen.dart';
 // import './widgets/music_tile.dart';
 // import './widgets/recents_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:test_player/support/lastplay.dart';
 import './provider/songs_provider.dart';
+import 'db/database_client.dart';
 
 Color backgroundColor = Color(0xff7800ee);
 
@@ -25,10 +28,11 @@ class MusicPlayerApp extends StatelessWidget {
       create: (ctx) => Songs(null),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        routes: {
-          '/': (ctx) => LoadingScreen(),
-          MainPage.routeName: (ctx) => MainPage(),
-        },
+        home: MainPage(),
+        // routes: {
+        //   '/': (ctx) => LoadingScreen(),
+        //   MainPage.routeName: (ctx) => MainPage(),
+        // },
       ),
     );
   }
@@ -45,6 +49,11 @@ class _MainPageState extends State<MainPage> {
   // final _controller = ScrollController();
   // final _controller1 = ScrollController();
   // static List<Song> _songs = [];
+  DatabaseClient db;
+  bool isLoading = true;
+  Song last;
+  List<Song> songs;
+
   @override
   void initState() {
     super.initState();
@@ -52,22 +61,85 @@ class _MainPageState extends State<MainPage> {
     // widget.songs.forEach((ele) => _songs.add(ele));
     // print(_songs.length);
     // print(_songs[25].title);
+    initPlayer();
     _setPage(0);
   }
+
+  void initPlayer() async {
+    DatabaseClient db;
+    int _selectedIndex;
+    db = new DatabaseClient();
+    await db.create();
+    if (await db.alreadyLoaded()) {
+      setState(() {
+        isLoading = false;
+        getLast();
+      });
+    } else {
+      var songs;
+      try {
+        songs = await MusicFinder.allSongs();
+      } catch (e) {
+        print("failed to get songs");
+      }
+      List<Song> list = new List.from(songs);
+      for (Song song in list) db.insertOrUpdateSong(song);
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        isLoading = false;
+        getLast();
+      });
+    }
+  }
+
+  void getLast() async {
+    last = await db.fetchLastSong();
+    songs = await db.fetchSongs();
+    setState(() {
+      songs = songs;
+    });
+  }
+
+  Future<Null> refreshData() async {
+    var db = new DatabaseClient();
+    await MusicFinder.allSongs().then((songs) {
+      List<Song> newSongs = List.from(songs);
+      for (Song song in newSongs) db.insertOrUpdateSong(song);
+    }).then((val) {
+      scaffoldState.currentState.showSnackBar(new SnackBar(
+        content: Text(
+          "Database Updated",
+        ),
+        duration: Duration(milliseconds: 1500),
+      ));
+    }).catchError((error) {
+      scaffoldState.currentState.showSnackBar(new SnackBar(
+        content: Text(
+          "Failed to update database",
+        ),
+        duration: Duration(milliseconds: 1500),
+      ));
+    });
+  }
+
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+  GlobalKey<ScaffoldState> scaffoldState = new GlobalKey();
 
   // List get songs => _songs;
   // static BuildContext ctx;
   List<Widget> pages = [
-    MainTracksScreen(),
-    FavouritesScreen(),
+    MainTracksScreen(db),
+    FavouritesScreen(db),
     // NowPlayingScreen(
     //     // song: Provider.of<Songs>(ctx)
     //     //     .songgsget[Provider.of<Songs>(ctx).currentIndex],
     //     // songData: Provider.of<Songs>(ctx),
     //     // nowPlayTap: true,
     //     ),
-    PlaylistScreen(),
-    SearchScreen(),
+    PlaylistScreen(db),
+    SearchScreen(db),
   ];
 
   // Future _playLocal(String url) async {
@@ -85,38 +157,43 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     final songData = Provider.of<Songs>(context);
-    return Scaffold(
-      backgroundColor: backgroundColor,
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            left: 48,
-            top: 0,
-            right: 0,
-            child: Container(
-              height: MediaQuery.of(context).size.height / 9.5,
-              decoration: BoxDecoration(
-                color: Colors.yellow,
+    return WillPopScope(
+      child: Scaffold(
+        backgroundColor: backgroundColor,
+        body: Stack(
+          children: <Widget>[
+            Positioned(
+              left: 48,
+              top: 0,
+              right: 0,
+              child: InkWell(
                 borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(42),
                 ),
-              ),
-
-              child: Column(
-                children: <Widget>[
-                  SizedBox(
-                    height: 35,
+                child: Container(
+                  height: MediaQuery.of(context).size.height / 9.5,
+                  decoration: BoxDecoration(
+                    color: Colors.yellow,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(42),
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+
+                  child: Column(
                     children: <Widget>[
-                      Icon(
-                        Icons.play_circle_outline,
-                        size: 40,
+                      SizedBox(
+                        height: 35,
                       ),
-                      FlatButton(
-                          child: Text(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        // crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.play_circle_outline,
+                            size: 40,
+                          ),
+
+                          Text(
                             'Now Playing',
                             style: GoogleFonts.montserrat(
                               color: Colors.black,
@@ -125,65 +202,91 @@ class _MainPageState extends State<MainPage> {
                             ),
                             // textAlign: TextAlign.center,
                           ),
-                          onPressed: () => {}
+
                           //  showSearch(// context: context, delegate: CustomSearchDelegate()),
-                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
+                  // showSearch(context: context, delegate: CustomSearchDelegate()),
+                ),
+                onTap: () {},
               ),
-
-              // showSearch(context: context, delegate: CustomSearchDelegate()),
             ),
-          ),
-          pages[_selectedpageindex],
-        ],
-      ),
+            pages[_selectedpageindex],
+          ],
+        ),
 
-      // MainTracksScreen(),
+        // MainTracksScreen(),
 
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: backgroundColor,
-        color: Colors.yellow,
-        // Colors.blue[50],
-        // animationDuration: Duration(seconds: 3),
-        // index: 3,
-        items: <Widget>[
-          Icon(
-            MdiIcons.musicNote,
-          ),
-          Icon(
-            MdiIcons.heart,
-          ),
-          // Icon(
-          //   MdiIcons.playPause,
-          //   // size: 36,
-          // ),
-          Icon(
-            MdiIcons.playlistMusic,
-          ),
-          Icon(
-            MdiIcons.magnify,
-          ),
-        ],
-        onTap: (i) {
-          // if (i == 2)
-          //   Navigator.of(context).push(
-          //     MaterialPageRoute(
-          //       builder: (_) => NowPlayingScreen(
-          //         song: songData.songgsget[songData.currentIndex],
-          //         songData: Provider.of<Songs>(context),
-          //         nowPlayTap: false,
-          //       ),
-          //     ),
-          //   );
-          // else
-          _setPage(i);
-        },
-        height: 52,
-        // animationCurve: Curves.fastLinearToSlowEaseIn,
+        bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: backgroundColor,
+          color: Colors.yellow,
+          // Colors.blue[50],
+          // animationDuration: Duration(seconds: 3),
+          // index: 3,
+          index: 0,
+          items: <Widget>[
+            Icon(
+              MdiIcons.musicNote,
+            ),
+            Icon(
+              MdiIcons.heart,
+            ),
+            // Icon(
+            //   MdiIcons.playPause,
+            //   // size: 36,
+            // ),
+            Icon(
+              MdiIcons.playlistMusic,
+            ),
+            Icon(
+              MdiIcons.magnify,
+            ),
+          ],
+          onTap: (i) {
+            _setPage(i);
+          },
+          height: 52,
+          // animationCurve: Curves.fastLinearToSlowEaseIn,
+        ),
       ),
+      onWillPop: _onWillPop,
     );
+  }
+
+  Future<bool> _onWillPop() {
+    if (_selectedpageindex != 0) {
+      setState(() {
+        _selectedpageindex = 0;
+      });
+      return null;
+    } else
+      return showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                title: new Text('Are you sure?'),
+                content: new Text('Grey will be stopped..'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: new Text(
+                      'No',
+                    ),
+                  ),
+                  new FlatButton(
+                    onPressed: () {
+                      MyQueue.player.stop();
+                      Navigator.of(context).pop(true);
+                    },
+                    child: new Text('Yes'),
+                  ),
+                ],
+              );
+            },
+          ) ??
+          false;
   }
 }
 
