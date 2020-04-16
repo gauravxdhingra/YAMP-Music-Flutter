@@ -65,11 +65,11 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                 bottomLeft: Radius.circular(42),
               ),
             ),
-            child: FlatButton(
-              child: Text('Search'),
-              onPressed: () => showSearch(
-                  context: context, delegate: CustomSearchDelegate()),
-            ),
+            // child: FlatButton(
+            //   child: Text('Search'),
+            //   onPressed: () => showSearch(
+            //       context: context, delegate: CustomSearchDelegate()),
+            // ),
 
             // showSearch(context: context, delegate: CustomSearchDelegate()),
           ),

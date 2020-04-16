@@ -55,16 +55,17 @@ class _MainPageState extends State<MainPage> {
   }
 
   // List get songs => _songs;
-  // static BuildContext ctx;
+  static BuildContext ctx;
   List<Widget> pages = [
     MainTracksScreen(),
     FavouritesScreen(),
-    NowPlayingScreen(
-      // song: Provider.of<Songs>(ctx)
-      //     .songgsget[Provider.of<Songs>(ctx).currentIndex],
-      // songData: Provider.of<Songs>(ctx),
-      // nowPlayTap: true,
-    ),
+    null,
+    // NowPlayingScreen(
+    //     // song: Provider.of<Songs>(ctx)
+    //     //     .songgsget[Provider.of<Songs>(ctx).currentIndex],
+    //     // songData: Provider.of<Songs>(ctx),
+    //     // nowPlayTap: true,
+    //     ),
     PlaylistScreen(),
     SearchScreen(),
   ];
@@ -113,8 +114,9 @@ class _MainPageState extends State<MainPage> {
             MdiIcons.magnify,
           ),
         ],
+        height: 52,
         onTap: (i) {
-          if (i == 2)
+          if (i == 2) {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (_) => NowPlayingScreen(
@@ -124,10 +126,11 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             );
-          else
+            return;
+          } else
             _setPage(i);
         },
-        height: 52,
+
         // animationCurve: Curves.fastLinearToSlowEaseIn,
       ),
     );
