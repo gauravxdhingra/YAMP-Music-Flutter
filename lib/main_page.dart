@@ -49,7 +49,7 @@ class _MainPageState extends State<MainPage> {
   // final _controller = ScrollController();
   // final _controller1 = ScrollController();
   // static List<Song> _songs = [];
-  DatabaseClient db;
+  static DatabaseClient db;
   bool isLoading = true;
   Song last;
   List<Song> songs;
@@ -130,7 +130,7 @@ class _MainPageState extends State<MainPage> {
   // List get songs => _songs;
   // static BuildContext ctx;
   List<Widget> pages = [
-    MainTracksScreen(db),
+    MainTracksScreen(db: db),
     FavouritesScreen(db),
     // NowPlayingScreen(
     //     // song: Provider.of<Songs>(ctx)
@@ -139,7 +139,7 @@ class _MainPageState extends State<MainPage> {
     //     // nowPlayTap: true,
     //     ),
     PlaylistScreen(db),
-    SearchScreen(db),
+    SearchScreen(),
   ];
 
   // Future _playLocal(String url) async {

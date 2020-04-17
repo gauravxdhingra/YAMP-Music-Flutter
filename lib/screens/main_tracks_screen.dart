@@ -51,7 +51,7 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
 
   void initSongs() async {
     allSongs = await widget.db.fetchSongs();
-
+    songs = await widget.db.fetchRecentSong();
     setState(() {
       isLoading = false;
     });

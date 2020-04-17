@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:test_player/db/database_client.dart';
 
 class SearchScreen extends StatefulWidget {
-  final DatabaseClient db;
-  SearchScreen(this.db);
+  // final DatabaseClient db;
+  // SearchScreen(this.db);
 
   @override
   _SearchScreenState createState() => _SearchScreenState();
