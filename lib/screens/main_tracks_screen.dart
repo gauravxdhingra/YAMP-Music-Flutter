@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
+// import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:test_player/db/database_client.dart';
-import 'package:test_player/provider/songs_provider.dart';
+// import 'package:test_player/provider/songs_provider.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import 'package:test_player/support/lastplay.dart';
-import '../widgets/music_tile.dart';
-import '../widgets/recents_tile.dart';
+// import '../widgets/music_tile.dart';
+// import '../widgets/recents_tile.dart';
 
 class MainTracksScreen extends StatefulWidget {
   final DatabaseClient db;
@@ -241,7 +241,11 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                 width: MediaQuery.of(context).size.width / 1.15,
                 // decoration: BoxDecoration(color: Colors.yellow),
                 // child: Text('data'),
-                child:
+                child: isLoading
+                    ? new Center(
+                        child: new CircularProgressIndicator(),
+                      )
+                    :
                     // FadingEdgeScrollView.fromScrollView(
                     //   gradientFractionOnStart: 0.04,
                     //   gradientFractionOnEnd: 0.02,

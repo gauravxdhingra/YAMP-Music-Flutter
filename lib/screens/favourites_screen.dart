@@ -9,7 +9,7 @@ import 'package:test_player/db/database_client.dart';
 import 'package:test_player/provider/songs_provider.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import 'package:test_player/support/lastplay.dart';
-import 'package:test_player/widgets/music_tile.dart';
+// import 'package:test_player/widgets/music_tile.dart';
 
 class FavouritesScreen extends StatefulWidget {
   final DatabaseClient db;

@@ -6,20 +6,24 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DatabaseClient {
-  Database _db;
+  static Database _db;
   Song song;
 
   Future create() async {
     Directory path = await getApplicationDocumentsDirectory();
+    // String dpath = await getDatabasesPath();
     String dbPath = join(path.path, "database.db");
-    _db = await openDatabase(dbPath, version: 1, onCreate: this._create);
+    // print(path.path);
+    // print(dpath);
+    _db = await openDatabase(dbPath, version: 102, onCreate: this._create);
+    return _db;
   }
 
   Future _create(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE songs(id NUMBER,title TEXT,duration NUMBER,albumArt TEXT,album TEXT,uri TEXT,artist TEXT,albumId NUMBER,isFav number NOT NULL default 0,timestamp number,count number not null default 0)');
+        "CREATE TABLE songs(id NUMBER,title TEXT,duration NUMBER,albumArt TEXT,album TEXT,uri TEXT,artist TEXT,albumId NUMBER,isFav number NOT NULL default 0,timestamp number,count number not null default 0)");
     await db.execute(
-        'CREATE TABLE recents(id integer primary key autoincrement,title TEXT,duration NUMBER,albumArt TEXT,album TEXT,uri TEXT,artist TEXT,albumId NUMBER)');
+        "CREATE TABLE recents(id integer primary key autoincrement,title TEXT,duration NUMBER,albumArt TEXT,album TEXT,uri TEXT,artist TEXT,albumId NUMBER)");
   }
 
   Future<bool> insertSongs() async {
