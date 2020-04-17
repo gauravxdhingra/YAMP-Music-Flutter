@@ -22,6 +22,9 @@ class MainTracksScreen extends StatefulWidget {
 }
 
 class _MainTracksScreenState extends State<MainTracksScreen> {
+  List<Song> songs, allSongs;
+  bool isLoading = true;
+
   final _controller = ScrollController();
   final _controller1 = ScrollController();
 // List<Song> tracks = widget.songs;
@@ -40,18 +43,43 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
         : new File.fromUri(Uri.parse(song.albumArt));
   }
 
-  void goToNowPlaying(Song s, {bool nowPlayTap: false}) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NowPlayingScreen(
-          song: s,
-          songData: Provider.of<Songs>(context),
-          nowPlayTap: nowPlayTap,
-        ),
-      ),
-    );
+  @override
+  void initState() {
+    super.initState();
+    initSongs();
   }
+
+  void initSongs() async {
+    allSongs = await widget.db.fetchSongs();
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  Future<bool> isFav(song) async {
+    if (await widget.db.isfav(song) == 0)
+      return true;
+    else
+      return false;
+  }
+  // void goToNowPlaying(Song s, {bool nowPlayTap: false}) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => NowPlayingScreen(
+  //         song: s,
+  //         songData: Provider.of<Songs>(context),
+  //         nowPlayTap: nowPlayTap,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +109,77 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
                     fontSize: 20,
                     fontWeight: FontWeight.w600),
               ),
+              Container(
+                child: isLoading
+                    ? new Center(
+                        child: new CircularProgressIndicator(),
+                      )
+                    : songs.length != 0
+                        ? new ListView.builder(
+                            physics: BouncingScrollPhysics(),
+                            itemCount: songs.length,
+                            itemBuilder: (context, i) => new Column(
+                              children: <Widget>[
+                                new ListTile(
+                                  leading: Hero(
+                                    tag: songs[i].id,
+                                    child: songs[i].albumArt != null
+                                        ? Image.file(
+                                            getImage(songs[i]),
+                                            width: 55.0,
+                                            height: 55.0,
+                                          )
+                                        : Icon(Icons.music_note),
+                                  ),
+                                  title: new Text(songs[i].title,
+                                      maxLines: 1,
+                                      style: new TextStyle(
+                                          fontSize: 16.0, color: Colors.black)),
+                                  subtitle: new Text(
+                                    songs[i].artist,
+                                    maxLines: 1,
+                                    style: new TextStyle(
+                                        fontSize: 12.0, color: Colors.grey),
+                                  ),
+                                  trailing: Text(
+                                      new Duration(
+                                              milliseconds: songs[i].duration)
+                                          .toString()
+                                          .split('.')
+                                          .first
+                                          .substring(3, 7),
+                                      style: new TextStyle(
+                                          fontSize: 12.0, color: Colors.grey)),
+                                  onTap: () {
+                                    MyQueue.songs = songs;
+                                    Navigator.of(context).push(
+                                        new MaterialPageRoute(
+                                            builder: (context) =>
+                                                new NowPlayingScreen(widget.db,
+                                                    MyQueue.songs, i, 0)));
+                                  },
+                                ),
+                              ],
+                            ),
+                          )
+                        : Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  "Nothing here :(",
+                                  style: TextStyle(
+                                      fontSize: 30.0,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 10.0)),
+                              ],
+                            ),
+                          ),
+              ),
+
               // Container(
               //   height: MediaQuery.of(context).size.height / 11,
               //   child: ListView(
