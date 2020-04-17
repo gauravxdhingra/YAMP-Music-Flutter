@@ -7,7 +7,6 @@ import 'package:test_player/db/database_client.dart';
 
 class PlaylistScreen extends StatefulWidget {
   final DatabaseClient db;
-
   PlaylistScreen(this.db);
 
   @override

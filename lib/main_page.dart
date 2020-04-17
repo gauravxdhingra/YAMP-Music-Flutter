@@ -9,7 +9,7 @@ import 'package:test_player/screens/main_tracks_screen.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import 'package:test_player/screens/playlist_screen.dart';
 import 'package:test_player/screens/search_screen.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 // import './screens/loading_spinner.dart';
 // import './widgets/music_tile.dart';
 // import './widgets/recents_tile.dart';
@@ -48,12 +48,12 @@ class _MainPageState extends State<MainPage> {
   // final _controller = ScrollController();
   // final _controller1 = ScrollController();
   // static List<Song> _songs = [];
-  DatabaseClient db;
+   DatabaseClient db;
   bool isLoading = true;
   Song last;
   List<Song> songs;
 
-  static DatabaseClient dbst ;
+  static DatabaseClient dbst = new DatabaseClient();
 
   @override
   void initState() {
@@ -67,12 +67,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   void initPlayer() async {
-    db = new DatabaseClient();
+    DatabaseClient db = new DatabaseClient();
     await db.create();
     if (await db.alreadyLoaded()) {
       setState(() {
         isLoading = false;
-        getLast();
+        // getLast();
       });
     } else {
       var songs;
@@ -86,10 +86,9 @@ class _MainPageState extends State<MainPage> {
       if (!mounted) {
         return;
       }
-      dbst = db;
       setState(() {
         isLoading = false;
-        getLast();
+        // getLast();
       });
     }
   }
@@ -124,21 +123,12 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  var refreshKey = GlobalKey<RefreshIndicatorState>();
-  GlobalKey<ScaffoldState> scaffoldState = new GlobalKey();
-
   // List get songs => _songs;
   // static BuildContext ctx;
   List<Widget> pages = [
-    MainTracksScreen(db: dbst),
-    FavouritesScreen(dbst),
-    // NowPlayingScreen(
-    //     // song: Provider.of<Songs>(ctx)
-    //     //     .songgsget[Provider.of<Songs>(ctx).currentIndex],
-    //     // songData: Provider.of<Songs>(ctx),
-    //     // nowPlayTap: true,
-    //     ),
-    PlaylistScreen(dbst),
+    MainTracksScreen(db),
+    FavouritesScreen(db),
+    PlaylistScreen(db),
     SearchScreen(),
   ];
 
@@ -154,11 +144,15 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
+  GlobalKey<ScaffoldState> scaffoldState = new GlobalKey();
+
   @override
   Widget build(BuildContext context) {
-    final songData = Provider.of<Songs>(context);
+    // final songData = Provider.of<Songs>(context);
     return WillPopScope(
       child: Scaffold(
+        key: scaffoldState,
         backgroundColor: backgroundColor,
         body: Stack(
           children: <Widget>[
@@ -167,9 +161,10 @@ class _MainPageState extends State<MainPage> {
               top: 0,
               right: 0,
               child: InkWell(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(42),
-                ),
+                // borderRadius: BorderRadius.only(
+                //   bottomLeft: Radius.circular(42),
+                // ),
+
                 child: Container(
                   height: MediaQuery.of(context).size.height / 9.5,
                   decoration: BoxDecoration(
@@ -210,7 +205,33 @@ class _MainPageState extends State<MainPage> {
                   ),
                   // showSearch(context: context, delegate: CustomSearchDelegate()),
                 ),
-                onTap: () {},
+                onTap: () async {
+                  var pref = await SharedPreferences.getInstance();
+                  var fp = pref.getBool("played");
+                  if (fp == null) {
+                    scaffoldState.currentState.showSnackBar(
+                        new SnackBar(content: Text("Play your first song.")));
+                  } else {
+                    Navigator.of(context).push(
+                      new MaterialPageRoute(
+                        builder: (context) {
+                          if (MyQueue.songs == null) {
+                            List<Song> list = new List();
+                            list.add(last);
+                            MyQueue.songs = list;
+                            return new NowPlayingScreen(db, list, 0, 0);
+                          } else
+                            return new NowPlayingScreen(
+                              db,
+                              MyQueue.songs,
+                              MyQueue.index,
+                              1,
+                            );
+                        },
+                      ),
+                    );
+                  }
+                },
               ),
             ),
             pages[_selectedpageindex],
@@ -267,7 +288,7 @@ class _MainPageState extends State<MainPage> {
             builder: (context) {
               return AlertDialog(
                 title: new Text('Are you sure?'),
-                content: new Text('Grey will be stopped..'),
+                content: new Text('Exit?'),
                 actions: <Widget>[
                   new FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),

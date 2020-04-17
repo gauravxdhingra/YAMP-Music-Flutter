@@ -436,6 +436,7 @@ class _NowPlayingScreenState extends State<NowPlayingScreen>
     // int i = 0;
     // backgroundColor: Colors.yellow,
     return Scaffold(
+      key: scaffoldState,
       body: song == null
           ? Stack(
               children: <Widget>[

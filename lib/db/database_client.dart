@@ -81,8 +81,8 @@ class DatabaseClient {
       song.isFav = 0;
     }
     if (_db == null) await create();
-    int count = Sqflite.firstIntValue(await _db
-        .rawQuery("SELECT COUNT(*) FROM songs WHERE id = ${song.id}"));
+    int count = Sqflite.firstIntValue(
+        await _db.rawQuery("SELECT COUNT(*) FROM songs WHERE id = ${song.id}"));
     if (count == 0) {
       return await _db.insert("songs", song.toMap());
     }

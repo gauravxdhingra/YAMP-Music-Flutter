@@ -15,7 +15,7 @@ import '../widgets/recents_tile.dart';
 class MainTracksScreen extends StatefulWidget {
   final DatabaseClient db;
 
-  const MainTracksScreen({Key key, this.db}) : super(key: key);
+  MainTracksScreen(this.db);
 
   @override
   _MainTracksScreenState createState() => _MainTracksScreenState();
@@ -25,8 +25,8 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
   List<Song> songs, allSongs;
   bool isLoading = true;
 
-  final _controller = ScrollController();
-  final _controller1 = ScrollController();
+  // final _controller = ScrollController();
+  // final _controller1 = ScrollController();
 // List<Song> tracks = widget.songs;
   // static List<Song> _songs;
 
@@ -80,6 +80,8 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
   //     ),
   //   );
   // }
+
+  GlobalKey<ScaffoldState> scaffoldState = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
