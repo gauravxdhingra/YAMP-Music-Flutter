@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 
 class DatabaseClient {
-  static Database _db;
+  Database _db;
   Song song;
 
   Future create() async {

@@ -20,21 +20,60 @@ import 'db/database_client.dart';
 
 Color backgroundColor = Color(0xff7800ee);
 
+class PageSelector extends StatelessWidget {
+  PageSelector(this.db, this._selectedIndex);
+  final DatabaseClient db;
+  final int _selectedIndex;
+
+  _selectionPage(int pos) {
+    switch (pos) {
+      case 0:
+        return MainTracksScreen(db);
+      case 2:
+        return MainTracksScreen(db);
+      case 3:
+        return SearchScreen();
+      case 1:
+        return FavouritesScreen(db);
+      case 4:
+        return PlaylistScreen(db);
+      default:
+        return Text("Error");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _selectionPage(_selectedIndex);
+  }
+}
+
 class MusicPlayerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => Songs(null),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: MainPage(),
-        // routes: {
-        //   '/': (ctx) => LoadingScreen(),
-        //   MainPage.routeName: (ctx) => MainPage(),
-        // },
-      ),
+    // return ChangeNotifierProvider(
+    // create: (ctx) => Songs(),
+    // child:
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MainPage(),
+      // routes: {
+      //   '/': (ctx) => LoadingScreen(),
+      //   MainPage.routeName: (ctx) => MainPage(),
+      // },
+      // ),
     );
   }
+}
+
+class BottomItem {
+  String tooltip;
+  IconData icon;
+  VoidCallback onPressed;
+  bool isSelected;
+
+  BottomItem(
+      [this.tooltip, this.icon, this.onPressed, this.isSelected = false]);
 }
 
 class MainPage extends StatefulWidget {
@@ -48,16 +87,68 @@ class _MainPageState extends State<MainPage> {
   // final _controller = ScrollController();
   // final _controller1 = ScrollController();
   // static List<Song> _songs = [];
-  static DatabaseClient db;
+  DatabaseClient db;
   bool isLoading = true;
   Song last;
   List<Song> songs;
+  List<BottomItem> bottomItems;
+  List<dynamic> bottomOptions;
+  int _selectedIndex = 0;
+  int serIndex;
 
   static DatabaseClient dbst = new DatabaseClient();
+
+  _onSelectItem(int index) {
+    setState(() => _selectedIndex = index);
+  }
+
+  bool _handlingIsSelected(int pos) {
+    return _selectedIndex == pos;
+  }
+
+  initBottomItems() {
+    bottomItems = [
+      new BottomItem("Home", Icons.home, null, null),
+      new BottomItem("Albums", Icons.album, () async {
+        _onSelectItem(1);
+      }, _handlingIsSelected(1)),
+      new BottomItem("Songs", Icons.music_note, () async {
+        _onSelectItem(2);
+      }, _handlingIsSelected(2)),
+      new BottomItem("Artists", Icons.person, () async {
+        _onSelectItem(3);
+      }, _handlingIsSelected(3)),
+      new BottomItem("Playlists", Icons.playlist_play, () async {
+        _onSelectItem(4);
+      }, _handlingIsSelected(4)),
+    ];
+    bottomOptions = <Widget>[];
+    for (var i = 1; i < bottomItems.length; i++) {
+      var d = bottomItems[i];
+      if (i == 2 || i == 4) {
+        bottomOptions.add(Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.03)));
+      }
+      if (i == 3) {
+        bottomOptions.add(Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: MediaQuery.of(context).size.width * 0.15)));
+      }
+      bottomOptions.add(new IconButton(
+        icon: Icon(d.icon,
+            color: d.isSelected ? Color(0xff373a46) : Colors.blueGrey.shade600),
+        onPressed: d.onPressed,
+        tooltip: d.tooltip,
+        iconSize: 32.0,
+      ));
+    }
+  }
 
   @override
   void initState() {
     super.initState();
+    // initBottomItems();
     // _songs = widget.songs;
     // widget.songs.forEach((ele) => _songs.add(ele));
     // print(_songs.length);
@@ -67,7 +158,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   void initPlayer() async {
-    DatabaseClient db = new DatabaseClient();
+    db = new DatabaseClient();
     await db.create();
     if (await db.alreadyLoaded()) {
       setState(() {
@@ -86,12 +177,13 @@ class _MainPageState extends State<MainPage> {
       if (!mounted) {
         return;
       }
-      dbst = db;
+
       setState(() {
         isLoading = false;
         // getLast();
       });
     }
+    dbst = db;
   }
 
   void getLast() async {
@@ -127,9 +219,9 @@ class _MainPageState extends State<MainPage> {
   // List get songs => _songs;
   // static BuildContext ctx;
   List<Widget> pages = [
-    MainTracksScreen(db),
-    FavouritesScreen(db),
-    PlaylistScreen(db),
+    MainTracksScreen(dbst),
+    FavouritesScreen(dbst),
+    PlaylistScreen(dbst),
     SearchScreen(),
   ];
 
@@ -151,127 +243,152 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     // final songData = Provider.of<Songs>(context);
+    initBottomItems();
     return WillPopScope(
       child: Scaffold(
         key: scaffoldState,
         backgroundColor: backgroundColor,
-        body: Stack(
-          children: <Widget>[
-            Positioned(
-              left: 48,
-              top: 0,
-              right: 0,
-              child: InkWell(
-                // borderRadius: BorderRadius.only(
-                //   bottomLeft: Radius.circular(42),
-                // ),
-
-                child: Container(
-                  height: MediaQuery.of(context).size.height / 9.5,
-                  decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(42),
+        body: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : _selectedIndex == 0
+                ? RefreshIndicator(
+                    child: PageSelector(
+                      db,
+                      _selectedIndex,
                     ),
+                    color: Colors.blueGrey,
+                    onRefresh: refreshData,
+                    backgroundColor: Colors.white,
+                  )
+                : PageSelector(
+                    db,
+                    _selectedIndex,
                   ),
+        // isLoading
+        //     ? CircularProgressIndicator()
+        //     : Stack(
+        //         children: <Widget>[
+        //           Positioned(
+        //             left: 48,
+        //             top: 0,
+        //             right: 0,
+        //             child: InkWell(
+        //                 // borderRadius: BorderRadius.only(
+        //                 //   bottomLeft: Radius.circular(42),
+        //                 // ),
 
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 35,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        // crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(
-                            Icons.play_circle_outline,
-                            size: 40,
-                          ),
+        //                 child: Container(
+        //                   height: MediaQuery.of(context).size.height / 9.5,
+        //                   decoration: BoxDecoration(
+        //                     color: Colors.yellow,
+        //                     borderRadius: BorderRadius.only(
+        //                       bottomLeft: Radius.circular(42),
+        //                     ),
+        //                   ),
 
-                          Text(
-                            'Now Playing',
-                            style: GoogleFonts.montserrat(
-                              color: Colors.black,
-                              fontSize: 30,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            // textAlign: TextAlign.center,
-                          ),
+        //                   child: Column(
+        //                     children: <Widget>[
+        //                       SizedBox(
+        //                         height: 35,
+        //                       ),
+        //                       Row(
+        //                         mainAxisAlignment: MainAxisAlignment.center,
+        //                         // crossAxisAlignment: CrossAxisAlignment.center,
+        //                         children: <Widget>[
+        //                           Icon(
+        //                             Icons.play_circle_outline,
+        //                             size: 40,
+        //                           ),
 
-                          //  showSearch(// context: context, delegate: CustomSearchDelegate()),
-                        ],
-                      ),
-                    ],
-                  ),
-                  // showSearch(context: context, delegate: CustomSearchDelegate()),
-                ),
-                onTap: () async {
-                  var pref = await SharedPreferences.getInstance();
-                  var fp = pref.getBool("played");
-                  if (fp == null) {
-                    scaffoldState.currentState.showSnackBar(
-                        new SnackBar(content: Text("Play your first song.")));
-                  } else {
-                    Navigator.of(context).push(
-                      new MaterialPageRoute(
-                        builder: (context) {
-                          if (MyQueue.songs == null) {
-                            List<Song> list = new List();
-                            list.add(last);
-                            MyQueue.songs = list;
-                            return new NowPlayingScreen(db, list, 0, 0);
-                          } else
-                            return new NowPlayingScreen(
-                              db,
-                              MyQueue.songs,
-                              MyQueue.index,
-                              1,
-                            );
-                        },
-                      ),
-                    );
-                  }
-                },
-              ),
-            ),
-            pages[_selectedpageindex],
-          ],
-        ),
+        //                           Text(
+        //                             'Now Playing',
+        //                             style: GoogleFonts.montserrat(
+        //                               color: Colors.black,
+        //                               fontSize: 30,
+        //                               fontWeight: FontWeight.w500,
+        //                             ),
+        //                             // textAlign: TextAlign.center,
+        //                           ),
+
+        //                           //  showSearch(// context: context, delegate: CustomSearchDelegate()),
+        //                         ],
+        //                       ),
+        //                     ],
+        //                   ),
+        //                   // showSearch(context: context, delegate: CustomSearchDelegate()),
+        //                 ),
+        //                 onTap: () async {
+        //                   var pref = await SharedPreferences.getInstance();
+        //                   var fp = pref.getBool("played");
+        //                   if (fp == null) {
+        //                     scaffoldState.currentState.showSnackBar(
+        //                         new SnackBar(
+        //                             content: Text("Play your first song.")));
+        //                   } else {
+        //                     Navigator.of(context)
+        //                         .push(new MaterialPageRoute(builder: (context) {
+        //                       if (MyQueue.songs == null) {
+        //                         List<Song> list = new List();
+        //                         list.add(last);
+        //                         MyQueue.songs = list;
+        //                         return new NowPlayingScreen(db, list, 0, 0);
+        //                       } else
+        //                         return new NowPlayingScreen(
+        //                             db, MyQueue.songs, MyQueue.index, 1);
+        //                     }));
+        //                   }
+        //                 }),
+        //           ),
+        //           pages[_selectedpageindex],
+        //         ],
+        //       ),
 
         // MainTracksScreen(),
 
-        bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: backgroundColor,
-          color: Colors.yellow,
-          // Colors.blue[50],
-          // animationDuration: Duration(seconds: 3),
-          // index: 3,
-          index: 0,
-          items: <Widget>[
-            Icon(
-              MdiIcons.musicNote,
-            ),
-            Icon(
-              MdiIcons.heart,
-            ),
-            // Icon(
-            //   MdiIcons.playPause,
-            //   // size: 36,
-            // ),
-            Icon(
-              MdiIcons.playlistMusic,
-            ),
-            Icon(
-              MdiIcons.magnify,
-            ),
-          ],
-          onTap: (i) {
-            _setPage(i);
-          },
-          height: 52,
-          // animationCurve: Curves.fastLinearToSlowEaseIn,
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          child: Container(
+            color: Colors.transparent,
+            height: 55.0,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: bottomOptions),
+          ),
+          notchMargin: 10.0,
+          elevation: 0.0,
+          color: Colors.grey.withOpacity(0.25),
         ),
+        // CurvedNavigationBar(
+        //   backgroundColor: backgroundColor,
+        //   color: Colors.yellow,
+        //   // Colors.blue[50],
+        //   // animationDuration: Duration(seconds: 3),
+        //   // index: 3,
+        //   index: 0,
+        //   items: <Widget>[
+        //     Icon(
+        //       MdiIcons.musicNote,
+        //     ),
+        //     Icon(
+        //       MdiIcons.heart,
+        //     ),
+        //     // Icon(
+        //     //   MdiIcons.playPause,
+        //     //   // size: 36,
+        //     // ),
+        //     Icon(
+        //       MdiIcons.playlistMusic,
+        //     ),
+        //     Icon(
+        //       MdiIcons.magnify,
+        //     ),
+        //   ],
+        //   onTap: (i) {
+        //     _setPage(i);
+        //   },
+        //   height: 52,
+        //   // animationCurve: Curves.fastLinearToSlowEaseIn,
+        // ),
       ),
       onWillPop: _onWillPop,
     );

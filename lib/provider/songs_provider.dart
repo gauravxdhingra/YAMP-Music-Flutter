@@ -1,79 +1,79 @@
-import 'package:flute_music_player/flute_music_player.dart';
-import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-// import 'package:test_player/data/song_data.dart';
-import 'dart:math';
+// import 'package:flute_music_player/flute_music_player.dart';
+// import 'package:flutter/widgets.dart';
+// import 'package:provider/provider.dart';
+// // import 'package:test_player/data/song_data.dart';
+// import 'dart:math';
 
-enum PlayerState { stopped, playing, paused }
+// enum PlayerState { stopped, playing, paused }
 
-class Songs with ChangeNotifier {
-  List<Song> songgs = [];
-  var _currentSongIndex = 0;
-  MusicFinder musicFinder;
-  MusicFinder audioPlayer;
-  // Songs songData;
+// class Songs with ChangeNotifier {
+//   List<Song> songgs = [];
+//   var _currentSongIndex = 0;
+//   MusicFinder musicFinder;
+//   MusicFinder audioPlayer;
+//   // Songs songData;
 
-  // Songs(this.songData);
+//   // Songs(this.songData);
 
-  Songs(this.songgs) {
-    {
-      musicFinder = new MusicFinder();
-    }
-  }
+//   Songs(this.songgs) {
+//     {
+//       musicFinder = new MusicFinder();
+//     }
+//   }
 
-  PlayerState playerState = PlayerState.stopped;
+//   PlayerState playerState = PlayerState.stopped;
 
-  int get length => songgsget.length;
-  int get songNumber => _currentSongIndex + 1;
-  int get currentIndex => _currentSongIndex;
+//   int get length => songgsget.length;
+//   int get songNumber => _currentSongIndex + 1;
+//   int get currentIndex => _currentSongIndex;
 
-  setCurrentIndex(int index) {
-    _currentSongIndex = index;
-    notifyListeners();
-  }
+//   setCurrentIndex(int index) {
+//     _currentSongIndex = index;
+//     notifyListeners();
+//   }
 
-  // playLocal(kurl) async {
-  //   final result = await audioPlayer.play(kurl);
-  // }
+//   // playLocal(kurl) async {
+//   //   final result = await audioPlayer.play(kurl);
+//   // }
 
-  void initPlayer() async {
-    audioPlayer = new MusicFinder();
-    List<Song> _songs = await MusicFinder.allSongs();
-    songgs = _songs;
-    songgs.sort((a, b) {
-      return a.title.toLowerCase().compareTo(b.title.toLowerCase());
-    });
-    notifyListeners();
+//   void initPlayer() async {
+//     audioPlayer = new MusicFinder();
+//     List<Song> _songs = await MusicFinder.allSongs();
+//     songgs = _songs;
+//     songgs.sort((a, b) {
+//       return a.title.toLowerCase().compareTo(b.title.toLowerCase());
+//     });
+//     notifyListeners();
 
-    //  List get songs => _songs;
-    // songs = new List<Song>.from(_songs);
-    // _songs = songs;
-  }
+//     //  List get songs => _songs;
+//     // songs = new List<Song>.from(_songs);
+//     // _songs = songs;
+//   }
 
-  Song get nextSong {
-    if (_currentSongIndex < length) {
-      _currentSongIndex++;
-      notifyListeners();
-    }
-    if (_currentSongIndex >= length) return null;
-    return songgsget[_currentSongIndex];
-  }
+//   Song get nextSong {
+//     if (_currentSongIndex < length) {
+//       _currentSongIndex++;
+//       notifyListeners();
+//     }
+//     if (_currentSongIndex >= length) return null;
+//     return songgsget[_currentSongIndex];
+//   }
 
-  Song get randomSong {
-    Random r = new Random();
-    return songgsget[r.nextInt(songgsget.length)];
-  }
+//   Song get randomSong {
+//     Random r = new Random();
+//     return songgsget[r.nextInt(songgsget.length)];
+//   }
 
-  Song get prevSong {
-    if (_currentSongIndex > 0) {
-      _currentSongIndex--;
-      notifyListeners();
-    }
-    if (_currentSongIndex < 0) return null;
-    return songgsget[_currentSongIndex];
-  }
+//   Song get prevSong {
+//     if (_currentSongIndex > 0) {
+//       _currentSongIndex--;
+//       notifyListeners();
+//     }
+//     if (_currentSongIndex < 0) return null;
+//     return songgsget[_currentSongIndex];
+//   }
 
-  // MusicFinder get audioPlayer => musicFinder;
+//   // MusicFinder get audioPlayer => musicFinder;
 
-  List<Song> get songgsget => [...songgs];
-}
+//   List<Song> get songgsget => [...songgs];
+// }

@@ -24,6 +24,7 @@ class MainTracksScreen extends StatefulWidget {
 class _MainTracksScreenState extends State<MainTracksScreen> {
   List<Song> songs, allSongs;
   bool isLoading = true;
+  // DatabaseClient db;
 
   // final _controller = ScrollController();
   // final _controller1 = ScrollController();
@@ -46,16 +47,46 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
   @override
   void initState() {
     super.initState();
+    // initPlayer();
     initSongs();
   }
 
   void initSongs() async {
+    // initSongs();
     allSongs = await widget.db.fetchSongs();
     songs = await widget.db.fetchRecentSong();
     setState(() {
       isLoading = false;
     });
   }
+
+  // void initPlayer() async {
+  //   db = new DatabaseClient();
+  //   await db.create();
+  //   if (await db.alreadyLoaded()) {
+  //     setState(() {
+  //       isLoading = false;
+  //       // getLast();
+  //     });
+  //   } else {
+  //     var songs;
+  //     try {
+  //       songs = await MusicFinder.allSongs();
+  //     } catch (e) {
+  //       print("failed to get songs");
+  //     }
+  //     List<Song> list = new List.from(songs);
+  //     for (Song song in list) db.insertOrUpdateSong(song);
+  //     if (!mounted) {
+  //       return;
+  //     }
+  //     // dbst = db;
+  //     setState(() {
+  //       isLoading = false;
+  //       // getLast();
+  //     });
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -85,250 +116,263 @@ class _MainTracksScreenState extends State<MainTracksScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: MediaQuery.of(context).size.height / 7.85,
-      right: 15,
-      left: 0,
-      child: Container(
-        height: MediaQuery.of(context).size.height / 1.27,
-        padding: EdgeInsets.only(left: 24, top: 24),
-        decoration: BoxDecoration(
-          color: Color(0xff6e00db),
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(42),
-            bottomRight: Radius.circular(42),
+    return Scaffold(
+        body: Stack(children: <Widget>[
+      Positioned(
+        top: MediaQuery.of(context).size.height / 7.85,
+        right: 15,
+        left: 0,
+        child: Container(
+          height: MediaQuery.of(context).size.height / 1.27,
+          padding: EdgeInsets.only(left: 24, top: 24),
+          decoration: BoxDecoration(
+            color: Color(0xff6e00db),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(42),
+              bottomRight: Radius.circular(42),
+            ),
           ),
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                "Recent Songs",
-                style: GoogleFonts.montserrat(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600),
-              ),
-              Container(
-                child: isLoading
-                    ? new Center(
-                        child: new CircularProgressIndicator(),
-                      )
-                    : songs.length != 0
-                        ? new ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            itemCount: songs.length,
-                            itemBuilder: (context, i) => new Column(
-                              children: <Widget>[
-                                new ListTile(
-                                  leading: Hero(
-                                    tag: songs[i].id,
-                                    child: songs[i].albumArt != null
-                                        ? Image.file(
-                                            getImage(songs[i]),
-                                            width: 55.0,
-                                            height: 55.0,
-                                          )
-                                        : Icon(Icons.music_note),
-                                  ),
-                                  title: new Text(songs[i].title,
-                                      maxLines: 1,
-                                      style: new TextStyle(
-                                          fontSize: 16.0, color: Colors.black)),
-                                  subtitle: new Text(
-                                    songs[i].artist,
-                                    maxLines: 1,
-                                    style: new TextStyle(
-                                        fontSize: 12.0, color: Colors.grey),
-                                  ),
-                                  trailing: Text(
-                                      new Duration(
-                                              milliseconds: songs[i].duration)
-                                          .toString()
-                                          .split('.')
-                                          .first
-                                          .substring(3, 7),
-                                      style: new TextStyle(
-                                          fontSize: 12.0, color: Colors.grey)),
-                                  onTap: () {
-                                    MyQueue.songs = songs;
-                                    Navigator.of(context).push(
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                new NowPlayingScreen(widget.db,
-                                                    MyQueue.songs, i, 0)));
-                                  },
-                                ),
-                              ],
-                            ),
-                          )
-                        : Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "Nothing here :(",
-                                  style: TextStyle(
-                                      fontSize: 30.0,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.0)),
-                              ],
-                            ),
-                          ),
-              ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                // Text(
+                //   "Recent Songs",
+                //   style: GoogleFonts.montserrat(
+                //       color: Colors.white,
+                //       fontSize: 20,
+                //       fontWeight: FontWeight.w600),
+                // ),
+                // Container(
+                //   child: isLoading
+                //       ? new Center(
+                //           child: new CircularProgressIndicator(),
+                //         )
+                //       : songs.length != 0
+                //           ? new ListView.builder(
+                //               physics: BouncingScrollPhysics(),
+                //               itemCount: allSongs.length,
+                //               itemBuilder: (context, i) => new Column(
+                //                 children: <Widget>[
+                //                   new ListTile(
+                //                     leading: Hero(
+                //                       tag: allSongs[i].id,
+                //                       child: allSongs[i].albumArt != null
+                //                           ? Image.file(
+                //                               getImage(songs[i]),
+                //                               width: 55.0,
+                //                               height: 55.0,
+                //                             )
+                //                           : Icon(Icons.music_note),
+                //                     ),
+                //                     title: new Text(allSongs[i].title,
+                //                         maxLines: 1,
+                //                         style: new TextStyle(
+                //                             fontSize: 16.0,
+                //                             color: Colors.black)),
+                //                     subtitle: new Text(
+                //                       allSongs[i].artist,
+                //                       maxLines: 1,
+                //                       style: new TextStyle(
+                //                           fontSize: 12.0, color: Colors.grey),
+                //                     ),
+                //                     trailing: Text(
+                //                         new Duration(
+                //                                 milliseconds:
+                //                                     allSongs[i].duration)
+                //                             .toString()
+                //                             .split('.')
+                //                             .first
+                //                             .substring(3, 7),
+                //                         style: new TextStyle(
+                //                             fontSize: 12.0,
+                //                             color: Colors.grey)),
+                //                     onTap: () {
+                //                       MyQueue.songs = songs;
+                //                       Navigator.of(context).push(
+                //                           new MaterialPageRoute(
+                //                               builder: (context) =>
+                //                                   new NowPlayingScreen(
+                //                                       widget.db,
+                //                                       MyQueue.songs,
+                //                                       i,
+                //                                       0)));
+                //                     },
+                //                   ),
+                //                 ],
+                //               ),
+                //             )
+                //           : Center(
+                //               child: Column(
+                //                 mainAxisAlignment: MainAxisAlignment.center,
+                //                 children: <Widget>[
+                //                   Text(
+                //                     "Nothing here :(",
+                //                     style: TextStyle(
+                //                         fontSize: 30.0,
+                //                         fontWeight: FontWeight.w600),
+                //                   ),
+                //                   Padding(
+                //                       padding:
+                //                           EdgeInsets.symmetric(vertical: 10.0)),
+                //                 ],
+                //               ),
+                //             ),
+                // ),
 
-              // Container(
-              //   height: MediaQuery.of(context).size.height / 11,
-              //   child: ListView(
-              //     scrollDirection: Axis.horizontal,
-              //     children: <Widget>[
-              //       Container(
-              //         margin: EdgeInsets.only(top: 16, left: 0),
-              //         width: MediaQuery.of(context).size.width / 1.2,
-              //         //  decoration: BoxDecoration(color: Colors.yellow),
-              //         child: FadingEdgeScrollView.fromScrollView(
-              //           gradientFractionOnStart: 0.05,
-              //           gradientFractionOnEnd: 0.03,
-              //           child: ListView.builder(
-              //             controller: _controller,
-              //             physics: BouncingScrollPhysics(),
-              //             scrollDirection: Axis.horizontal,
-              //             padding: EdgeInsets.zero,
-              //             itemCount: _songs.length,
-              //             itemBuilder: (BuildContext context, int index) {
-              //               return Container(
-              //                 height: 84,
-              //                 margin: EdgeInsets.only(bottom: 18),
-              //                 child: RecentsTile(
-              //                   index: index,
-              //                 ),
-              //               );
-              //             },
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              Padding(
-                padding: const EdgeInsets.only(right: 24),
-                child: Divider(
-                  thickness: 2,
-                  color: Color(0xff7800ee),
+                // Container(
+                //   height: MediaQuery.of(context).size.height / 11,
+                //   child: ListView(
+                //     scrollDirection: Axis.horizontal,
+                //     children: <Widget>[
+                //       Container(
+                //         margin: EdgeInsets.only(top: 16, left: 0),
+                //         width: MediaQuery.of(context).size.width / 1.2,
+                //         //  decoration: BoxDecoration(color: Colors.yellow),
+                //         child: FadingEdgeScrollView.fromScrollView(
+                //           gradientFractionOnStart: 0.05,
+                //           gradientFractionOnEnd: 0.03,
+                //           child: ListView.builder(
+                //             controller: _controller,
+                //             physics: BouncingScrollPhysics(),
+                //             scrollDirection: Axis.horizontal,
+                //             padding: EdgeInsets.zero,
+                //             itemCount: _songs.length,
+                //             itemBuilder: (BuildContext context, int index) {
+                //               return Container(
+                //                 height: 84,
+                //                 margin: EdgeInsets.only(bottom: 18),
+                //                 child: RecentsTile(
+                //                   index: index,
+                //                 ),
+                //               );
+                //             },
+                //           ),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.only(right: 24),
+                //   child: Divider(
+                //     thickness: 2,
+                //     color: Color(0xff7800ee),
+                //   ),
+                // ),
+                // SizedBox(
+                //   height: 2,
+                // ),
+                Text(
+                  "My Music",
+                  style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600),
                 ),
-              ),
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                "My Music",
-                style: GoogleFonts.montserrat(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 16, left: 0),
-                // height: MediaQuery.of(context).size.height / 1.7415,
-                height: MediaQuery.of(context).size.height / 1.7415,
-                // + MediaQuery.of(context).size.height / 12.85,
+                Container(
+                  margin: EdgeInsets.only(top: 16, left: 0),
+                  // height: MediaQuery.of(context).size.height / 1.7415,
+                  height: MediaQuery.of(context).size.height / 1.7415,
+                  // + MediaQuery.of(context).size.height / 12.85,
 
-                width: MediaQuery.of(context).size.width / 1.15,
-                // decoration: BoxDecoration(color: Colors.yellow),
-                // child: Text('data'),
-                child: isLoading
-                    ? new Center(
-                        child: new CircularProgressIndicator(),
-                      )
-                    :
-                    // FadingEdgeScrollView.fromScrollView(
-                    //   gradientFractionOnStart: 0.04,
-                    //   gradientFractionOnEnd: 0.02,
-                    //   child:
-                    FutureBuilder(
-                  future: widget.db.fetchSongs(),
-                  builder: (context, AsyncSnapshot<List<Song>> snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.none:
-                        break;
-                      case ConnectionState.waiting:
-                        return CircularProgressIndicator();
-                      case ConnectionState.active:
-                        break;
-                      case ConnectionState.done:
-                        List<Song> songs = snapshot.data;
-                        return Scrollbar(
-                          child: new ListView.builder(
-                            physics: BouncingScrollPhysics(),
-                            itemCount: songs.length,
-                            itemBuilder: (context, i) => new Column(
-                              children: <Widget>[
-                                new ListTile(
-                                  leading: Hero(
-                                      tag: songs[i].id,
-                                      child: getImage(songs[i]) != null
-                                          ? Image.file(
-                                              getImage(songs[i]),
-                                              width: 55.0,
-                                              height: 55.0,
-                                              // TODO :  Check here
-                                            )
-                                          : Icon(Icons.music_note)),
-                                  title: new Text(songs[i].title,
-                                      maxLines: 1,
-                                      style: new TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16.0,
-                                      )),
-                                  subtitle: new Text(
-                                    songs[i].artist,
-                                    maxLines: 1,
-                                    style: new TextStyle(
-                                        fontSize: 12.0, color: Colors.grey),
-                                  ),
-                                  trailing: new Text(
-                                      new Duration(
-                                              milliseconds: songs[i].duration)
-                                          .toString()
-                                          .split('.')
-                                          .first
-                                          .substring(3, 7),
-                                      style: new TextStyle(
-                                          fontSize: 12.0,
-                                          color: Colors.black54)),
-                                  onTap: () {
-                                    MyQueue.songs = songs;
-                                    Navigator.of(context).push(
-                                      new MaterialPageRoute(
-                                        builder: (context) => NowPlayingScreen(
-                                          widget.db,
-                                          MyQueue.songs,
-                                          i,
-                                          0,
+                  width: MediaQuery.of(context).size.width / 1.15,
+                  // decoration: BoxDecoration(color: Colors.yellow),
+                  // child: Text('data'),
+                  child: isLoading
+                      ? new Center(
+                          child: new CircularProgressIndicator(),
+                        )
+                      :
+                      // FadingEdgeScrollView.fromScrollView(
+                      //   gradientFractionOnStart: 0.04,
+                      //   gradientFractionOnEnd: 0.02,
+                      //   child:
+                      FutureBuilder(
+                          future: widget.db.fetchSongs(),
+                          builder:
+                              (context, AsyncSnapshot<List<Song>> snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.none:
+                                break;
+                              case ConnectionState.waiting:
+                                return CircularProgressIndicator();
+                              case ConnectionState.active:
+                                break;
+                              case ConnectionState.done:
+                                List<Song> songs = snapshot.data;
+                                return Scrollbar(
+                                  child: new ListView.builder(
+                                    physics: BouncingScrollPhysics(),
+                                    itemCount: songs.length,
+                                    itemBuilder: (context, i) => new Column(
+                                      children: <Widget>[
+                                        new ListTile(
+                                          leading: Hero(
+                                              tag: songs[i].id,
+                                              child: getImage(songs[i]) != null
+                                                  ? Image.file(
+                                                      getImage(songs[i]),
+                                                      width: 55.0,
+                                                      height: 55.0,
+                                                      // TODO :  Check here
+                                                    )
+                                                  : Icon(Icons.music_note)),
+                                          title: new Text(songs[i].title,
+                                              maxLines: 1,
+                                              style: new TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16.0,
+                                              )),
+                                          subtitle: new Text(
+                                            songs[i].artist,
+                                            maxLines: 1,
+                                            style: new TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey),
+                                          ),
+                                          trailing: new Text(
+                                              new Duration(
+                                                      milliseconds:
+                                                          songs[i].duration)
+                                                  .toString()
+                                                  .split('.')
+                                                  .first
+                                                  .substring(3, 7),
+                                              style: new TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.black54)),
+                                          onTap: () {
+                                            MyQueue.songs = songs;
+                                            Navigator.of(context).push(
+                                              new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NowPlayingScreen(
+                                                  widget.db,
+                                                  MyQueue.songs,
+                                                  i,
+                                                  0,
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                    }
-                    return Text('end');
-                  },
+                                      ],
+                                    ),
+                                  ),
+                                );
+                            }
+                            return Text('end');
+                          },
+                        ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      )
+    ]));
 
     // ListView.builder(
 //                     controller: _controller1,
