@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:test_player/screens/favourites_screen.dart';
-import 'package:test_player/screens/loading_spinner.dart';
 import 'package:test_player/screens/main_tracks_screen.dart';
 import 'package:test_player/screens/now_playing_screen.dart';
 import 'package:test_player/screens/playlist_screen.dart';
@@ -49,10 +48,12 @@ class _MainPageState extends State<MainPage> {
   // final _controller = ScrollController();
   // final _controller1 = ScrollController();
   // static List<Song> _songs = [];
-  static DatabaseClient db;
+  DatabaseClient db;
   bool isLoading = true;
   Song last;
   List<Song> songs;
+
+  static DatabaseClient dbst ;
 
   @override
   void initState() {
@@ -66,8 +67,6 @@ class _MainPageState extends State<MainPage> {
   }
 
   void initPlayer() async {
-    DatabaseClient db;
-    int _selectedIndex;
     db = new DatabaseClient();
     await db.create();
     if (await db.alreadyLoaded()) {
@@ -87,6 +86,7 @@ class _MainPageState extends State<MainPage> {
       if (!mounted) {
         return;
       }
+      dbst = db;
       setState(() {
         isLoading = false;
         getLast();
@@ -130,15 +130,15 @@ class _MainPageState extends State<MainPage> {
   // List get songs => _songs;
   // static BuildContext ctx;
   List<Widget> pages = [
-    MainTracksScreen(db: db),
-    FavouritesScreen(db),
+    MainTracksScreen(db: dbst),
+    FavouritesScreen(dbst),
     // NowPlayingScreen(
     //     // song: Provider.of<Songs>(ctx)
     //     //     .songgsget[Provider.of<Songs>(ctx).currentIndex],
     //     // songData: Provider.of<Songs>(ctx),
     //     // nowPlayTap: true,
     //     ),
-    PlaylistScreen(db),
+    PlaylistScreen(dbst),
     SearchScreen(),
   ];
 
