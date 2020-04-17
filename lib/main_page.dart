@@ -48,7 +48,7 @@ class _MainPageState extends State<MainPage> {
   // final _controller = ScrollController();
   // final _controller1 = ScrollController();
   // static List<Song> _songs = [];
-  DatabaseClient db;
+  static DatabaseClient db;
   bool isLoading = true;
   Song last;
   List<Song> songs;
@@ -127,9 +127,9 @@ class _MainPageState extends State<MainPage> {
   // List get songs => _songs;
   // static BuildContext ctx;
   List<Widget> pages = [
-    MainTracksScreen(dbst),
-    FavouritesScreen(dbst),
-    PlaylistScreen(dbst),
+    MainTracksScreen(db),
+    FavouritesScreen(db),
+    PlaylistScreen(db),
     SearchScreen(),
   ];
 
