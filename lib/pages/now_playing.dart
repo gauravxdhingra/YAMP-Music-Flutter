@@ -242,21 +242,27 @@ class _StateNowPlaying extends State<NowPlaying>
                   physics: ClampingScrollPhysics(),
                   itemCount: widget.songs.length,
                   padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.06,
-                      right: MediaQuery.of(context).size.width * 0.06,
+                      left: MediaQuery.of(context).size.width * 0.02,
+                      right: MediaQuery.of(context).size.width * 0.02,
                       top: 10.0),
                   itemBuilder: (context, i) => new Column(
                     children: <Widget>[
                       new ListTile(
                         leading: new CircleAvatar(
-                          child: getImage(widget.songs[i]) != null
-                              ? new Image.file(
+                          backgroundImage: getImage(widget.songs[i]) != null
+                              ? FileImage(
                                   getImage(widget.songs[i]),
-                                  height: 120.0,
-                                  fit: BoxFit.cover,
                                 )
-                              : new Text(
-                                  widget.songs[i].title[0].toUpperCase()),
+                              // child:  new Image.file(
+
+                              //         height: 120.0,
+                              //         fit: BoxFit.cover,
+                              //       )
+                              : null,
+                          child: getImage(widget.songs[i]) == null
+                              ? Text(
+                                  widget.songs[i].title[0].toUpperCase())
+                              : null,
                         ),
                         title: new Text(widget.songs[i].title,
                             maxLines: 1, style: new TextStyle(fontSize: 16.0)),
@@ -303,8 +309,6 @@ class _StateNowPlaying extends State<NowPlaying>
               ));
         });
   }
-
-
 
   Widget portrait() {
     double width = MediaQuery.of(context).size.width;
@@ -355,23 +359,7 @@ class _StateNowPlaying extends State<NowPlaying>
                 child: Hero(
                   tag: song.id,
                   child: getImage(song) != null
-                      ?
-                      // Material(
-                      //     color: Colors.transparent,
-                      //     elevation: 22.0,
-                      // child:
-                      // InkWell(
-                      // onDoubleTap: () {
-                      //   setState(() {
-                      //     if (!_showArtistImage)
-                      //       _showArtistImage = true;
-                      //     else
-                      //       _showArtistImage = false;
-                      //   });
-                      // },
-//                              onLongPress: _showArtistDetail,
-                      // child:
-                      Container(
+                      ? Container(
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.transparent,
@@ -511,14 +499,6 @@ class _StateNowPlaying extends State<NowPlaying>
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            // GestureDetector(
-                            // onTap: () {
-                            //   Navigator.of(context).push(
-                            //       new MaterialPageRoute(builder: (context) {
-                            //     return new ArtistCard(widget.db, song);
-                            //   }));
-                            // },
-                            // child:
                             new Text(
                               "${song.artist}\n",
                               style: new TextStyle(
@@ -551,10 +531,6 @@ class _StateNowPlaying extends State<NowPlaying>
                               letterSpacing: 1.0),
                         ),
                         Expanded(
-                          // width: width * 0.75,
-                          // padding: EdgeInsets.only(
-                          //   left: statusBarHeight * 0.5,
-                          // ),
                           child: Slider(
                             min: 0.0,
                             activeColor:
@@ -682,8 +658,6 @@ class _StateNowPlaying extends State<NowPlaying>
       ],
     );
   }
-
-
 
   Future<void> repeat1() async {
     setState(() {

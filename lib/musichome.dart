@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 // import 'package:musicplayer/database/database_client.dart';
@@ -28,17 +29,17 @@ class BodySelection extends StatelessWidget {
   final DatabaseClient db;
   final int _selectedIndex;
 
-  _selectionPage(int pos) {
+  selectionPage(int pos) {
     switch (pos) {
       case 0:
         return Home(db);
-      case 2:
+      case 1:
         return Songs(db);
       case 3:
         return Artists(db);
-      case 1:
-        return Album(db);
       case 4:
+        return Album(db);
+      case 2:
         return Playlist(db);
       default:
         return Text("Error");
@@ -47,7 +48,7 @@ class BodySelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _selectionPage(_selectedIndex);
+    return selectionPage(_selectedIndex);
   }
 }
 
@@ -59,7 +60,7 @@ class MusicHome extends StatefulWidget {
 }
 
 class _MusicState extends State<MusicHome> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
   int serIndex;
   List<Song> songs;
   List<String> title = ["", "Albums", "Songs", "Artists", "Playlists"];
@@ -80,15 +81,20 @@ class _MusicState extends State<MusicHome> {
   initBottomItems() {
     bottomItems = [
       new BottomItem("Home", Icons.home, null, null),
-      new BottomItem("Songs", Icons.music_note, () async {
+      new BottomItem(
+        "Songs",
+        Icons.music_note,
+        () async {
+          _onSelectItem(1);
+        },
+        _handlingIsSelected(1),
+      ),
+      new BottomItem("Playlists", Icons.favorite, () async {
         _onSelectItem(2);
       }, _handlingIsSelected(2)),
-      new BottomItem("Playlists", Icons.favorite, () async {
+      new BottomItem("Albums", Icons.album, () async {
         _onSelectItem(4);
       }, _handlingIsSelected(4)),
-      new BottomItem("Albums", Icons.album, () async {
-        _onSelectItem(1);
-      }, _handlingIsSelected(1)),
       new BottomItem("Artists", Icons.person, () async {
         _onSelectItem(3);
       }, _handlingIsSelected(3)),
@@ -96,16 +102,16 @@ class _MusicState extends State<MusicHome> {
     bottomOptions = <Widget>[];
     for (var i = 1; i < bottomItems.length; i++) {
       var d = bottomItems[i];
-      if (i == 2 || i == 4) {
-        bottomOptions.add(Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.03)));
-      }
-      if (i == 3) {
-        bottomOptions.add(Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.15)));
-      }
+      // if (i == 2 || i == 4) {
+      //   bottomOptions.add(Padding(
+      //       padding: EdgeInsets.symmetric(
+      //           horizontal: MediaQuery.of(context).size.width * 0.03)));
+      // }
+      // if (i == 3) {
+      //   bottomOptions.add(Padding(
+      //       padding: EdgeInsets.symmetric(
+      //           horizontal: MediaQuery.of(context).size.width * 0.15)));
+      // }
       bottomOptions.add(new IconButton(
         icon: Icon(d.icon,
             color: d.isSelected ? Color(0xff373a46) : Colors.blueGrey.shade600),
@@ -234,19 +240,34 @@ class _MusicState extends State<MusicHome> {
                     backgroundColor: Colors.white,
                   )
                 : BodySelection(_selectedIndex, db),
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          child: Container(
-            color: Colors.transparent,
-            height: 55.0,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: bottomOptions),
-          ),
-          notchMargin: 10.0,
-          elevation: 0.0,
-          color: Colors.grey.withOpacity(0.25),
+        bottomNavigationBar: CurvedNavigationBar(
+          height: 52,
+          items: <Widget>[
+            Icon(Icons.music_note),
+            Icon(Icons.favorite),
+            Icon(Icons.album),
+            Icon(Icons.account_circle),
+          ],
+          onTap: (i) async {
+            _onSelectItem(i + 1);
+            BodySelection(i, db).selectionPage(i);
+
+            _handlingIsSelected(i + 1);
+          },
         ),
+        // BottomAppBar(
+        //   shape: CircularNotchedRectangle(),
+        //   child: Container(
+        //     color: Colors.transparent,
+        //     height: 55.0,
+        //     child: Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: bottomOptions),
+        //   ),
+        //   notchMargin: 10.0,
+        //   elevation: 0.0,
+        //   color: Colors.grey.withOpacity(0.25),
+        // ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
       onWillPop: _onWillPop,

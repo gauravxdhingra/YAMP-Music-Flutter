@@ -9,17 +9,17 @@
 
 // import 'now_playing.dart';
 
-// class SearchSong extends StatefulWidget {
+// class SearchSong1 extends StatefulWidget {
 //  DatabaseClient db;
 //  List<Song> songs;
-//  SearchSong(this.db, this.songs);
+//  SearchSong1(this.db, this.songs);
 //  @override
 //  State<StatefulWidget> createState() {
-//    return new _statesearch();
+//    return new _statesearch1();
 //  }
 // }
 
-// class _statesearch extends State<SearchSong> {
+// class _statesearch1 extends State<SearchSong1> {
 //  bool isLoading = true;
 //  @override
 //  void initState() {

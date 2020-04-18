@@ -29,7 +29,7 @@ class SongsState extends State<Songs> {
 
   Widget recentW() {
     return new Container(
-      height: 100.0,
+      height: 60,
       child: FutureBuilder(
         future: widget.db.fetchRecentSong(),
         builder: (context, AsyncSnapshot<List<Song>> snapshot) {
@@ -43,11 +43,11 @@ class SongsState extends State<Songs> {
             case ConnectionState.done:
               List<Song> recents = snapshot.data;
               return ListView.builder(
-                itemCount: recents.length,
+                itemCount: 10,
+                //  recents.length,
                 scrollDirection: Axis.horizontal,
                 physics: BouncingScrollPhysics(),
-                itemBuilder: (context, i) => 
-                InkWell(
+                itemBuilder: (context, i) => InkWell(
                   onTap: () {
                     MyQueue.songs = recents;
                     Navigator.of(context)
@@ -58,8 +58,9 @@ class SongsState extends State<Songs> {
                   child: Hero(
                     tag: recents[i].id,
                     child: Container(
-                      width: 250,
+                      width: MediaQuery.of(context).size.width * 0.6,
                       child: ListTile(
+                        contentPadding: EdgeInsets.only(left: 20),
                         leading: getImage(recents[i]) != null
                             ? CircleAvatar(
                                 child: Container(
@@ -78,7 +79,8 @@ class SongsState extends State<Songs> {
                               )
                             : CircleAvatar(
                                 child: Center(
-                                  child: Icon(Icons.music_note),
+                                  child:
+                                      Text(recents[i].title[0].toUpperCase()),
                                 ),
                               ),
                         title: Text(
@@ -88,12 +90,13 @@ class SongsState extends State<Songs> {
                             fontSize: 14.0,
                             fontWeight: FontWeight.w500,
                           ),
-                          // maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         subtitle: Text(
                           recents[i].artist,
                           style: TextStyle(fontSize: 12.0, color: Colors.white),
-                          // maxLines: 1,
+                          maxLines: 1,
                         ),
                       ),
                     ),
@@ -120,7 +123,7 @@ class SongsState extends State<Songs> {
             left: 0,
             child: Container(
               height: MediaQuery.of(context).size.height / 1.25,
-              // padding: EdgeInsets.only(left: 24, top: 24),
+              padding: EdgeInsets.only(top: 15),
               decoration: BoxDecoration(
                 color: Color(0xff6e00db),
                 borderRadius: BorderRadius.only(
@@ -131,21 +134,28 @@ class SongsState extends State<Songs> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    'Recents',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text(
+                      'Recents',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   recentW(),
-                  Text(
-                    'My Music',
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  Divider(thickness: 2,),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Text(
+                      'My Music',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   FutureBuilder(
@@ -183,7 +193,9 @@ class SongsState extends State<Songs> {
                                               )
                                             : CircleAvatar(
                                                 child: Center(
-                                                  child: Icon(Icons.music_note),
+                                                  child: Text(songs[i]
+                                                      .title[0]
+                                                      .toUpperCase()),
                                                 ),
                                               ),
                                       ),
