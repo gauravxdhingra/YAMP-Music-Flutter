@@ -221,7 +221,7 @@ class _StateNowPlaying extends State<NowPlaying>
           : Center(
               child: CircularProgressIndicator(),
             ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.white,
     );
   }
 
@@ -304,26 +304,7 @@ class _StateNowPlaying extends State<NowPlaying>
         });
   }
 
-  void _showArtistDetail() {
-    showModalBottomSheet(
-        context: context,
-        builder: (builder) {
-          return Container(
-            decoration: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(6.0),
-                        topRight: Radius.circular(6.0))),
-                color: Color(0xFFFAFAFA)),
-            height: MediaQuery.of(context).size.height * 0.7,
-            child: GetArtistDetail(
-              artist: song.artist,
-              artistSong: song,
-              mode: 2,
-            ),
-          );
-        });
-  }
+
 
   Widget portrait() {
     double width = MediaQuery.of(context).size.width;
@@ -333,35 +314,35 @@ class _StateNowPlaying extends State<NowPlaying>
     final double cutRadius = 8.0;
     return Stack(
       children: <Widget>[
-        Container(
-            height: MediaQuery.of(context).size.width,
-            color: Colors.white,
-            child: getImage(song) != null
-                ? Image.file(
-                    getImage(song),
-                    fit: BoxFit.fitHeight,
-                  )
-                : Image.asset(
-                    "images/music.jpg",
-                    fit: BoxFit.fitWidth,
-                    width: MediaQuery.of(context).size.width,
-                  )),
-        Positioned(
-          top: width,
-          child: Container(
-            color: Colors.white,
-            height: MediaQuery.of(context).size.height - width,
-            width: width,
-          ),
-        ),
-        BackdropFilter(
-          filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-          child: Container(
-            height: width,
-            decoration:
-                new BoxDecoration(color: Colors.grey[900].withOpacity(0.5)),
-          ),
-        ),
+        // Container(
+        //     height: MediaQuery.of(context).size.width,
+        //     color: Colors.white,
+        //     child: getImage(song) != null
+        //         ? Image.file(
+        //             getImage(song),
+        //             fit: BoxFit.fitHeight,
+        //           )
+        //         : Image.asset(
+        //             "images/music.jpg",
+        //             fit: BoxFit.fitWidth,
+        //             width: MediaQuery.of(context).size.width,
+        //           )),
+        // Positioned(
+        //   top: width,
+        //   child: Container(
+        //     color: Colors.white,
+        //     height: MediaQuery.of(context).size.height - width,
+        //     width: width,
+        //   ),
+        // ),
+        // BackdropFilter(
+        //   filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+        //   child: Container(
+        //     height: width,
+        //     decoration:
+        //         new BoxDecoration(color: Colors.grey[900].withOpacity(0.5)),
+        //   ),
+        // ),
         Align(
           alignment: Alignment.topCenter,
           child: Padding(
@@ -374,114 +355,123 @@ class _StateNowPlaying extends State<NowPlaying>
                 child: Hero(
                   tag: song.id,
                   child: getImage(song) != null
-                      ? Material(
-                          color: Colors.transparent,
-                          elevation: 22.0,
-                          child: InkWell(
-                            onDoubleTap: () {
-                              setState(() {
-                                if (!_showArtistImage)
-                                  _showArtistImage = true;
-                                else
-                                  _showArtistImage = false;
-                              });
-                            },
+                      ?
+                      // Material(
+                      //     color: Colors.transparent,
+                      //     elevation: 22.0,
+                      // child:
+                      // InkWell(
+                      // onDoubleTap: () {
+                      //   setState(() {
+                      //     if (!_showArtistImage)
+                      //       _showArtistImage = true;
+                      //     else
+                      //       _showArtistImage = false;
+                      //   });
+                      // },
 //                              onLongPress: _showArtistDetail,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  borderRadius:
-                                      BorderRadius.circular(cutRadius),
-                                  image: DecorationImage(
-                                      image: FileImage(getImage(song)),
-                                      fit: BoxFit.cover)),
-                              child: Stack(
-                                children: <Widget>[
-                                  _showArtistImage
-                                      ? Container(
-                                          width: width - 2 * width * 0.06,
-                                          height: width - width * 0.06,
-                                          child: GetArtistDetail(
-                                            artist: song.artist,
-                                            artistSong: song,
-                                          ),
-                                        )
-                                      : Container(),
-                                  Positioned(
-                                    bottom: -width * 0.15,
-                                    right: -width * 0.15,
-                                    child: Container(
-                                      decoration: ShapeDecoration(
-                                          color: Colors.white,
-                                          shape: BeveledRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(
-                                                      width * 0.15)))),
-                                      height: width * 0.15 * 2,
-                                      width: width * 0.15 * 2,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          right: 4.0, bottom: 6.0),
-                                      child: Text(
-                                        durationText,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 18.0,
-                                        ),
+                      // child:
+                      Container(
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.transparent,
+                              // borderRadius:
+                              //     BorderRadius.circular(cutRadius),
+                              image: DecorationImage(
+                                  image: FileImage(getImage(song)),
+                                  fit: BoxFit.cover)),
+                          child: Stack(
+                            children: <Widget>[
+                              _showArtistImage
+                                  ? Container(
+                                      width: width - 2 * width * 0.06,
+                                      height: width - width * 0.06,
+                                      child: GetArtistDetail(
+                                        artist: song.artist,
+                                        artistSong: song,
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                    )
+                                  : Container(),
+                              // Positioned(
+                              //   bottom: -width * 0.15,
+                              //   right: -width * 0.15,
+                              //   child: Container(
+                              //     decoration: ShapeDecoration(
+                              //         color: Colors.white,
+                              //         shape: BeveledRectangleBorder(
+                              //             borderRadius: BorderRadius.only(
+                              //                 topLeft: Radius.circular(
+                              //                     width * 0.15)))),
+                              //     height: width * 0.15 * 2,
+                              //     width: width * 0.15 * 2,
+                              //   ),
+                              // ),
+                              // Positioned(
+                              //   bottom: 0.0,
+                              //   right: 0.0,
+                              //   child: Padding(
+                              //     padding:
+                              //         EdgeInsets.only(right: 4.0, bottom: 6.0),
+                              //     child: Text(
+                              //       durationText,
+                              //       style: TextStyle(
+                              //         color: Colors.black,
+                              //         fontWeight: FontWeight.w600,
+                              //         fontSize: 18.0,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
                           ),
                         )
+                      // )
+                      // )
                       : Material(
+                          // color: Colors.red,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(cutRadius)),
                           clipBehavior: Clip.antiAlias,
                           child: Stack(
                             fit: StackFit.expand,
                             children: <Widget>[
-                              Image.asset(
-                                "images/back.jpg",
-                                fit: BoxFit.cover,
+                              Icon(
+                                Icons.music_note,
+                                size: 150,
                               ),
-                              Positioned(
-                                bottom: -width * 0.15,
-                                right: -width * 0.15,
-                                child: Container(
-                                  decoration: ShapeDecoration(
-                                      color: Colors.white,
-                                      shape: BeveledRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(
-                                                  width * 0.15)))),
-                                  height: width * 0.15 * 2,
-                                  width: width * 0.15 * 2,
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0.0,
-                                right: 0.0,
-                                child: Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 4.0, bottom: 6.0),
-                                  child: Text(
-                                    durationText,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // Image.asset(
+                              //   "images/back.jpg",
+                              //   fit: BoxFit.cover,
+                              // ),
+                              // Positioned(
+                              //   bottom: -width * 0.15,
+                              //   right: -width * 0.15,
+                              //   child: Container(
+                              //     decoration: ShapeDecoration(
+                              //         color: Colors.white,
+                              //         shape: BeveledRectangleBorder(
+                              //             borderRadius: BorderRadius.only(
+                              //                 topLeft: Radius.circular(
+                              //                     width * 0.15)))),
+                              //     height: width * 0.15 * 2,
+                              //     width: width * 0.15 * 2,
+                              //   ),
+                              // ),
+                              // Positioned(
+                              //   bottom: 0.0,
+                              //   right: 0.0,
+                              //   child: Padding(
+                              //     padding:
+                              //         EdgeInsets.only(right: 4.0, bottom: 6.0),
+                              //     child: Text(
+                              //       durationText,
+                              //       style: TextStyle(
+                              //         color: Colors.black,
+                              //         fontSize: 16.0,
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
                         ),
@@ -500,37 +490,6 @@ class _StateNowPlaying extends State<NowPlaying>
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        positionText,
-                        style: TextStyle(
-                            fontSize: 13.0,
-                            color: Color(0xaa373737),
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.0),
-                      ),
-                      Container(
-                        width: width * 0.85,
-                        padding: EdgeInsets.only(
-                          left: statusBarHeight * 0.5,
-                        ),
-                        child: Slider(
-                          min: 0.0,
-                          activeColor:
-                              Colors.blueGrey.shade400.withOpacity(0.5),
-                          inactiveColor:
-                              Colors.blueGrey.shade300.withOpacity(0.3),
-                          value: position?.inMilliseconds?.toDouble() ?? 0.0,
-                          onChanged: (double value) =>
-                              player.seek((value / 1000).roundToDouble()),
-                          max: song.duration.toDouble() + 1000,
-                        ),
-                      ),
-                    ],
-                  ),
                   Expanded(
                     child: Center(
                       child: Container(
@@ -552,28 +511,71 @@ class _StateNowPlaying extends State<NowPlaying>
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                    new MaterialPageRoute(builder: (context) {
-                                  return new ArtistCard(widget.db, song);
-                                }));
-                              },
-                              child: new Text(
-                                "${song.artist}\n",
-                                style: new TextStyle(
-                                    color: Colors.black.withOpacity(0.7),
-                                    fontSize: 14.0,
-                                    letterSpacing: 1.8,
-                                    height: 1.5),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                              ),
+                            // GestureDetector(
+                            // onTap: () {
+                            //   Navigator.of(context).push(
+                            //       new MaterialPageRoute(builder: (context) {
+                            //     return new ArtistCard(widget.db, song);
+                            //   }));
+                            // },
+                            // child:
+                            new Text(
+                              "${song.artist}\n",
+                              style: new TextStyle(
+                                  color: Colors.black.withOpacity(0.7),
+                                  fontSize: 14.0,
+                                  letterSpacing: 1.8,
+                                  height: 1.5),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
                             ),
+                            // ),
                           ],
                         ),
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          positionText,
+                          style: TextStyle(
+                              fontSize: 13.0,
+                              color: Color(0xaa373737),
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.0),
+                        ),
+                        Expanded(
+                          // width: width * 0.75,
+                          // padding: EdgeInsets.only(
+                          //   left: statusBarHeight * 0.5,
+                          // ),
+                          child: Slider(
+                            min: 0.0,
+                            activeColor:
+                                Colors.blueGrey.shade400.withOpacity(0.5),
+                            inactiveColor:
+                                Colors.blueGrey.shade300.withOpacity(0.3),
+                            value: position?.inMilliseconds?.toDouble() ?? 0.0,
+                            onChanged: (double value) =>
+                                player.seek((value / 1000).roundToDouble()),
+                            max: song.duration.toDouble() + 1000,
+                          ),
+                        ),
+                        Text(
+                          durationText,
+                          style: TextStyle(
+                              fontSize: 13.0,
+                              color: Color(0xaa373737),
+                              fontWeight: FontWeight.w600,
+                              letterSpacing: 1.0),
+                        ),
+                      ],
                     ),
                   ),
                   Expanded(
@@ -681,107 +683,7 @@ class _StateNowPlaying extends State<NowPlaying>
     );
   }
 
-  Widget landscape() {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    return Container(
-      color: Color(0xfffafafa),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            top: 0.0,
-            left: 0.0,
-            child: Container(
-                height: MediaQuery.of(context).size.height,
-                width: height - height * 0.12,
-                color: Colors.white,
-                child: getImage(song) != null
-                    ? Image.file(getImage(song), fit: BoxFit.cover)
-                    : Image.asset("images/music.jpg")),
-          ),
-          BackdropFilter(
-            filter: ui.ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-            child: Container(
-              height: height,
-              width: height - height * 0.12,
-              decoration:
-                  new BoxDecoration(color: Colors.grey[900].withOpacity(0.5)),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).padding.top,
-                  top: MediaQuery.of(context).padding.top),
-              child: Container(
-                width: height - 2 * MediaQuery.of(context).padding.top,
-                height: height - 2 * MediaQuery.of(context).padding.top,
-                child: new AspectRatio(
-                  aspectRatio: 15 / 15,
-                  child: Hero(
-                    tag: song.id,
-                    child: getImage(song) != null
-                        ? Material(
-                            color: Colors.transparent,
-                            elevation: 22.0,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  borderRadius: BorderRadius.circular(6.0),
-                                  image: DecorationImage(
-                                      image: FileImage(getImage(song)),
-                                      fit: BoxFit.cover)),
-                              child: Stack(
-                                children: <Widget>[
-                                  Positioned(
-                                    bottom: -width * 0.15,
-                                    right: -width * 0.15,
-                                    child: Container(
-                                      decoration: ShapeDecoration(
-                                          color: Colors.white,
-                                          shape: BeveledRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                  topLeft: Radius.circular(
-                                                      width * 0.15)))),
-                                      height: width * 0.15 * 2,
-                                      width: width * 0.15 * 2,
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 0.0,
-                                    right: 0.0,
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                          right: 4.0, bottom: 6.0),
-                                      child: Text(
-                                        durationText,
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 18.0),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                        : new Image.asset(
-                            "images/back.jpg",
-                            fit: BoxFit.fitHeight,
-                          ),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  }
+
 
   Future<void> repeat1() async {
     setState(() {
