@@ -1,11 +1,15 @@
-//import 'package:flute_music_player/flute_music_player.dart';
-//import 'package:material_search/material_search.dart';
-//import 'package:flutter/material.dart';
-//import 'package:musicplayer/database/database_client.dart';
-//import 'package:musicplayer/pages/now_playing.dart';
-//import 'package:musicplayer/util/lastplay.dart';
-//
-//class SearchSong extends StatefulWidget {
+// import 'package:flute_music_player/flute_music_player.dart';
+// import 'package:material_search/material_search.dart';
+// import 'package:flutter/material.dart';
+// // import 'package:musicplayer/database/database_client.dart';
+// // import 'package:musicplayer/pages/now_playing.dart';
+// // import 'package:musicplayer/util/lastplay.dart';
+// import 'package:test_player/database/database_client.dart';
+// import 'package:test_player/util/lastplay.dart';
+
+// import 'now_playing.dart';
+
+// class SearchSong extends StatefulWidget {
 //  DatabaseClient db;
 //  List<Song> songs;
 //  SearchSong(this.db, this.songs);
@@ -13,20 +17,20 @@
 //  State<StatefulWidget> createState() {
 //    return new _statesearch();
 //  }
-//}
-//
-//class _statesearch extends State<SearchSong> {
+// }
+
+// class _statesearch extends State<SearchSong> {
 //  bool isLoading = true;
 //  @override
 //  void initState() {
 //    // TODO: implement initState
 //    super.initState();
 //  }
-//
+
 //  @override
 //  Widget build(BuildContext context) {
 //    return new Scaffold(
-//
+
 //        body: new SafeArea(
 //      child: new MaterialSearchInput<String>(
 //        placeholder: 'Search songs', //placeholder of the search bar text input
@@ -37,7 +41,7 @@
 //                  icon: Icons.music_note,
 //                ))
 //            .toList(),
-//
+
 //        onSelect: (String selected) async {
 //          if (selected == null) {
 //            //user closed the MaterialSearch without selecting any value
@@ -53,4 +57,4 @@
 //      ),
 //    ));
 //  }
-//}
+// }

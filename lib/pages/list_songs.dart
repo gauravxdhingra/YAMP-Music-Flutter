@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:test_player/database/database_client.dart';
 import 'package:test_player/pages/now_playing.dart';
-import 'package:test_player/util/AAppBar.dart';
+// import 'package:test_player/util/AAppBar.dart';
 import 'package:test_player/util/lastplay.dart';
 
 class ListSongs extends StatefulWidget {
@@ -166,12 +166,12 @@ class _ListSong extends State<ListSongs> {
     initSongs();
     return new Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
-      appBar: widget.orientation == Orientation.portrait
-          ? GreyAppBar(
-              title: getTitle(widget.mode).toLowerCase(),
-              isBack: true,
-            )
-          : null,
+      // appBar: widget.orientation == Orientation.portrait
+      //     ? GreyAppBar(
+      //         title: getTitle(widget.mode).toLowerCase(),
+      //         isBack: true,
+      //       )
+      //     : null,
       body: new Container(
         child: isLoading
             ? new Center(

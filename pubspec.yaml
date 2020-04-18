@@ -41,6 +41,7 @@ dependencies:
   xml: "^3.0.0"
   http:
   swipedetector: ^1.2.0
+  material_search: ^0.2.8
 
 dev_dependencies:
   flutter_test:

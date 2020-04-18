@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 // import 'package:musicplayer/views/songs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_player/pages/now_playing.dart';
-import 'package:test_player/util/AAppBar.dart';
+// import 'package:test_player/util/AAppBar.dart';
 import 'package:test_player/util/lastplay.dart';
 import 'package:test_player/views/album.dart';
 import 'package:test_player/views/artists.dart';
@@ -52,7 +52,6 @@ class BodySelection extends StatelessWidget {
 }
 
 class MusicHome extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return new _MusicState();
@@ -60,7 +59,7 @@ class MusicHome extends StatefulWidget {
 }
 
 class _MusicState extends State<MusicHome> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 2;
   int serIndex;
   List<Song> songs;
   List<String> title = ["", "Albums", "Songs", "Artists", "Playlists"];
@@ -81,18 +80,18 @@ class _MusicState extends State<MusicHome> {
   initBottomItems() {
     bottomItems = [
       new BottomItem("Home", Icons.home, null, null),
-      new BottomItem("Albums", Icons.album, () async {
-        _onSelectItem(1);
-      }, _handlingIsSelected(1)),
       new BottomItem("Songs", Icons.music_note, () async {
         _onSelectItem(2);
       }, _handlingIsSelected(2)),
+      new BottomItem("Playlists", Icons.favorite, () async {
+        _onSelectItem(4);
+      }, _handlingIsSelected(4)),
+      new BottomItem("Albums", Icons.album, () async {
+        _onSelectItem(1);
+      }, _handlingIsSelected(1)),
       new BottomItem("Artists", Icons.person, () async {
         _onSelectItem(3);
       }, _handlingIsSelected(3)),
-      new BottomItem("Playlists", Icons.playlist_play, () async {
-        _onSelectItem(4);
-      }, _handlingIsSelected(4)),
     ];
     bottomOptions = <Widget>[];
     for (var i = 1; i < bottomItems.length; i++) {
@@ -167,7 +166,7 @@ class _MusicState extends State<MusicHome> {
     var db = new DatabaseClient();
     await MusicFinder.allSongs().then((songs) {
       List<Song> newSongs = List.from(songs);
-      for (Song song in newSongs)  db.insertOrUpdateSong(song);
+      for (Song song in newSongs) db.insertOrUpdateSong(song);
     }).then((val) {
       scaffoldState.currentState.showSnackBar(new SnackBar(
         content: Text(
@@ -195,11 +194,11 @@ class _MusicState extends State<MusicHome> {
       child: new Scaffold(
         backgroundColor: Color(0xFFFAFAFA),
         key: scaffoldState,
-        appBar: _selectedIndex == 0
-            ? null
-            : GreyAppBar(
-                title: title[_selectedIndex].toLowerCase(),
-              ),
+        // appBar: _selectedIndex == 0
+        //     ? null
+        //     : GreyAppBar(
+        //         title: title[_selectedIndex].toLowerCase(),
+        //       ),
         floatingActionButton: new FloatingActionButton(
             child: new FlutterLogo(
               colors: Colors.blueGrey,

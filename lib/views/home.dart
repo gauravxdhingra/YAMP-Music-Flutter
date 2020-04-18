@@ -65,104 +65,6 @@ class HomeState extends State<Home> {
     });
   }
 
-  aboutPart() {
-    showAboutDialog(
-      context: context,
-      applicationName: "Grey",
-      applicationVersion: "0.3.1",
-      applicationLegalese: "MIT License",
-      applicationIcon: FlutterLogo(colors: Colors.blueGrey),
-      children: <Widget>[
-        Center(
-          child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: RichText(
-                  text: TextSpan(children: [
-                TextSpan(
-                  style: TextStyle(
-                      fontSize: 19.0,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.black,
-                      letterSpacing: 1.5),
-                  text: '{}',
-                ),
-                TextSpan(
-                    text: ' with ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18.0,
-                        color: Colors.black)),
-                TextSpan(
-                    text: '♥',
-                    style: TextStyle( fontSize: 18.0)),
-                TextSpan(
-                    text: ' by',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: 18.0,
-                        color: Colors.black)),
-                TextSpan(
-                    text: ' @avirias',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                        fontSize: 18.0))
-              ]))
-//            Text(
-//              "Developed by Avinash Kumar",
-//              style: TextStyle(
-//                  ),
-//            ),
-              ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              child: IconButton(
-                icon: ImageIcon(AssetImage("images/GitHub-Mark.png")),
-                onPressed: () {
-                  launchUrl(1);
-                },
-                iconSize: 40.0,
-              ),
-            ),
-            Container(
-              child: IconButton(
-                icon: ImageIcon(AssetImage("images/flogo.png")),
-                onPressed: () {
-                  launchUrl(2);
-                },
-                iconSize: 55.0,
-              ),
-            ),
-            Container(
-              child: IconButton(
-                icon: ImageIcon(AssetImage("images/instalogo.png")),
-                onPressed: () {
-                  launchUrl(3);
-                },
-                iconSize: 40.0,
-              ),
-            )
-          ],
-        ),
-//        Center(
-//          child: Padding(
-//            padding: const EdgeInsets.symmetric(vertical: 3.0),
-//            child: Text(
-//              "@avirias",
-//              style: TextStyle(
-//                  fontSize: 18.0,
-//                  fontFamily: "Quicksand",
-//                  fontWeight: FontWeight.w500),
-//            ),
-//          ),
-//        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
@@ -194,7 +96,7 @@ class HomeState extends State<Home> {
                   Icons.info_outline,
                   color: Colors.white,
                 ),
-                onPressed: aboutPart),
+                onPressed: (){}),
             new IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {

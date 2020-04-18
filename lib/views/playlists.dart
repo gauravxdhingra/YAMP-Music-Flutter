@@ -23,15 +23,14 @@ class _StatePlaylist extends State<Playlist> {
   var mode;
   List<Song> songs;
   var selected;
-  String atFirst,atSecond,atThir;
+  String atFirst, atSecond, atThir;
   String nu = "null";
   Orientation orientation;
   @override
   void initState() {
     super.initState();
     _lengthFind();
-    setState(() {
-    });
+    setState(() {});
     mode = 1;
     selected = 1;
   }
@@ -45,20 +44,19 @@ class _StatePlaylist extends State<Playlist> {
     var random = Random();
     songs = await widget.db.fetchRecentSong();
     setState(() {
-      atFirst = songs[random.nextInt(songs.length-1)].artist;
+      atFirst = songs[random.nextInt(songs.length - 1)].artist;
     });
     songs = await widget.db.fetchTopSong();
     setState(() {
-      atSecond = songs[random.nextInt(songs.length-1)].artist;
+      atSecond = songs[random.nextInt(songs.length - 1)].artist;
     });
     songs = await widget.db.fetchFavSong();
     String atThird = "No Songs in favorites";
     setState(() {
       atThir = songs.length != 0
-          ? "Includes ${songs[random.nextInt(songs.length-1)].artist.toString()} and more"
+          ? "Includes ${songs[random.nextInt(songs.length - 1)].artist.toString()} and more"
           : atThird;
     });
-
   }
 
   @override
@@ -70,78 +68,79 @@ class _StatePlaylist extends State<Playlist> {
   }
 
   Widget portrait() {
-    return new ListView(
-      physics: BouncingScrollPhysics(),
-      children: <Widget>[
-        new ListTile(
-          leading: new Icon(
-            Icons.history,
-            size: 28.0,
-          ),
-          title: new Text(
-            "Recently played",
-            style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500),
-          ),
-          subtitle: new Text(
-            "Includes ${atFirst!=null?atFirst:nu} and more",
-            maxLines: 1,
-          ),
-          onTap: () {
-            Navigator.of(context)
-                .push(new CupertinoPageRoute(builder: (context) {
-              return new ListSongs(widget.db, 1, orientation);
-            }));
-          },
-        ),
-        new ListTile(
-          leading: new Icon(
-            Icons.insert_chart,
-            size: 28.0,
-          ),
-          title: new Text(
-            "Top tracks",
-            style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.w500),
-          ),
-          subtitle: new Text(
-            "Includes ${atSecond!=null?atSecond:nu} and more",
-            maxLines: 1,
-          ),
-          onTap: () {
-            Navigator.of(context)
-                .push(new CupertinoPageRoute(builder: (context) {
-              return new ListSongs(widget.db, 2, orientation);
-            }));
-          },
-        ),
-        new ListTile(
-          leading: new Icon(
-            Icons.favorite,
-            size: 28.0,
-          ),
-          title: new Text(
-            "Favourites",
-            style: TextStyle(
-                fontSize: 20.0,
-                letterSpacing: 1.0,
-                fontWeight: FontWeight.w500),
-          ),
-          subtitle: new Text(
-            atThir!=null?atThir:nu,
-            maxLines: 1,
-          ),
-          onTap: () {
-            Navigator.of(context)
-                .push(new CupertinoPageRoute(builder: (context) {
-              return new ListSongs(widget.db, 3, orientation);
-            }));
-          },
-        ),
-      ],
-    );
+    return new ListSongs(widget.db, 3, orientation);
+    //   return new ListView(
+    //     physics: BouncingScrollPhysics(),
+    //     children: <Widget>[
+    //       new ListTile(
+    //         leading: new Icon(
+    //           Icons.history,
+    //           size: 28.0,
+    //         ),
+    //         title: new Text(
+    //           "Recently played",
+    //           style: TextStyle(
+    //               fontSize: 20.0,
+    //               fontWeight: FontWeight.w500),
+    //         ),
+    //         subtitle: new Text(
+    //           "Includes ${atFirst!=null?atFirst:nu} and more",
+    //           maxLines: 1,
+    //         ),
+    //         onTap: () {
+    //           Navigator.of(context)
+    //               .push(new CupertinoPageRoute(builder: (context) {
+    //             return new ListSongs(widget.db, 1, orientation);
+    //           }));
+    //         },
+    //       ),
+    //       new ListTile(
+    //         leading: new Icon(
+    //           Icons.insert_chart,
+    //           size: 28.0,
+    //         ),
+    //         title: new Text(
+    //           "Top tracks",
+    //           style: TextStyle(
+    //               fontSize: 20.0,
+    //               fontWeight: FontWeight.w500),
+    //         ),
+    //         subtitle: new Text(
+    //           "Includes ${atSecond!=null?atSecond:nu} and more",
+    //           maxLines: 1,
+    //         ),
+    //         onTap: () {
+    //           Navigator.of(context)
+    //               .push(new CupertinoPageRoute(builder: (context) {
+    //             return new ListSongs(widget.db, 2, orientation);
+    //           }));
+    //         },
+    //       ),
+    //       new ListTile(
+    //         leading: new Icon(
+    //           Icons.favorite,
+    //           size: 28.0,
+    //         ),
+    //         title: new Text(
+    //           "Favourites",
+    //           style: TextStyle(
+    //               fontSize: 20.0,
+    //               letterSpacing: 1.0,
+    //               fontWeight: FontWeight.w500),
+    //         ),
+    //         subtitle: new Text(
+    //           atThir!=null?atThir:nu,
+    //           maxLines: 1,
+    //         ),
+    //         onTap: () {
+    //           Navigator.of(context)
+    //               .push(new CupertinoPageRoute(builder: (context) {
+    //             return new ListSongs(widget.db, 3, orientation);
+    //           }));
+    //         },
+    //       ),
+    //     ],
+    //   );
   }
 
   Widget landscape() {
