@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './main_page.dart';
+import './musichome.dart';
+void main() => runApp(new MyApp());
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.blue));
-  runApp(
-    MusicPlayerApp(),
-  );
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent));
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blueGrey,
+        canvasColor: Colors.transparent,
+        errorColor: Colors.transparent,
+        fontFamily: "Google Sans"
+      ),
+      darkTheme: ThemeData.dark(),
+      home: MusicHome(),
+    );
+  }
 }

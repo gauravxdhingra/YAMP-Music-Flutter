@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-import '../db/database_client.dart';
+// import 'package:musicplayer/database/database_client.dart';
+import 'package:test_player/database/database_client.dart';
 
 dynamic getImage(Song song) {
   return song.albumArt == null
@@ -121,7 +122,7 @@ class SearchSong extends SearchDelegate<String> {
     var results = query.isEmpty ? recentSearches : suggestionList;
     return Container(
       color: Colors.white,
-      child: results != null
+      child: results!=null
           ? ListView.builder(
               scrollDirection: Axis.vertical,
               itemCount: results.length,
