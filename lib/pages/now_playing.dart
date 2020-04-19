@@ -5,11 +5,12 @@ import 'dart:ui' as ui;
 // import 'package:musicplayer/util/artistInfo.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:pimp_my_button/pimp_my_button.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/util/lastplay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_player/database/database_client.dart';
-import 'package:test_player/pages/artistcard.dart';
+// import 'package:test_player/pages/artistcard.dart';
 import 'package:test_player/util/artistInfo.dart';
 import 'package:test_player/util/lastplay.dart';
 
@@ -78,8 +79,10 @@ class _StateNowPlaying extends State<NowPlaying>
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animateColor = ColorTween(
-      begin: Colors.blueGrey[400].withOpacity(0.7),
-      end: Colors.blueGrey[400].withOpacity(0.9),
+      begin: Colors.red,
+      // .withOpacity(0.7),
+      end: Colors.blue,
+      // .withOpacity(0.9),
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -221,7 +224,7 @@ class _StateNowPlaying extends State<NowPlaying>
           : Center(
               child: CircularProgressIndicator(),
             ),
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xffFFCE00),
     );
   }
 
@@ -260,8 +263,7 @@ class _StateNowPlaying extends State<NowPlaying>
                               //       )
                               : null,
                           child: getImage(widget.songs[i]) == null
-                              ? Text(
-                                  widget.songs[i].title[0].toUpperCase())
+                              ? Text(widget.songs[i].title[0].toUpperCase())
                               : null,
                         ),
                         title: new Text(widget.songs[i].title,
@@ -292,7 +294,7 @@ class _StateNowPlaying extends State<NowPlaying>
                         trailing: widget.songs[i].id ==
                                 MyQueue.songs[MyQueue.index].id
                             ? new Icon(Icons.play_circle_filled,
-                                color: Colors.blueGrey[700])
+                                color: Colors.blue[700])
                             : null,
                         onTap: () {
                           setState(() {
@@ -354,12 +356,15 @@ class _StateNowPlaying extends State<NowPlaying>
             child: Container(
               width: width - 2 * width * 0.06,
               height: width - width * 0.06,
-              child: new AspectRatio(
+              child: AspectRatio(
                 aspectRatio: 15 / 15,
-                child: Hero(
-                  tag: song.id,
-                  child: getImage(song) != null
-                      ? Container(
+                child: getImage(song) != null
+                    // tag: song.id,
+                    ? GestureDetector(
+                        onDoubleTap: () {
+                          setFav(song);
+                        },
+                        child: Container(
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               color: Colors.transparent,
@@ -371,29 +376,64 @@ class _StateNowPlaying extends State<NowPlaying>
                           child: Stack(
                             children: <Widget>[
                               _showArtistImage
-                                  ? Container(
-                                      width: width - 2 * width * 0.06,
-                                      height: width - width * 0.06,
-                                      child: GetArtistDetail(
-                                        artist: song.artist,
-                                        artistSong: song,
+                                  ? GestureDetector(
+                                      onDoubleTap: () {
+                                        setFav(song);
+                                      },
+                                      child: Container(
+                                        width: width - 2 * width * 0.06,
+                                        height: width - width * 0.06,
+                                        child: GetArtistDetail(
+                                          artist: song.artist,
+                                          artistSong: song,
+                                        ),
                                       ),
                                     )
                                   : Container(),
-                              // Positioned(
-                              //   bottom: -width * 0.15,
-                              //   right: -width * 0.15,
-                              //   child: Container(
-                              //     decoration: ShapeDecoration(
-                              //         color: Colors.white,
-                              //         shape: BeveledRectangleBorder(
-                              //             borderRadius: BorderRadius.only(
-                              //                 topLeft: Radius.circular(
-                              //                     width * 0.15)))),
-                              //     height: width * 0.15 * 2,
-                              //     width: width * 0.15 * 2,
-                              //   ),
-                              // ),
+                              Positioned(
+                                bottom: 20,
+                                right: 20,
+                                child: Container(
+                                  height: 100,
+                                  width: 100,
+                                  // child: PimpedButton(
+                                  //   particle: Rectangle2DemoParticle(),
+                                  //   pimpedWidgetBuilder: (context, controller) {
+                                  //     return IconButton(
+                                  //       icon: Icon(Icons.favorite_border),
+                                  //       color: Colors.indigo,
+                                  //       onPressed: () {
+                                  //         controller.forward(from: 0.0);
+                                  //         setFav(song);
+                                  //       },
+                                  //     );
+                                  //   },
+                                  // ),
+                                  child: IconButton(
+                                      icon: isFav == 0
+                                          ? new Icon(
+                                              Icons.favorite_border,
+                                              color: Colors.red,
+                                              size: 100.0,
+                                            )
+                                          : new Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                              size: 100.0,
+                                            ),
+                                      onPressed: () {
+                                        setFav(song);
+                                      }),
+                                  // decoration: ShapeDecoration(
+                                  //     color: Colors.red,
+                                  //     shape: BeveledRectangleBorder(
+                                  //         borderRadius: BorderRadius.only(
+                                  //             topLeft: Radius.circular(
+                                  //                 width * 0.15)))),
+                                  // height: width * 0.15 * 2,
+                                  // width: width * 0.15 * 2,
+                                ),
+                              ),
                               // Positioned(
                               //   bottom: 0.0,
                               //   right: 0.0,
@@ -412,58 +452,89 @@ class _StateNowPlaying extends State<NowPlaying>
                               // ),
                             ],
                           ),
-                        )
-                      // )
-                      // )
-                      : Material(
-                          // color: Colors.red,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(cutRadius)),
-                          clipBehavior: Clip.antiAlias,
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: <Widget>[
-                              Icon(
-                                Icons.music_note,
-                                size: 150,
-                              ),
-                              // Image.asset(
-                              //   "images/back.jpg",
-                              //   fit: BoxFit.cover,
-                              // ),
-                              // Positioned(
-                              //   bottom: -width * 0.15,
-                              //   right: -width * 0.15,
-                              //   child: Container(
-                              //     decoration: ShapeDecoration(
-                              //         color: Colors.white,
-                              //         shape: BeveledRectangleBorder(
-                              //             borderRadius: BorderRadius.only(
-                              //                 topLeft: Radius.circular(
-                              //                     width * 0.15)))),
-                              //     height: width * 0.15 * 2,
-                              //     width: width * 0.15 * 2,
-                              //   ),
-                              // ),
-                              // Positioned(
-                              //   bottom: 0.0,
-                              //   right: 0.0,
-                              //   child: Padding(
-                              //     padding:
-                              //         EdgeInsets.only(right: 4.0, bottom: 6.0),
-                              //     child: Text(
-                              //       durationText,
-                              //       style: TextStyle(
-                              //         color: Colors.black,
-                              //         fontSize: 16.0,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
-                          ),
                         ),
-                ),
+                      )
+                    // )
+                    // )
+                    : Material(
+                        // color: Colors.red,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(cutRadius)),
+                        clipBehavior: Clip.antiAlias,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: <Widget>[
+                            Icon(
+                              Icons.music_note,
+                              size: 150,
+                            ),
+                            // Image.asset(
+                            //   "images/back.jpg",
+                            //   fit: BoxFit.cover,
+                            // ),
+                            // Positioned(
+                            //   bottom: -width * 0.15,
+                            //   right: -width * 0.15,
+                            //   child: Container(
+                            //     decoration: ShapeDecoration(
+                            //         color: Colors.white,
+                            //         shape: BeveledRectangleBorder(
+                            //             borderRadius: BorderRadius.only(
+                            //                 topLeft: Radius.circular(
+                            //                     width * 0.15)))),
+                            //     height: width * 0.15 * 2,
+                            //     width: width * 0.15 * 2,
+                            //   ),
+                            // ),
+                            // Positioned(
+                            //   bottom: 0.0,
+                            //   right: 0.0,
+                            //   child: Padding(
+                            //     padding:
+                            //         EdgeInsets.only(right: 4.0, bottom: 6.0),
+                            //     child: Text(
+                            //       durationText,
+                            //       style: TextStyle(
+                            //         color: Colors.black,
+                            //         fontSize: 16.0,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                            Positioned(
+                              bottom: 20,
+                              right: 20,
+                              child: Container(
+                                height: 100,
+                                width: 100,
+                                child: IconButton(
+                                    icon: isFav == 0
+                                        ? new Icon(
+                                            Icons.favorite_border,
+                                            color: Colors.red,
+                                            size: 100.0,
+                                          )
+                                        : new Icon(
+                                            Icons.favorite,
+                                            color: Colors.red,
+                                            size: 100.0,
+                                          ),
+                                    onPressed: () {
+                                      setFav(song);
+                                    }),
+                                // decoration: ShapeDecoration(
+                                //     color: Colors.red,
+                                //     shape: BeveledRectangleBorder(
+                                //         borderRadius: BorderRadius.only(
+                                //             topLeft: Radius.circular(
+                                //                 width * 0.15)))),
+                                // height: width * 0.15 * 2,
+                                // width: width * 0.15 * 2,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
               ),
             ),
           ),
@@ -566,12 +637,12 @@ class _StateNowPlaying extends State<NowPlaying>
                                 icon: isFav == 0
                                     ? new Icon(
                                         Icons.favorite_border,
-                                        color: Colors.blueGrey,
+                                        color: Colors.blue,
                                         size: 15.0,
                                       )
                                     : new Icon(
                                         Icons.favorite,
-                                        color: Colors.blueGrey,
+                                        color: Colors.blue,
                                         size: 15.0,
                                       ),
                                 onPressed: () {
@@ -581,11 +652,11 @@ class _StateNowPlaying extends State<NowPlaying>
                                 padding:
                                     EdgeInsets.symmetric(horizontal: 15.0)),
                             new IconButton(
-                              splashColor: Colors.blueGrey[200],
+                              splashColor: Colors.blue[200],
                               highlightColor: Colors.transparent,
                               icon: new Icon(
                                 Icons.skip_previous,
-                                color: Colors.blueGrey,
+                                color: Colors.blue,
                                 size: 32.0,
                               ),
                               onPressed: prev,
@@ -601,12 +672,11 @@ class _StateNowPlaying extends State<NowPlaying>
                               ),
                             ),
                             new IconButton(
-                              splashColor:
-                                  Colors.blueGrey[200].withOpacity(0.5),
+                              splashColor: Colors.blue[200].withOpacity(0.5),
                               highlightColor: Colors.transparent,
                               icon: new Icon(
                                 Icons.skip_next,
-                                color: Colors.blueGrey,
+                                color: Colors.blue,
                                 size: 32.0,
                               ),
                               onPressed: next,
@@ -618,12 +688,12 @@ class _StateNowPlaying extends State<NowPlaying>
                                 icon: (repeatOn == 1)
                                     ? Icon(
                                         Icons.repeat,
-                                        color: Colors.blueGrey,
+                                        color: Colors.blue,
                                         size: 15.0,
                                       )
                                     : Icon(
                                         Icons.repeat,
-                                        color: Colors.blueGrey.withOpacity(0.5),
+                                        color: Colors.blue.withOpacity(0.5),
                                         size: 15.0,
                                       ),
                                 onPressed: () {
@@ -639,7 +709,7 @@ class _StateNowPlaying extends State<NowPlaying>
                     color: Colors.white,
                     child: FlatButton(
                       onPressed: _showBottomSheet,
-                      highlightColor: Colors.blueGrey[200].withOpacity(0.1),
+                      highlightColor: Colors.blue[200].withOpacity(0.1),
                       child: Text(
                         "UP NEXT",
                         style: TextStyle(
@@ -647,7 +717,7 @@ class _StateNowPlaying extends State<NowPlaying>
                             letterSpacing: 2.0,
                             fontWeight: FontWeight.bold),
                       ),
-                      splashColor: Colors.blueGrey[200].withOpacity(0.1),
+                      splashColor: Colors.blue[200].withOpacity(0.1),
                     ),
                   )
                 ],

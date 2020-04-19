@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:draggable_scrollbar_sliver/draggable_scrollbar_sliver.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
@@ -71,52 +72,49 @@ class SongsState extends State<Songs> {
                         return new NowPlaying(widget.db, recents, i, 0);
                       }));
                     }, //  ,
-                    child: Hero(
-                      tag: recents[i].id,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        child: ListTile(
-                          contentPadding: EdgeInsets.only(
-                            left: 10,
-                          ),
-                          leading: getImage(recents[i]) != null
-                              ? CircleAvatar(
-                                  child: Container(
-                                    // height: 120.0,
-                                    // width: 180.0,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        image: FileImage(
-                                          getImage(recents[i]),
-                                        ),
-                                        fit: BoxFit.cover,
+                    child: Container(
+                      // tag: recents[i].id,
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.only(
+                          left: 10,
+                        ),
+                        leading: getImage(recents[i]) != null
+                            ? CircleAvatar(
+                                child: Container(
+                                  // height: 120.0,
+                                  // width: 180.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                      image: FileImage(
+                                        getImage(recents[i]),
                                       ),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                )
-                              : CircleAvatar(
-                                  child: Center(
-                                    child:
-                                        Text(recents[i].title[0].toUpperCase()),
-                                  ),
                                 ),
-                          title: Text(
-                            recents[i].title,
-                            style: new TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1,
+                              )
+                            : CircleAvatar(
+                                child: Center(
+                                  child:
+                                      Text(recents[i].title[0].toUpperCase()),
+                                ),
+                              ),
+                        title: Text(
+                          recents[i].title,
+                          style: new TextStyle(
+                            color: Colors.white,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500,
                           ),
-                          subtitle: Text(
-                            recents[i].artist,
-                            style:
-                                TextStyle(fontSize: 12.0, color: Colors.white),
-                            maxLines: 1,
-                          ),
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(
+                          recents[i].artist,
+                          style: TextStyle(fontSize: 12.0, color: Colors.white),
+                          maxLines: 1,
                         ),
                       ),
                     ),
@@ -136,7 +134,8 @@ class SongsState extends State<Songs> {
     final _controller = ScrollController();
     final _controllerh = ScrollController();
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color(0xff7800ee),
+      //  Colors.transparent,
       body: Stack(
         children: <Widget>[
           Positioned(
@@ -144,7 +143,7 @@ class SongsState extends State<Songs> {
             right: 15,
             left: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height / 1.16,
+              height: MediaQuery.of(context).size.height / 1.19,
               padding: EdgeInsets.only(top: 15),
               decoration: BoxDecoration(
                 color: Color(0xff6e00db),
@@ -152,6 +151,14 @@ class SongsState extends State<Songs> {
                   topRight: Radius.circular(42),
                   bottomRight: Radius.circular(42),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black38,
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                  )
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,8 +175,12 @@ class SongsState extends State<Songs> {
                     ),
                   ),
                   recentW(_controllerh),
-                  Divider(
-                    thickness: 2,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Divider(
+                      color: Color(0xff7800ee),
+                      thickness: 2,
+                    ),
                   ),
                   Padding(
                     padding:
@@ -195,9 +206,17 @@ class SongsState extends State<Songs> {
                           break;
                         case ConnectionState.done:
                           List<Song> songs = snapshot.data;
-                          return Scrollbar(
+                          return DraggableScrollbar.rrect(
+                            labelTextBuilder: (double offset) =>
+                                Text("${offset ~/ 100}"),
+                            // alwaysVisibleScrollThumb: true,
+                            scrollbarTimeToFade: Duration(seconds: 2),
+                            controller: _controller,
+                            heightScrollThumb: 40,
+                            backgroundColor: Color(0xffFFCE00),
                             child: Container(
-                              height: MediaQuery.of(context).size.height / 1.5,
+                              height:
+                                  MediaQuery.of(context).size.height / 1.525,
                               child: FadingEdgeScrollView.fromScrollView(
                                 gradientFractionOnStart: 0.05,
                                 gradientFractionOnEnd: 0.03,
@@ -213,34 +232,32 @@ class SongsState extends State<Songs> {
                                   itemBuilder: (context, i) => new Column(
                                     children: <Widget>[
                                       Container(
-                                        height: 62,
+                                        height: 70,
                                         child: ListTile(
                                           contentPadding: EdgeInsets.only(
                                             left: 20,
-                                            right: 20,
+                                            right: 30,
                                             top: 5,
                                             bottom: 5,
                                           ),
-                                          leading: Hero(
-                                            tag: songs[i].id,
-                                            child: getImage(songs[i]) != null
-                                                ? CircleAvatar(
-                                                    backgroundImage: FileImage(
-                                                      getImage(songs[i]),
-                                                      // fit: BoxFit.cover,
-                                                      // width: 55.0,
-                                                      // height: 55.0,
-                                                      // TODO :  Check here
-                                                    ),
-                                                  )
-                                                : CircleAvatar(
-                                                    child: Center(
-                                                      child: Text(songs[i]
-                                                          .title[0]
-                                                          .toUpperCase()),
-                                                    ),
+                                          leading: getImage(songs[i]) != null
+                                              //  tag: songs[i].id,
+                                              ? CircleAvatar(
+                                                  backgroundImage: FileImage(
+                                                    getImage(songs[i]),
+                                                    // fit: BoxFit.cover,
+                                                    // width: 55.0,
+                                                    // height: 55.0,
+                                                    // TODO :  Check here
                                                   ),
-                                          ),
+                                                )
+                                              : CircleAvatar(
+                                                  child: Center(
+                                                    child: Text(songs[i]
+                                                        .title[0]
+                                                        .toUpperCase()),
+                                                  ),
+                                                ),
                                           title: new Text(songs[i].title,
                                               maxLines: 1,
                                               style: new TextStyle(

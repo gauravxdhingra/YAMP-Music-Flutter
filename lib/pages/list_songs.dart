@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:draggable_scrollbar_sliver/draggable_scrollbar_sliver.dart';
+import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 // import 'package:musicplayer/database/database_client.dart';
@@ -137,8 +139,9 @@ class _ListSong extends State<ListSongs> {
   Widget build(BuildContext context) {
     initSongs();
     // songs.sort((so));
+    final _controller1 = ScrollController();
     return Scaffold(
-      backgroundColor: Color(0xFFFAFAFA),
+      backgroundColor: Color(0xff7800ee),
       body: Stack(
         children: <Widget>[
           Positioned(
@@ -159,152 +162,192 @@ class _ListSong extends State<ListSongs> {
                   ? new Center(
                       child: new CircularProgressIndicator(),
                     )
-                  : songs.length != 0
-                      ? Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20, top: 10),
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.favorite,
-                                    size: 30,
-                                    color: Colors.white,
-                                  ),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                    'Favourites',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 25,
-                                    ),
-                                  ),
-                                ],
+                  : Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, top: 10),
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.favorite,
+                                size: 30,
+                                color: Colors.white,
                               ),
-                            ),
-                            Divider(
-                              thickness: 2,
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height / 1.4,
-                              child: new ListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                itemCount: songs.length,
-                                itemBuilder: (context, i) => new Column(
-                                  children: <Widget>[
-                                    new ListTile(
-                                      contentPadding: EdgeInsets.only(
-                                        left: 20,
-                                        right: 20,
-                                        // top: 5,
-                                        // bottom: 5,
-                                      ),
-                                      leading: Hero(
-                                        tag: songs[i].id,
-                                        child: songs[i].albumArt != null
-                                            ? CircleAvatar(
-                                                backgroundImage: FileImage(
-                                                  getImage(songs[i]),
-                                                  // width: 55.0,
-                                                  // height: 55.0,
-                                                ),
-                                              )
-                                            : CircleAvatar(
-                                                child: Center(
-                                                  child: Text(songs[i]
-                                                      .title[0]
-                                                      .toUpperCase()),
-                                                ),
-                                              ),
-                                      ),
-                                      title: new Text(songs[i].title,
-                                          maxLines: 1,
-                                          style: new TextStyle(
-                                              fontSize: 16.0,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w500)),
-                                      subtitle: new Text(
-                                        songs[i].artist,
-                                        maxLines: 1,
-                                        style: new TextStyle(
-                                            fontSize: 12.0,
-                                            color: Colors.white),
-                                      ),
-                                      trailing: widget.mode == 2
-                                          ? new Text(
-                                              (i + 1).toString(),
-                                              style: new TextStyle(
-                                                  fontSize: 12.0,
-                                                  color: Colors.white),
-                                            )
-                                          : new Text(
-                                              new Duration(
-                                                      milliseconds:
-                                                          songs[i].duration)
-                                                  .toString()
-                                                  .split('.')
-                                                  .first
-                                                  .substring(3, 7),
-                                              style: new TextStyle(
-                                                  fontSize: 12.0,
-                                                  color: Colors.white)),
-                                      onTap: () {
-                                        MyQueue.songs = songs;
-                                        Navigator.of(context).push(
-                                            new MaterialPageRoute(
-                                                builder: (context) =>
-                                                    new NowPlaying(widget.db,
-                                                        MyQueue.songs, i, 0)));
-                                      },
-                                    ),
-                                  ],
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                'Favourites',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 25,
                                 ),
                               ),
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                "Nothing here :(",
-                                style: TextStyle(
-                                    fontSize: 30.0,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(vertical: 10.0)),
-                              OutlineButton(
-                                child: Text("Add Songs".toUpperCase()),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8.0)),
-                                onPressed: _modelBottomSheet,
-                                color: Colors.blueGrey.shade500,
-                                highlightedBorderColor: Color(0xFF373737),
-                                borderSide: BorderSide(
-                                    width: 2.0, color: Colors.blueGrey),
-                              )
                             ],
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Divider(
+                            color: Color(0xff7800ee),
+                            thickness: 2,
+                          ),
+                        ),
+                        songs.length != 0
+                            ? DraggableScrollbar.rrect(
+                                labelTextBuilder: (double offset) =>
+                                    Text("${offset ~/ 100}"),
+                                // alwaysVisibleScrollThumb: true,
+                                scrollbarTimeToFade:
+                                    Duration(milliseconds: 300),
+                                controller: _controller1,
+                                heightScrollThumb: 40,
+                                backgroundColor: Color(0xffFFCE00),
+                                child: Container(
+                                  padding: EdgeInsets.only(top: 0),
+                                  height: MediaQuery.of(context).size.height /
+                                      1.285,
+                                  child: FadingEdgeScrollView.fromScrollView(
+                                    gradientFractionOnStart: 0.05,
+                                    gradientFractionOnEnd: 0.07,
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.only(top: 0),
+                                      controller: _controller1,
+                                      physics: BouncingScrollPhysics(),
+                                      itemCount: songs.length,
+                                      itemBuilder: (context, i) => Column(
+                                        children: <Widget>[
+                                          Container(
+                                            height: 70,
+                                            child: ListTile(
+                                              contentPadding: EdgeInsets.only(
+                                                left: 20,
+                                                right: 20,
+                                                top: 0,
+                                                bottom: 0,
+                                              ),
+                                              leading: songs[i].albumArt != null
+                                                  // tag: songs[i].id,
+                                                  ? CircleAvatar(
+                                                      backgroundImage:
+                                                          FileImage(
+                                                        getImage(songs[i]),
+                                                        // width: 55.0,
+                                                        // height: 55.0,
+                                                      ),
+                                                    )
+                                                  : CircleAvatar(
+                                                      child: Center(
+                                                        child: Text(songs[i]
+                                                            .title[0]
+                                                            .toUpperCase()),
+                                                      ),
+                                                    ),
+                                              title: new Text(songs[i].title,
+                                                  maxLines: 1,
+                                                  style: new TextStyle(
+                                                      fontSize: 16.0,
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.w500)),
+                                              subtitle: new Text(
+                                                songs[i].artist,
+                                                maxLines: 1,
+                                                style: new TextStyle(
+                                                    fontSize: 12.0,
+                                                    color: Colors.white),
+                                              ),
+                                              trailing: widget.mode == 2
+                                                  ? new Text(
+                                                      (i + 1).toString(),
+                                                      style: new TextStyle(
+                                                          fontSize: 12.0,
+                                                          color: Colors.white),
+                                                    )
+                                                  : new Text(
+                                                      new Duration(
+                                                              milliseconds:
+                                                                  songs[i]
+                                                                      .duration)
+                                                          .toString()
+                                                          .split('.')
+                                                          .first
+                                                          .substring(3, 7),
+                                                      style: new TextStyle(
+                                                          fontSize: 12.0,
+                                                          color: Colors.white)),
+                                              onTap: () {
+                                                MyQueue.songs = songs;
+                                                Navigator.of(context).push(
+                                                    new MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            new NowPlaying(
+                                                                widget.db,
+                                                                MyQueue.songs,
+                                                                i,
+                                                                0)));
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            // ldcomc
+                            : Container(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height / 3.2,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "Start Adding Songs To Favourites ♥",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 10.0)),
+                                    OutlineButton(
+                                      child: Text(
+                                        "Add Songs".toUpperCase(),
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0)),
+                                      onPressed: _modelBottomSheet,
+                                      color: Colors.white,
+                                      highlightedBorderColor: Color(0xFF373737),
+                                      borderSide: BorderSide(
+                                          width: 2.0, color: Colors.white),
+                                    )
+                                  ],
+                                ),
+                              ),
+                      ],
+                    ),
             ),
           ),
         ],
       ),
-      floatingActionButton: songs != null
-          ? FloatingActionButton(
-              onPressed: () {
-                _modelBottomSheet();
-              },
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.blueGrey,
-              child: Icon(Icons.add))
-          : null,
+      // floatingActionButton: songs != null
+      //     ? FloatingActionButton(
+      //         onPressed: () {
+      //           _modelBottomSheet();
+      //         },
+      //         backgroundColor: Colors.white,
+      //         foregroundColor: Colors.blueGrey,
+      //         child: Icon(Icons.add))
+      //     : null,
     );
   }
 }

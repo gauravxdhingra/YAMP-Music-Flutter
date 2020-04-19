@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/pages/now_playing.dart';
 // import 'package:musicplayer/util/AAppBar.dart';
@@ -205,12 +206,13 @@ class _MusicState extends State<MusicHome> {
         //     : GreyAppBar(
         //         title: title[_selectedIndex].toLowerCase(),
         //       ),
-        floatingActionButton: new FloatingActionButton(
-            child: new FlutterLogo(
-              colors: Colors.blueGrey,
-              style: FlutterLogoStyle.markOnly,
+        floatingActionButton: new FloatingActionButton.extended(
+            label: Text(
+              'Now Playing',
+              style: TextStyle(color: Colors.black),
             ),
-            backgroundColor: Colors.white,
+            icon: Icon(MdiIcons.play, color: Colors.black),
+            backgroundColor: Colors.yellowAccent,
             onPressed: () async {
               var pref = await SharedPreferences.getInstance();
               var fp = pref.getBool("played");
@@ -241,6 +243,8 @@ class _MusicState extends State<MusicHome> {
                   )
                 : BodySelection(_selectedIndex, db),
         bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Color(0xff7800ee),
+          color: Colors.yellowAccent,
           height: 52,
           items: <Widget>[
             Icon(Icons.music_note),
@@ -268,7 +272,7 @@ class _MusicState extends State<MusicHome> {
         //   elevation: 0.0,
         //   color: Colors.grey.withOpacity(0.25),
         // ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
       onWillPop: _onWillPop,
     );
