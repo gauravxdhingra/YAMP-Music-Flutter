@@ -262,7 +262,7 @@ class _MusicState extends State<MusicHome> {
                     child: BodySelection(_selectedIndex, db),
                     color: Colors.blueGrey,
                     onRefresh: refreshData,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Color(0xff7800ee),
                   )
                 : BodySelection(_selectedIndex, db),
         bottomNavigationBar: CurvedNavigationBar(

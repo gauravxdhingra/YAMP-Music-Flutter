@@ -149,7 +149,7 @@ class _ListSong extends State<ListSongs> {
             right: 15,
             left: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height / 1.16,
+              height: MediaQuery.of(context).size.height / 1.14,
               padding: EdgeInsets.only(top: 15),
               decoration: BoxDecoration(
                 color: Color(0xff6e00db),

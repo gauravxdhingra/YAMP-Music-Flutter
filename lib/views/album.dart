@@ -34,7 +34,8 @@ class _stateAlbum extends State<Album> {
 
   void initAlbum() async {
     songs = await widget.db.fetchSongs();
-    filtersongs = await widget.db.searchSongByTitle('');
+    filtersongs = [];
+    // filtersongs = await widget.db.searchSongByTitle('');
     // songs = await widget.db.fetchAlbum();
     setState(() {
       isLoading = false;
@@ -146,72 +147,113 @@ class _stateAlbum extends State<Album> {
           ? new Center(
               child: new CircularProgressIndicator(),
             )
-          : Container(
-              color: Color(0xff7800ee),
-              padding: EdgeInsets.only(top: 15),
-              child: FloatingSearchBar.builder(
-                inputTextStyle: TextStyle(color: Colors.white),
-                SliverColor: Color(0xff6e00db),
-                backgroundcolor: Color(0xff7800ee),
-                pinned: true,
-                // padding: EdgeInsets.only(top: 15),
-                body: null,
-                controller: tedit,
-                itemCount: filtersongs.length,
-                itemBuilder: (context, i) => ListTile(
-                  leading: CircleAvatar(
-                    child: Icon(Icons.music_note),
-                  ),
-                  title: Text(
-                    filtersongs[i].title,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  subtitle: Text(
-                    filtersongs[i].artist,
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onTap: () {
-                    MyQueue.songs = songs;
-                    Navigator.of(context).push(new MaterialPageRoute(
-                        builder: (context) => new NowPlaying(widget.db,
-                            MyQueue.songs, returnIndex(filtersongs[i]), 0)));
-                  },
-                ),
-                leading: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                ),
-                trailing: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        tedit.clear();
-                        filtersongs = songs;
-                        setState(() {});
-                      }),
-                ),
-                onChanged: (String value) async {
-                  filtersongs = await widget.db.searchSongByTitle(value);
-                  // print(filtersongs[0].title);
-                  setState(() {});
-                },
-                // onTap: () {
-                //   MyQueue.songs = songs;
-                //   Navigator.of(context).push(new MaterialPageRoute(
-                //       builder: (context) =>
-                //           new NowPlaying(widget.db, MyQueue.songs, 0, 0)));
-                // },
-                decoration: InputDecoration.collapsed(
-                    hintText: "Search Songs...",
-                    // fillColor: Colors.white,
-                    // focusColor: Colors.white,
-                    hintStyle: TextStyle(
-                      color: Colors.white,
-                    )
-                    // filled: true,
+          : Stack(
+              children: <Widget>[
+                Positioned(
+                  top: MediaQuery.of(context).size.height / 22,
+                  right: 15,
+                  left: 0,
+                  child: Container(
+                    height: MediaQuery.of(context).size.height / 1.14,
+                    // padding: EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(
+                      color: Color(0xff6e00db),
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(42),
+                        bottomRight: Radius.circular(42),
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black38,
+                          blurRadius: 2.0,
+                          spreadRadius: 0.0,
+                          offset: Offset(
+                              2.0, 2.0), // shadow direction: bottom right
+                        )
+                      ],
                     ),
-              ),
+                    child: Container(
+                      // color: Color(0xff7800ee),
+                      padding: EdgeInsets.only(top: 15),
+                      child: FloatingSearchBar.builder(
+                        inputTextStyle: TextStyle(color: Colors.black),
+                        SliverColor: Color(0xffFFCE00),
+                        //  Color(0xff7800ee),
+                        backgroundcolor: Color(0xff6e00db),
+                        pinned: true,
+                        // padding: EdgeInsets.only(top: 15),
+                        body: null,
+                        controller: tedit,
+                        itemCount: filtersongs.length,
+                        itemBuilder: (context, i) => ListTile(
+                          leading: CircleAvatar(
+                            child: Icon(Icons.music_note),
+                          ),
+                          title: Text(
+                            filtersongs[i].title,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          subtitle: Text(
+                            filtersongs[i].artist,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onTap: () {
+                            MyQueue.songs = songs;
+                            Navigator.of(context).push(new MaterialPageRoute(
+                                builder: (context) => new NowPlaying(
+                                    widget.db,
+                                    MyQueue.songs,
+                                    returnIndex(filtersongs[i]),
+                                    0)));
+                          },
+                        ),
+                        leading: Icon(
+                          Icons.search,
+                          color: Colors.black,
+                        ),
+                        trailing: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          child: IconButton(
+                              icon: Icon(
+                                Icons.clear,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                tedit.clear();
+                                filtersongs = [];
+                                // filtersongs = songs;
+                                setState(() {});
+                              }),
+                        ),
+                        onChanged: (String value) async {
+                          if (value == '') {
+                            filtersongs = [];
+                          } else
+                            filtersongs =
+                                await widget.db.searchSongByTitle(value);
+                          // print(filtersongs[0].title);
+                          setState(() {});
+                        },
+                        // onTap: () {
+                        //   MyQueue.songs = songs;
+                        //   Navigator.of(context).push(new MaterialPageRoute(
+                        //       builder: (context) =>
+                        //           new NowPlaying(widget.db, MyQueue.songs, 0, 0)));
+                        // },
+                        decoration: InputDecoration.collapsed(
+                            hintText: "Search Songs...",
+                            // fillColor: Colors.white,
+                            // focusColor: Colors.white,
+                            hintStyle: TextStyle(
+                              color: Colors.black,
+                            )
+                            // filled: true,
+                            ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
       // Positioned(
       //   top: 20,
