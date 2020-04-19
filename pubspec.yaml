@@ -1,5 +1,5 @@
 name: test_player
-description: A new Flutter project.
+description: Yet Another Music Player!
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -47,10 +47,16 @@ dependencies:
   draggable_scrollbar_sliver: ^0.0.3
   floating_search_bar: ^0.3.0
   # flutter_visualizers: ^0.0.2
+  flutter_launcher_icons: ^0.7.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

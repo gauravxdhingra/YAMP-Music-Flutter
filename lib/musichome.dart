@@ -199,7 +199,7 @@ class _MusicState extends State<MusicHome> {
     initBottomItems();
     return new WillPopScope(
       child: new Scaffold(
-        backgroundColor: Color(0xFFFAFAFA),
+        backgroundColor: Color(0xff7800ee),
         key: scaffoldState,
         // appBar: _selectedIndex == 0
         //     ? null
@@ -313,7 +313,7 @@ class _MusicState extends State<MusicHome> {
             builder: (context) {
               return AlertDialog(
                 title: new Text('Are you sure?'),
-                content: new Text('Grey will be stopped..'),
+                content: new Text('Do you wish to quit YAMP'),
                 actions: <Widget>[
                   new FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),

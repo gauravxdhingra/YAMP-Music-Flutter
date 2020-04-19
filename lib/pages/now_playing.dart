@@ -719,7 +719,8 @@ class _StateNowPlaying extends State<NowPlaying>
                           positionText,
                           style: TextStyle(
                               fontSize: 13.0,
-                              color: Color(0xaa373737),
+                              color: Colors.black,
+                              //  Color(0xaa373737),
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.0),
                         ),
@@ -727,9 +728,10 @@ class _StateNowPlaying extends State<NowPlaying>
                           child: Slider(
                             min: 0.0,
                             activeColor:
-                                Colors.blueGrey.shade400.withOpacity(0.5),
-                            inactiveColor:
-                                Colors.blueGrey.shade300.withOpacity(0.3),
+                                // Colors.blueGrey.shade400.withOpacity(0.5),
+                                Color(0xff6e00db).withOpacity(0.8),
+                            inactiveColor:Color(0xff6e00db).withOpacity(0.2),
+                                // Colors.blueGrey.shade300.withOpacity(0.3),
                             value: position?.inMilliseconds?.toDouble() ?? 0.0,
                             onChanged: (double value) =>
                                 player.seek((value / 1000).roundToDouble()),
@@ -740,7 +742,8 @@ class _StateNowPlaying extends State<NowPlaying>
                           durationText,
                           style: TextStyle(
                               fontSize: 13.0,
-                              color: Color(0xaa373737),
+                              // color: Color(0xaa373737),
+                              color: Colors.black,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.0),
                         ),
@@ -1063,7 +1066,8 @@ class NavButtons extends StatelessWidget {
                 spreadRadius: 3,
                 blurRadius: 10),
             BoxShadow(
-                color: Colors.white,
+                color: Color(0xffFFCE00),
+                //  Colors.white,
                 offset: Offset(-3, -4),
                 spreadRadius: -2,
                 blurRadius: 20)
@@ -1075,7 +1079,7 @@ class NavButtons extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Color(0xffFFCE00),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
@@ -1084,7 +1088,8 @@ class NavButtons extends StatelessWidget {
                           spreadRadius: 3,
                           blurRadius: 10),
                       BoxShadow(
-                          color: Colors.white,
+                          color: Color(0xffFFCE00),
+                          // Colors.white,
                           offset: Offset(-3, -4),
                           spreadRadius: -2,
                           blurRadius: 20)
@@ -1093,7 +1098,7 @@ class NavButtons extends StatelessWidget {
             ),
             Center(
               child: Container(
-                margin: EdgeInsets.all(10),
+                margin: EdgeInsets.all(8.4),
                 decoration: BoxDecoration(
                     color: Color(0xff7800ee), shape: BoxShape.circle),
                 child: Center(

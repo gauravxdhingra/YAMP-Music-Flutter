@@ -213,11 +213,11 @@ class SongsState extends State<Songs> {
                             // alwaysVisibleScrollThumb: true,
                             scrollbarTimeToFade: Duration(seconds: 2),
                             controller: _controller,
-                            heightScrollThumb: 40,
+                            heightScrollThumb: 45,
                             backgroundColor: Color(0xffFFCE00),
                             child: Container(
                               height:
-                                  MediaQuery.of(context).size.height / 1.525,
+                                  MediaQuery.of(context).size.height / 1.445,
                               child: FadingEdgeScrollView.fromScrollView(
                                 gradientFractionOnStart: 0.05,
                                 gradientFractionOnEnd: 0.03,

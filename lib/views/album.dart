@@ -174,7 +174,7 @@ class _stateAlbum extends State<Album> {
                     ),
                     child: Container(
                       // color: Color(0xff7800ee),
-                      padding: EdgeInsets.only(top: 15),
+                      padding: EdgeInsets.only(top: 7, left: 10, right: 10),
                       child: FloatingSearchBar.builder(
                         inputTextStyle: TextStyle(color: Colors.black),
                         SliverColor: Color(0xffFFCE00),

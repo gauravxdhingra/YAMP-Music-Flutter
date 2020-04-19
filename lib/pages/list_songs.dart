@@ -216,10 +216,10 @@ class _ListSong extends State<ListSongs> {
                                 child: Container(
                                   padding: EdgeInsets.only(top: 0),
                                   height: MediaQuery.of(context).size.height /
-                                      1.31,
+                                      1.28,
                                   child: FadingEdgeScrollView.fromScrollView(
-                                    gradientFractionOnStart: 0.05,
-                                    gradientFractionOnEnd: 0.07,
+                                    gradientFractionOnStart: 0.04,
+                                    gradientFractionOnEnd: 0.05,
                                     child: ListView.builder(
                                       padding: EdgeInsets.only(top: 0),
                                       controller: _controller1,
