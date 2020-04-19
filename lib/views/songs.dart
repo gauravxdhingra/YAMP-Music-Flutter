@@ -140,7 +140,7 @@ class SongsState extends State<Songs> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: MediaQuery.of(context).size.height / 15,
+            top: MediaQuery.of(context).size.height / 22,
             right: 15,
             left: 0,
             child: Container(

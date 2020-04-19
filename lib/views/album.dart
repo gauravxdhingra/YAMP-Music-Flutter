@@ -135,21 +135,41 @@ class _stateAlbum extends State<Album> {
     return 0;
   }
 
+  TextEditingController tedit = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // final Orientation orientation = MediaQuery.of(context).orientation;
-    return new Container(
-      child: isLoading
+    return new Scaffold(
+      backgroundColor: Color(0xff7800ee),
+      body: isLoading
           ? new Center(
               child: new CircularProgressIndicator(),
             )
           : Container(
-              // height: 200,
-              // width: 400,
+              color: Color(0xff7800ee),
+              padding: EdgeInsets.only(top: 15),
               child: FloatingSearchBar.builder(
+                inputTextStyle: TextStyle(color: Colors.white),
+                SliverColor: Color(0xff6e00db),
+                backgroundcolor: Color(0xff7800ee),
+                pinned: true,
+                // padding: EdgeInsets.only(top: 15),
+                body: null,
+                controller: tedit,
                 itemCount: filtersongs.length,
                 itemBuilder: (context, i) => ListTile(
-                  title: Text(filtersongs[i].title),
+                  leading: CircleAvatar(
+                    child: Icon(Icons.music_note),
+                  ),
+                  title: Text(
+                    filtersongs[i].title,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    filtersongs[i].artist,
+                    style: TextStyle(color: Colors.white),
+                  ),
                   onTap: () {
                     MyQueue.songs = songs;
                     Navigator.of(context).push(new MaterialPageRoute(
@@ -157,8 +177,19 @@ class _stateAlbum extends State<Album> {
                             MyQueue.songs, returnIndex(filtersongs[i]), 0)));
                   },
                 ),
+                leading: Icon(
+                  Icons.search,
+                  color: Colors.white,
+                ),
                 trailing: CircleAvatar(
-                  child: Text("Y"),
+                  backgroundColor: Colors.transparent,
+                  child: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        tedit.clear();
+                        filtersongs = songs;
+                        setState(() {});
+                      }),
                 ),
                 onChanged: (String value) async {
                   filtersongs = await widget.db.searchSongByTitle(value);
@@ -172,8 +203,14 @@ class _stateAlbum extends State<Album> {
                 //           new NowPlaying(widget.db, MyQueue.songs, 0, 0)));
                 // },
                 decoration: InputDecoration.collapsed(
-                  hintText: "Search Songs...",
-                ),
+                    hintText: "Search Songs...",
+                    // fillColor: Colors.white,
+                    // focusColor: Colors.white,
+                    hintStyle: TextStyle(
+                      color: Colors.white,
+                    )
+                    // filled: true,
+                    ),
               ),
             ),
       // Positioned(

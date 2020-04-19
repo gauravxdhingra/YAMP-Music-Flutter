@@ -145,7 +145,7 @@ class _ListSong extends State<ListSongs> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            top: MediaQuery.of(context).size.height / 15,
+            top: MediaQuery.of(context).size.height / 22,
             right: 15,
             left: 0,
             child: Container(
@@ -173,7 +173,8 @@ class _ListSong extends State<ListSongs> {
                   : Column(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 10),
+                          padding: const EdgeInsets.only(
+                              left: 20, top: 10, bottom: 10),
                           child: Row(
                             children: <Widget>[
                               Icon(
@@ -215,7 +216,7 @@ class _ListSong extends State<ListSongs> {
                                 child: Container(
                                   padding: EdgeInsets.only(top: 0),
                                   height: MediaQuery.of(context).size.height /
-                                      1.285,
+                                      1.31,
                                   child: FadingEdgeScrollView.fromScrollView(
                                     gradientFractionOnStart: 0.05,
                                     gradientFractionOnEnd: 0.07,

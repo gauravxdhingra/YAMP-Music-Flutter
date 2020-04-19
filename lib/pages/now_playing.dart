@@ -5,7 +5,9 @@ import 'dart:ui' as ui;
 // import 'package:musicplayer/util/artistInfo.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
-import 'package:pimp_my_button/pimp_my_button.dart';
+// import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
+// import 'package:flutter_visualizers/visualizer.dart';
+// import 'package:pimp_my_button/pimp_my_button.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/util/lastplay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +15,7 @@ import 'package:test_player/database/database_client.dart';
 // import 'package:test_player/pages/artistcard.dart';
 import 'package:test_player/util/artistInfo.dart';
 import 'package:test_player/util/lastplay.dart';
+import '../util/methodcalls.dart';
 
 class NowPlaying extends StatefulWidget {
   final int mode;
@@ -60,9 +63,28 @@ class _StateNowPlaying extends State<NowPlaying>
   void initState() {
     super.initState();
     _showArtistImage = false;
+
     initAnim();
     initPlayer();
+    // initPlatformState();
   }
+
+  // int playerID;
+
+  // Future<void> initPlatformState() async {
+  //   MethodCalls.playSong();
+  //   int sessionId;
+  //   // Platform messages may fail, so we use a try/catch PlatformException.
+  //   try {
+  //     sessionId = await MethodCalls.getSessionId();
+  //   } on Exception {
+  //     sessionId = null;
+  //   }
+
+  //   setState(() {
+  //     playerID = sessionId;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -79,9 +101,9 @@ class _StateNowPlaying extends State<NowPlaying>
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animateColor = ColorTween(
-      begin: Colors.red,
+      begin: Color(0xffFFCE00),
       // .withOpacity(0.7),
-      end: Colors.blue,
+      end: Color(0xff6e00db),
       // .withOpacity(0.9),
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -317,9 +339,24 @@ class _StateNowPlaying extends State<NowPlaying>
     widthX = width;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     sHeightX = statusBarHeight;
-    final double cutRadius = 8.0;
+    // final double cutRadius = 8.0;
     return Stack(
       children: <Widget>[
+        // Positioned(
+        //     child: Visualizer(
+        //   builder: (BuildContext context, List<int> wave) {
+        //     return new CustomPaint(
+        //       painter: LineVisualizer(
+        //         waveData: wave,
+        //         height: MediaQuery.of(context).size.height,
+        //         width: MediaQuery.of(context).size.width,
+        //         color: Colors.blueAccent,
+        //       ),
+        //       child: new Container(),
+        //     );
+        //   },
+        //   id: playerID,
+        // )),
         Positioned(
           top: 35,
           left: 5,
@@ -471,7 +508,7 @@ class _StateNowPlaying extends State<NowPlaying>
                         child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xff7800ee),
+                            // color: Color(0xff7800ee),
                             // borderRadius:
                             //     BorderRadius.circular(cutRadius),
                           ),
@@ -716,7 +753,7 @@ class _StateNowPlaying extends State<NowPlaying>
                         padding: const EdgeInsets.only(bottom: 15.0),
                         child: new Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             NavButtons(
                               song: song,
@@ -727,13 +764,15 @@ class _StateNowPlaying extends State<NowPlaying>
                               childd: isFav == 0
                                   ? new Icon(
                                       Icons.favorite_border,
-                                      color: Colors.blue,
-                                      size: 15.0,
+                                      color: Colors.white,
+                                      // blue,
+                                      size: 28.0,
                                     )
                                   : new Icon(
                                       Icons.favorite,
-                                      color: Colors.blue,
-                                      size: 15.0,
+                                      color: Colors.white,
+                                      // blue,
+                                      size: 28.0,
                                     ),
                             ),
                             // new IconButton(
@@ -762,7 +801,8 @@ class _StateNowPlaying extends State<NowPlaying>
                               ontap: prev,
                               childd: Icon(
                                 Icons.skip_previous,
-                                color: Colors.blue,
+                                color: Colors.white,
+                                //  Colors.blue,
                                 size: 32.0,
                               ),
                             ),
@@ -812,7 +852,8 @@ class _StateNowPlaying extends State<NowPlaying>
                               ontap: next,
                               childd: Icon(
                                 Icons.skip_next,
-                                color: Colors.blue,
+                                color: Colors.white,
+                                // Colors.blue,
                                 size: 32.0,
                               ),
                             ),
@@ -827,13 +868,15 @@ class _StateNowPlaying extends State<NowPlaying>
                               childd: (repeatOn == 1)
                                   ? Icon(
                                       Icons.repeat,
-                                      color: Colors.blue,
-                                      size: 15.0,
+                                      color: Colors.white,
+                                      // Colors.blue,
+                                      size: 28.0,
                                     )
                                   : Icon(
                                       Icons.repeat,
-                                      color: Colors.blue.withOpacity(0.5),
-                                      size: 15.0,
+                                      color: Colors.grey,
+                                      // blue.withOpacity(0.5),
+                                      size: 28.0,
                                     ),
                             ),
                             // new IconButton(
@@ -926,11 +969,11 @@ class PlayPauseButton extends StatelessWidget {
         height: 100,
         width: 100,
         decoration: BoxDecoration(
-          color: Colors.pink,
+          color: Color(0xff7800ee),
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: Colors.red.withOpacity(0.5),
+                color: Color(0xff6e00db).withOpacity(0.5),
                 offset: Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
@@ -947,11 +990,11 @@ class PlayPauseButton extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Color(0xff6e00db),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.red.withOpacity(0.5),
+                          color: Color(0xff6e00db).withOpacity(0.5),
                           offset: Offset(5, 10),
                           spreadRadius: 3,
                           blurRadius: 10),
@@ -972,7 +1015,11 @@ class PlayPauseButton extends StatelessWidget {
                     shape: BoxShape.circle),
                 child: Center(
                   child: AnimatedIcon(
-                      icon: AnimatedIcons.pause_play, progress: _animateIcon),
+                    icon: AnimatedIcons.pause_play,
+                    progress: _animateIcon,
+                    color: Colors.white,
+                    size: 55,
+                  ),
                 ),
               ),
             ),
@@ -1007,11 +1054,11 @@ class NavButtons extends StatelessWidget {
         height: 60,
         width: 60,
         decoration: BoxDecoration(
-          color: Colors.pink,
+          color: Color(0xff7800ee),
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: Colors.red.withOpacity(0.5),
+                color: Color(0xff6e00db).withOpacity(0.5),
                 offset: Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
@@ -1032,7 +1079,7 @@ class NavButtons extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: Colors.red.withOpacity(0.5),
+                          color: Color(0xff6e00db).withOpacity(0.5),
                           offset: Offset(5, 10),
                           spreadRadius: 3,
                           blurRadius: 10),
@@ -1047,8 +1094,8 @@ class NavButtons extends StatelessWidget {
             Center(
               child: Container(
                 margin: EdgeInsets.all(10),
-                decoration:
-                    BoxDecoration(color: Colors.pink, shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                    color: Color(0xff7800ee), shape: BoxShape.circle),
                 child: Center(
                   child: childd,
                   //      Icon(
@@ -1065,3 +1112,6 @@ class NavButtons extends StatelessWidget {
     );
   }
 }
+// Color(0xff7800ee),
+// Color(0xff6e00db),
+// Color(0xffFFCE00),
