@@ -464,85 +464,162 @@ class _StateNowPlaying extends State<NowPlaying>
                       )
                     // )
                     // )
-                    : Material(
-                        // color: Colors.red,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(cutRadius)),
-                        clipBehavior: Clip.antiAlias,
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Icon(
-                              Icons.music_note,
-                              size: 150,
-                            ),
-                            // Image.asset(
-                            //   "images/back.jpg",
-                            //   fit: BoxFit.cover,
-                            // ),
-                            // Positioned(
-                            //   bottom: -width * 0.15,
-                            //   right: -width * 0.15,
-                            //   child: Container(
-                            //     decoration: ShapeDecoration(
-                            //         color: Colors.white,
-                            //         shape: BeveledRectangleBorder(
-                            //             borderRadius: BorderRadius.only(
-                            //                 topLeft: Radius.circular(
-                            //                     width * 0.15)))),
-                            //     height: width * 0.15 * 2,
-                            //     width: width * 0.15 * 2,
-                            //   ),
-                            // ),
-                            // Positioned(
-                            //   bottom: 0.0,
-                            //   right: 0.0,
-                            //   child: Padding(
-                            //     padding:
-                            //         EdgeInsets.only(right: 4.0, bottom: 6.0),
-                            //     child: Text(
-                            //       durationText,
-                            //       style: TextStyle(
-                            //         color: Colors.black,
-                            //         fontSize: 16.0,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            Positioned(
-                              bottom: 20,
-                              right: 20,
-                              child: Container(
-                                height: 100,
-                                width: 100,
-                                child: IconButton(
-                                    icon: isFav == 0
-                                        ? new Icon(
-                                            Icons.favorite_border,
-                                            color: Colors.red,
-                                            size: 100.0,
-                                          )
-                                        : new Icon(
-                                            Icons.favorite,
-                                            color: Colors.red,
-                                            size: 100.0,
-                                          ),
-                                    onPressed: () {
-                                      setFav(song);
-                                    }),
-                                // decoration: ShapeDecoration(
-                                //     color: Colors.red,
-                                //     shape: BeveledRectangleBorder(
-                                //         borderRadius: BorderRadius.only(
-                                //             topLeft: Radius.circular(
-                                //                 width * 0.15)))),
-                                // height: width * 0.15 * 2,
-                                // width: width * 0.15 * 2,
+                    : GestureDetector(
+                        onDoubleTap: () {
+                          setFav(song);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xff7800ee),
+                            // borderRadius:
+                            //     BorderRadius.circular(cutRadius),
+                          ),
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: <Widget>[
+                              Icon(
+                                Icons.music_note,
+                                size: 150,
                               ),
-                            ),
-                          ],
+                              _showArtistImage
+                                  ? GestureDetector(
+                                      onDoubleTap: () {
+                                        setFav(song);
+                                      },
+                                      child: Container(
+                                        width: width - 2 * width * 0.06,
+                                        height: width - width * 0.06,
+                                        child: GetArtistDetail(
+                                          artist: song.artist,
+                                          artistSong: song,
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
+                              Positioned(
+                                bottom: 40,
+                                right: 35,
+                                child: Container(
+                                  height: 50,
+                                  width: 50,
+                                  child: IconButton(
+                                      icon: isFav == 0
+                                          ? new Icon(
+                                              Icons.favorite_border,
+                                              color: Colors.red,
+                                              size: 50.0,
+                                            )
+                                          : new Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                              size: 50.0,
+                                            ),
+                                      onPressed: () {
+                                        setFav(song);
+                                      }),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
+                // Material(
+                //     color: Colors.transparent,
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(
+                //         cutRadius,
+                //       ),
+                //     ),
+                //     clipBehavior: Clip.antiAlias,
+                //     child: Stack(
+                //       fit: StackFit.expand,
+                //       children: <Widget>[
+                // Icon(
+                //   Icons.music_note,
+                //   size: 150,
+                // ),
+                //         // Image.asset(
+                //         //   "images/back.jpg",
+                //         //   fit: BoxFit.cover,
+                //         // ),
+                //         // Positioned(
+                //         //   bottom: -width * 0.15,
+                //         //   right: -width * 0.15,
+                //         //   child: Container(
+                //         //     decoration: ShapeDecoration(
+                //         //         color: Colors.white,
+                //         //         shape: BeveledRectangleBorder(
+                //         //             borderRadius: BorderRadius.only(
+                //         //                 topLeft: Radius.circular(
+                //         //                     width * 0.15)))),
+                //         //     height: width * 0.15 * 2,
+                //         //     width: width * 0.15 * 2,
+                //         //   ),
+                //         // ),
+                //         // Positioned(
+                //         //   bottom: 0.0,
+                //         //   right: 0.0,
+                //         //   child: Padding(
+                //         //     padding:
+                //         //         EdgeInsets.only(right: 4.0, bottom: 6.0),
+                //         //     child: Text(
+                //         //       durationText,
+                //         //       style: TextStyle(
+                //         //         color: Colors.black,
+                //         //         fontSize: 16.0,
+                //         //       ),
+                //         //     ),
+                //         //   ),
+                //         // ),
+                //         Positioned(
+                //           bottom: 40,
+                //           right: 35,
+                //           child: Container(
+                //             height: 50,
+                //             width: 50,
+                //             // child: PimpedButton(
+                //             //   particle: Rectangle2DemoParticle(),
+                //             //   pimpedWidgetBuilder: (context, controller) {
+                //             //     return IconButton(
+                //             //       icon: Icon(Icons.favorite_border),
+                //             //       color: Colors.indigo,
+                //             //       onPressed: () {
+                //             //         controller.forward(from: 0.0);
+                //             //         setFav(song);
+                //             //       },
+                //             //     );
+                //             //   },
+                //             // ),
+                //             child: IconButton(
+                //               icon: isFav == 0
+                //                   ? new Icon(
+                //                       Icons.favorite_border,
+                //                       color: Colors.red,
+                //                       size: 50.0,
+                //                     )
+                //                   : new Icon(
+                //                       Icons.favorite,
+                //                       color: Colors.red,
+                //                       size: 50.0,
+                //                     ),
+                //               onPressed: () {
+                //                 setFav(song);
+                //               },
+                //             ),
+                //             // decoration: ShapeDecoration(
+                //             //     color: Colors.red,
+                //             //     shape: BeveledRectangleBorder(
+                //             //         borderRadius: BorderRadius.only(
+                //             //             topLeft: Radius.circular(
+                //             //                 width * 0.15)))),
+                //             // height: width * 0.15 * 2,
+                //             // width: width * 0.15 * 2,
+                //           ),
+                //         ),
+                //       ],
+                //     ),
+                //   ),
               ),
             ),
           ),

@@ -32,13 +32,13 @@ class BodySelection extends StatelessWidget {
 
   selectionPage(int pos) {
     switch (pos) {
-      case 0:
-        return Home(db);
+      // case 0:
+      //   return Home(db);
       case 1:
         return Songs(db);
+      // case 4:
+      //   return Artists(db);
       case 3:
-        return Artists(db);
-      case 4:
         return Album(db);
       case 2:
         return Playlist(db);
@@ -272,8 +272,8 @@ class _MusicState extends State<MusicHome> {
           items: <Widget>[
             Icon(Icons.music_note),
             Icon(Icons.favorite),
-            Icon(Icons.album),
-            Icon(Icons.account_circle),
+            // Icon(Icons.album),
+            Icon(Icons.search),
           ],
           onTap: (i) async {
             _onSelectItem(i + 1);
