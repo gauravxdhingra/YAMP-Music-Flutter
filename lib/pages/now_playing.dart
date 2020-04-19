@@ -320,6 +320,14 @@ class _StateNowPlaying extends State<NowPlaying>
     final double cutRadius = 8.0;
     return Stack(
       children: <Widget>[
+        Positioned(
+          top: 35,
+          left: 5,
+          child: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
         // Container(
         //     height: MediaQuery.of(context).size.width,
         //     color: Colors.white,
@@ -391,11 +399,11 @@ class _StateNowPlaying extends State<NowPlaying>
                                     )
                                   : Container(),
                               Positioned(
-                                bottom: 20,
-                                right: 20,
+                                bottom: 40,
+                                right: 35,
                                 child: Container(
-                                  height: 100,
-                                  width: 100,
+                                  height: 50,
+                                  width: 50,
                                   // child: PimpedButton(
                                   //   particle: Rectangle2DemoParticle(),
                                   //   pimpedWidgetBuilder: (context, controller) {
@@ -414,12 +422,12 @@ class _StateNowPlaying extends State<NowPlaying>
                                           ? new Icon(
                                               Icons.favorite_border,
                                               color: Colors.red,
-                                              size: 100.0,
+                                              size: 50.0,
                                             )
                                           : new Icon(
                                               Icons.favorite,
                                               color: Colors.red,
-                                              size: 100.0,
+                                              size: 50.0,
                                             ),
                                       onPressed: () {
                                         setFav(song);
@@ -633,72 +641,139 @@ class _StateNowPlaying extends State<NowPlaying>
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new IconButton(
-                                icon: isFav == 0
-                                    ? new Icon(
-                                        Icons.favorite_border,
-                                        color: Colors.blue,
-                                        size: 15.0,
-                                      )
-                                    : new Icon(
-                                        Icons.favorite,
-                                        color: Colors.blue,
-                                        size: 15.0,
-                                      ),
-                                onPressed: () {
-                                  setFav(song);
-                                }),
-                            Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 15.0)),
-                            new IconButton(
-                              splashColor: Colors.blue[200],
-                              highlightColor: Colors.transparent,
-                              icon: new Icon(
+                            NavButtons(
+                              song: song,
+                              isFav: isFav,
+                              ontap: () {
+                                setFav(song);
+                              },
+                              childd: isFav == 0
+                                  ? new Icon(
+                                      Icons.favorite_border,
+                                      color: Colors.blue,
+                                      size: 15.0,
+                                    )
+                                  : new Icon(
+                                      Icons.favorite,
+                                      color: Colors.blue,
+                                      size: 15.0,
+                                    ),
+                            ),
+                            // new IconButton(
+                            //   icon: isFav == 0
+                            //       ? new Icon(
+                            //           Icons.favorite_border,
+                            //           color: Colors.blue,
+                            //           size: 15.0,
+                            //         )
+                            //       : new Icon(
+                            //           Icons.favorite,
+                            //           color: Colors.blue,
+                            //           size: 15.0,
+                            //         ),
+                            //   onPressed:
+                            // () {
+                            //     setFav(song);
+                            //   },
+                            // ),
+                            // Padding(
+                            //     padding:
+                            //         EdgeInsets.symmetric(horizontal: 15.0)),
+                            NavButtons(
+                              song: song,
+                              isFav: null,
+                              ontap: prev,
+                              childd: Icon(
                                 Icons.skip_previous,
                                 color: Colors.blue,
                                 size: 32.0,
                               ),
-                              onPressed: prev,
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                              child: FloatingActionButton(
-                                backgroundColor: _animateColor.value,
-                                child: new AnimatedIcon(
-                                    icon: AnimatedIcons.pause_play,
-                                    progress: _animateIcon),
-                                onPressed: playPause,
-                              ),
+
+                            // new IconButton(
+                            //   splashColor: Colors.blue[200],
+                            //   highlightColor: Colors.transparent,
+                            //   icon: new
+                            // Icon(
+                            //     Icons.skip_previous,
+                            //     color: Colors.blue,
+                            //     size: 32.0,
+                            //   ),
+                            //   onPressed: prev,
+                            // ),
+                            // Padding(
+                            //   padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                            //   child: FloatingActionButton(
+                            //     backgroundColor: _animateColor.value,
+                            //     child: new AnimatedIcon(
+                            //         icon: AnimatedIcons.pause_play,
+                            //         progress: _animateIcon),
+                            //     onPressed: playPause,
+                            //   ),
+                            // ),
+                            PlayPauseButton(
+                              animateColor: _animateColor,
+                              animateIcon: _animateIcon,
+                              playPause: () {
+                                playPause();
+                              },
                             ),
-                            new IconButton(
-                              splashColor: Colors.blue[200].withOpacity(0.5),
-                              highlightColor: Colors.transparent,
-                              icon: new Icon(
+                            // new IconButton(
+                            //   splashColor: Colors.blue[200].withOpacity(0.5),
+                            //   highlightColor: Colors.transparent,
+                            //   icon: new Icon(
+                            //     Icons.skip_next,
+                            //     color: Colors.blue,
+                            //     size: 32.0,
+                            //   ),
+                            //   onPressed: next,
+                            // ),
+
+                            NavButtons(
+                              song: song,
+                              isFav: null,
+                              ontap: next,
+                              childd: Icon(
                                 Icons.skip_next,
                                 color: Colors.blue,
                                 size: 32.0,
                               ),
-                              onPressed: next,
                             ),
-                            Padding(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: 15.0)),
-                            new IconButton(
-                                icon: (repeatOn == 1)
-                                    ? Icon(
-                                        Icons.repeat,
-                                        color: Colors.blue,
-                                        size: 15.0,
-                                      )
-                                    : Icon(
-                                        Icons.repeat,
-                                        color: Colors.blue.withOpacity(0.5),
-                                        size: 15.0,
-                                      ),
-                                onPressed: () {
-                                  repeat1();
-                                }),
+                            // Padding(
+                            //     padding:
+                            //         EdgeInsets.symmetric(horizontal: 15.0)),
+                            NavButtons(
+                              song: song,
+                              isFav: null,
+                              repeatOn: repeatOn,
+                              ontap: () => repeat1(),
+                              childd: (repeatOn == 1)
+                                  ? Icon(
+                                      Icons.repeat,
+                                      color: Colors.blue,
+                                      size: 15.0,
+                                    )
+                                  : Icon(
+                                      Icons.repeat,
+                                      color: Colors.blue.withOpacity(0.5),
+                                      size: 15.0,
+                                    ),
+                            ),
+                            // new IconButton(
+                            //     icon: (repeatOn == 1)
+                            //         ? Icon(
+                            //             Icons.repeat,
+                            //             color: Colors.blue,
+                            //             size: 15.0,
+                            //           )
+                            //         : Icon(
+                            //             Icons.repeat,
+                            //             color: Colors.blue.withOpacity(0.5),
+                            //             size: 15.0,
+                            //           ),
+                            //     onPressed: () {
+                            //       repeat1();
+                            //     }),
                           ],
                         ),
                       ),
@@ -749,5 +824,167 @@ class _StateNowPlaying extends State<NowPlaying>
       else
         isFav = 1;
     });
+  }
+}
+
+class PlayPauseButton extends StatelessWidget {
+  const PlayPauseButton({
+    Key key,
+    @required Animation<ui.Color> animateColor,
+    @required Animation<double> animateIcon,
+    @required this.playPause,
+  })  : _animateColor = animateColor,
+        _animateIcon = animateIcon,
+        super(key: key);
+
+  final Animation<ui.Color> _animateColor;
+  final Animation<double> _animateIcon;
+  final Function playPause;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: playPause,
+      child: Container(
+        height: 100,
+        width: 100,
+        decoration: BoxDecoration(
+          color: Colors.pink,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.red.withOpacity(0.5),
+                offset: Offset(5, 10),
+                spreadRadius: 3,
+                blurRadius: 10),
+            BoxShadow(
+                color: Colors.white,
+                offset: Offset(-3, -4),
+                spreadRadius: -2,
+                blurRadius: 20)
+          ],
+        ),
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Container(
+                margin: EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.red.withOpacity(0.5),
+                          offset: Offset(5, 10),
+                          spreadRadius: 3,
+                          blurRadius: 10),
+                      BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-3, -4),
+                          spreadRadius: -2,
+                          blurRadius: 20)
+                    ]),
+              ),
+            ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                    color: _animateColor.value,
+                    // color: Colors.pink,
+                    shape: BoxShape.circle),
+                child: Center(
+                  child: AnimatedIcon(
+                      icon: AnimatedIcons.pause_play, progress: _animateIcon),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NavButtons extends StatelessWidget {
+  const NavButtons({
+    Key key,
+    @required this.song,
+    @required this.isFav,
+    @required this.ontap,
+    @required this.childd,
+    this.repeatOn,
+  }) : super(key: key);
+
+  final Song song;
+  final int isFav;
+  final Function ontap;
+  final Widget childd;
+  final int repeatOn;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(
+          color: Colors.pink,
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.red.withOpacity(0.5),
+                offset: Offset(5, 10),
+                spreadRadius: 3,
+                blurRadius: 10),
+            BoxShadow(
+                color: Colors.white,
+                offset: Offset(-3, -4),
+                spreadRadius: -2,
+                blurRadius: 20)
+          ],
+        ),
+        child: Stack(
+          children: <Widget>[
+            Center(
+              child: Container(
+                margin: EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                    color: Colors.grey,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.red.withOpacity(0.5),
+                          offset: Offset(5, 10),
+                          spreadRadius: 3,
+                          blurRadius: 10),
+                      BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-3, -4),
+                          spreadRadius: -2,
+                          blurRadius: 20)
+                    ]),
+              ),
+            ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.all(10),
+                decoration:
+                    BoxDecoration(color: Colors.pink, shape: BoxShape.circle),
+                child: Center(
+                  child: childd,
+                  //      Icon(
+                  //   Icons.,
+                  //   size: 30,
+                  //   color: Colors.red,
+                  // ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

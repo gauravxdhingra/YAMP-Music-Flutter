@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:test_player/database/database_client.dart';
@@ -20,17 +21,19 @@ class Album extends StatefulWidget {
 
 class _stateAlbum extends State<Album> {
   List<Song> songs;
+  List<Song> filtersongs;
   var f;
   bool isLoading = true;
   @override
   initState() {
-    super.initState();
     initAlbum();
+    super.initState();
   }
 
   void initAlbum() async {
-    // songs=await widget.db.fetchSongs();
-    songs = await widget.db.fetchAlbum();
+    songs = await widget.db.fetchSongs();
+    filtersongs = songs;
+    // songs = await widget.db.fetchAlbum();
     setState(() {
       isLoading = false;
     });
@@ -57,13 +60,13 @@ class _stateAlbum extends State<Album> {
                   tag: song.album,
                   child: getImage(song) != null
                       ? Container(
-                    color: Colors.blueGrey.shade300,
-                        child: new Image.file(
+                          color: Colors.blueGrey.shade300,
+                          child: new Image.file(
                             getImage(song),
                             height: double.infinity,
                             fit: BoxFit.fitHeight,
                           ),
-                      )
+                        )
                       : new Image.asset(
                           "images/back.jpg",
                           height: double.infinity,
@@ -123,22 +126,54 @@ class _stateAlbum extends State<Album> {
 
   @override
   Widget build(BuildContext context) {
-    final Orientation orientation = MediaQuery.of(context).orientation;
+    // final Orientation orientation = MediaQuery.of(context).orientation;
     return new Container(
-        child: isLoading
-            ? new Center(
-                child: new CircularProgressIndicator(),
-              )
-            : Scrollbar(
-                child: new GridView.count(
-                  crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
-                  children: _buildGridCards(context),
-                  physics: BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                  childAspectRatio: 8.0 / 9.5,
-                  crossAxisSpacing: 2.0,
-                  mainAxisSpacing: 18.0,
+      child: isLoading
+          ? new Center(
+              child: new CircularProgressIndicator(),
+            )
+          : Container(
+              // height: 200,
+              // width: 400,
+              child: FloatingSearchBar.builder(
+                itemCount: filtersongs.length,
+                itemBuilder: (context, i) => ListTile(
+                  title: Text(filtersongs[i].title),
                 ),
-              ));
+                trailing: CircleAvatar(
+                  child: Text("Y"),
+                ),
+                onChanged: (String value) {
+                  setState(() {
+                    filtersongs = songs
+                        .where((value) => songs
+                            .title
+                            .toLowerCase()
+                            .contains(value.title.toLowerCase()))
+                        .toList();
+                  });
+                },
+                onTap: () {},
+                decoration: InputDecoration.collapsed(
+                  hintText: "Search...",
+                ),
+              ),
+            ),
+      // Positioned(
+      //   top: 20,
+      //   child: Scrollbar(
+      //     child: new GridView.count(
+      //       crossAxisCount:
+      //           orientation == Orientation.portrait ? 2 : 4,
+      //       children: _buildGridCards(context),
+      //       physics: BouncingScrollPhysics(),
+      //       padding: EdgeInsets.only(left: 10.0, right: 10.0),
+      //       childAspectRatio: 8.0 / 9.5,
+      //       crossAxisSpacing: 2.0,
+      //       mainAxisSpacing: 18.0,
+      //     ),
+      //   ),
+      // ),
+    );
   }
 }

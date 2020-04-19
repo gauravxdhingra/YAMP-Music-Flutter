@@ -232,6 +232,29 @@ class _MusicState extends State<MusicHome> {
                 }));
               }
             }),
+
+        // floatingActionButton: new FloatingActionButton(
+        //     child: Icon(MdiIcons.play, color: Colors.black),
+        //     backgroundColor: Colors.yellowAccent,
+        //     onPressed: () async {
+        //       var pref = await SharedPreferences.getInstance();
+        //       var fp = pref.getBool("played");
+        //       if (fp == null) {
+        //         scaffoldState.currentState.showSnackBar(
+        //             new SnackBar(content: Text("Play your first song.")));
+        //       } else {
+        //         Navigator.of(context)
+        //             .push(new MaterialPageRoute(builder: (context) {
+        //           if (MyQueue.songs == null) {
+        //             List<Song> list = new List();
+        //             list.add(last);
+        //             MyQueue.songs = list;
+        //             return new NowPlaying(db, list, 0, 0);
+        //           } else
+        //             return new NowPlaying(db, MyQueue.songs, MyQueue.index, 1);
+        //         }));
+        //       }
+        //     }),
         body: isLoading
             ? Center(child: CircularProgressIndicator())
             : _selectedIndex == 0
@@ -272,7 +295,7 @@ class _MusicState extends State<MusicHome> {
         //   elevation: 0.0,
         //   color: Colors.grey.withOpacity(0.25),
         // ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
       onWillPop: _onWillPop,
     );

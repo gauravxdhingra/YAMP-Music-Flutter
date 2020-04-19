@@ -157,6 +157,14 @@ class _ListSong extends State<ListSongs> {
                   topRight: Radius.circular(42),
                   bottomRight: Radius.circular(42),
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black38,
+                    blurRadius: 2.0,
+                    spreadRadius: 0.0,
+                    offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                  )
+                ],
               ),
               child: isLoading
                   ? new Center(

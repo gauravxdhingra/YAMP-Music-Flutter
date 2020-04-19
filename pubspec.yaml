@@ -45,6 +45,7 @@ dependencies:
   like_button: ^0.2.0
   pimp_my_button: ^1.0.0
   draggable_scrollbar_sliver: ^0.0.3
+  floating_search_bar: ^0.3.0
 
 dev_dependencies:
   flutter_test:
