@@ -46,19 +46,7 @@ class _ListSong extends State<ListSongs> {
 
   void initSongs() async {
     allSongs = await widget.db.fetchSongs();
-    switch (widget.mode) {
-      case 1:
-        songs = await widget.db.fetchRecentSong();
-        break;
-      case 2:
-        songs = await widget.db.fetchTopSong();
-        break;
-      case 3:
-        songs = await widget.db.fetchFavSong();
-        break;
-      default:
-        break;
-    }
+    songs = await widget.db.fetchFavSong();
     setState(() {
       isLoading = false;
     });
@@ -67,22 +55,6 @@ class _ListSong extends State<ListSongs> {
   @override
   void dispose() {
     super.dispose();
-  }
-
-  String getTitle(int mode) {
-    switch (mode) {
-      case 1:
-        return "Recently played";
-        break;
-      case 2:
-        return "Top tracks";
-        break;
-      case 3:
-        return "Favourites";
-        break;
-      default:
-        return null;
-    }
   }
 
   Future<bool> isFav(song) async {
@@ -164,114 +136,174 @@ class _ListSong extends State<ListSongs> {
   @override
   Widget build(BuildContext context) {
     initSongs();
-    return new Scaffold(
+    // songs.sort((so));
+    return Scaffold(
       backgroundColor: Color(0xFFFAFAFA),
-      // appBar: widget.orientation == Orientation.portrait
-      //     ? GreyAppBar(
-      //         title: getTitle(widget.mode).toLowerCase(),
-      //         isBack: true,
-      //       )
-      //     : null,
-      body: new Container(
-        child: isLoading
-            ? new Center(
-                child: new CircularProgressIndicator(),
-              )
-            : songs.length != 0
-                ? new ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: songs.length,
-                    itemBuilder: (context, i) => new Column(
-                      children: <Widget>[
-                        new ListTile(
-                          leading: Hero(
-                            tag: songs[i].id,
-                            child: songs[i].albumArt != null
-                                ? Image.file(
-                                    getImage(songs[i]),
-                                    width: 55.0,
-                                    height: 55.0,
-                                  )
-                                : Icon(Icons.music_note),
-                          ),
-                          title: new Text(songs[i].title,
-                              maxLines: 1,
-                              style: new TextStyle(
-                                  fontSize: 16.0, color: Colors.black)),
-                          subtitle: new Text(
-                            songs[i].artist,
-                            maxLines: 1,
-                            style: new TextStyle(
-                                fontSize: 12.0, color: Colors.grey),
-                          ),
-                          trailing: widget.mode == 2
-                              ? new Text(
-                                  (i + 1).toString(),
-                                  style: new TextStyle(
-                                      fontSize: 12.0, color: Colors.grey),
-                                )
-                              : new Text(
-                                  new Duration(milliseconds: songs[i].duration)
-                                      .toString()
-                                      .split('.')
-                                      .first
-                                      .substring(3, 7),
-                                  style: new TextStyle(
-                                      fontSize: 12.0, color: Colors.grey)),
-                          onTap: () {
-                            MyQueue.songs = songs;
-                            Navigator.of(context).push(new MaterialPageRoute(
-                                builder: (context) => new NowPlaying(
-                                    widget.db, MyQueue.songs, i, 0)));
-                          },
-                        ),
-                      ],
-                    ),
-                  )
-                : Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Nothing here :(",
-                          style: TextStyle(
-                              fontSize: 30.0, fontWeight: FontWeight.w600),
-                        ),
-                        Padding(padding: EdgeInsets.symmetric(vertical: 10.0)),
-                        OutlineButton(
-                          child: Text("Add Songs".toUpperCase()),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                          onPressed: _modelBottomSheet,
-                          color: Colors.blueGrey.shade500,
-                          highlightedBorderColor: Color(0xFF373737),
-                          borderSide:
-                              BorderSide(width: 2.0, color: Colors.blueGrey),
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            top: MediaQuery.of(context).size.height / 15,
+            right: 15,
+            left: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 1.16,
+              padding: EdgeInsets.only(top: 15),
+              decoration: BoxDecoration(
+                color: Color(0xff6e00db),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(42),
+                  bottomRight: Radius.circular(42),
+                ),
+              ),
+              child: isLoading
+                  ? new Center(
+                      child: new CircularProgressIndicator(),
+                    )
+                  : songs.length != 0
+                      ? Column(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20, top: 10),
+                              child: Row(
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.favorite,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ),
+                                  SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
+                                    'Favourites',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              thickness: 2,
+                            ),
+                            Container(
+                              height: MediaQuery.of(context).size.height / 1.4,
+                              child: new ListView.builder(
+                                physics: BouncingScrollPhysics(),
+                                itemCount: songs.length,
+                                itemBuilder: (context, i) => new Column(
+                                  children: <Widget>[
+                                    new ListTile(
+                                      contentPadding: EdgeInsets.only(
+                                        left: 20,
+                                        right: 20,
+                                        // top: 5,
+                                        // bottom: 5,
+                                      ),
+                                      leading: Hero(
+                                        tag: songs[i].id,
+                                        child: songs[i].albumArt != null
+                                            ? CircleAvatar(
+                                                backgroundImage: FileImage(
+                                                  getImage(songs[i]),
+                                                  // width: 55.0,
+                                                  // height: 55.0,
+                                                ),
+                                              )
+                                            : CircleAvatar(
+                                                child: Center(
+                                                  child: Text(songs[i]
+                                                      .title[0]
+                                                      .toUpperCase()),
+                                                ),
+                                              ),
+                                      ),
+                                      title: new Text(songs[i].title,
+                                          maxLines: 1,
+                                          style: new TextStyle(
+                                              fontSize: 16.0,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w500)),
+                                      subtitle: new Text(
+                                        songs[i].artist,
+                                        maxLines: 1,
+                                        style: new TextStyle(
+                                            fontSize: 12.0,
+                                            color: Colors.white),
+                                      ),
+                                      trailing: widget.mode == 2
+                                          ? new Text(
+                                              (i + 1).toString(),
+                                              style: new TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.white),
+                                            )
+                                          : new Text(
+                                              new Duration(
+                                                      milliseconds:
+                                                          songs[i].duration)
+                                                  .toString()
+                                                  .split('.')
+                                                  .first
+                                                  .substring(3, 7),
+                                              style: new TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.white)),
+                                      onTap: () {
+                                        MyQueue.songs = songs;
+                                        Navigator.of(context).push(
+                                            new MaterialPageRoute(
+                                                builder: (context) =>
+                                                    new NowPlaying(widget.db,
+                                                        MyQueue.songs, i, 0)));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
                         )
-                      ],
-                    ),
-                  ),
+                      : Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Nothing here :(",
+                                style: TextStyle(
+                                    fontSize: 30.0,
+                                    fontWeight: FontWeight.w600),
+                              ),
+                              Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(vertical: 10.0)),
+                              OutlineButton(
+                                child: Text("Add Songs".toUpperCase()),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0)),
+                                onPressed: _modelBottomSheet,
+                                color: Colors.blueGrey.shade500,
+                                highlightedBorderColor: Color(0xFF373737),
+                                borderSide: BorderSide(
+                                    width: 2.0, color: Colors.blueGrey),
+                              )
+                            ],
+                          ),
+                        ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: songs != null
           ? FloatingActionButton(
               onPressed: () {
-                if (widget.mode != 3) {
-                  MyQueue.songs = songs;
-                  Navigator.of(context).push(new MaterialPageRoute(
-                      builder: (context) => new NowPlaying(
-                          widget.db,
-                          MyQueue.songs,
-                          new Random().nextInt(songs.length),
-                          0)));
-                } else
-                  _modelBottomSheet();
+                _modelBottomSheet();
               },
               backgroundColor: Colors.white,
               foregroundColor: Colors.blueGrey,
-              child: widget.mode == 3
-                  ? Icon(Icons.add)
-                  : Icon(CupertinoIcons.shuffle_thick),
-            )
+              child: Icon(Icons.add))
           : null,
     );
   }

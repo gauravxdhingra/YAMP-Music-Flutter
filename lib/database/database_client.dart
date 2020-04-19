@@ -283,7 +283,8 @@ class DatabaseClient {
     //  List<Map> results = await _db.query("songs",
     // distinct: true,
     //columns: Song.Columns );
-    List<Map> results = await _db.rawQuery("select * from songs where isFav=1");
+    List<Map> results =
+        await _db.rawQuery("select * from songs where isFav=1 order by title");
     List<Song> songs = new List();
     results.forEach((s) {
       Song song = new Song.fromMap(s);
