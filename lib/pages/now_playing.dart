@@ -105,9 +105,9 @@ class _StateNowPlaying extends State<NowPlaying>
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animateColor = ColorTween(
-      begin: Color(0xffFFCE00),
+      end: Color(0xffFFCE00),
       // .withOpacity(0.7),
-      end: Color(0xff6e00db),
+      begin: Color(0xff6e00db),
       // .withOpacity(0.9),
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -250,7 +250,10 @@ class _StateNowPlaying extends State<NowPlaying>
           : Center(
               child: CircularProgressIndicator(),
             ),
-      backgroundColor: Color(0xffFFCE00),
+      backgroundColor: Color(0xff7800ee),
+// Color(0xff6e00db),
+      // Colors.white,
+      //  Color(0xffFFCE00),
     );
   }
 
@@ -365,7 +368,7 @@ class _StateNowPlaying extends State<NowPlaying>
           top: 35,
           left: 5,
           child: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back_ios, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
@@ -522,6 +525,7 @@ class _StateNowPlaying extends State<NowPlaying>
                               Icon(
                                 Icons.music_note,
                                 size: 150,
+                                color: Colors.white,
                               ),
                               _showArtistImage
                                   ? GestureDetector(
@@ -686,8 +690,9 @@ class _StateNowPlaying extends State<NowPlaying>
                               child: new Text(
                                 '${song.title}\n',
                                 style: new TextStyle(
-                                    color: Colors.black.withOpacity(0.85),
-                                    fontSize: 19,
+                                    color: Colors.white,
+                                    // Colors.black.withOpacity(0.85),
+                                    fontSize: 18,
                                     letterSpacing: 1.5,
                                     fontWeight: FontWeight.w500,
                                     height: 1.5),
@@ -699,7 +704,8 @@ class _StateNowPlaying extends State<NowPlaying>
                             new Text(
                               "${song.artist}\n",
                               style: new TextStyle(
-                                  color: Colors.black.withOpacity(0.7),
+                                  color: Colors.white,
+                                  // Colors.black.withOpacity(0.7),
                                   fontSize: 14.0,
                                   letterSpacing: 1.8,
                                   height: 1.5),
@@ -723,7 +729,8 @@ class _StateNowPlaying extends State<NowPlaying>
                           positionText,
                           style: TextStyle(
                               fontSize: 13.0,
-                              color: Colors.black,
+                              color: Colors.white,
+                              // Colors.black,
                               //  Color(0xaa373737),
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.0),
@@ -731,10 +738,12 @@ class _StateNowPlaying extends State<NowPlaying>
                         Expanded(
                           child: Slider(
                             min: 0.0,
-                            activeColor:
-                                // Colors.blueGrey.shade400.withOpacity(0.5),
-                                Color(0xff6e00db).withOpacity(0.8),
-                            inactiveColor: Color(0xff6e00db).withOpacity(0.2),
+                            activeColor: Colors.yellow,
+                            // Colors.blueGrey.shade400.withOpacity(0.5),
+                            // Color(0xff6e00db).withOpacity(0.8),
+                            // Colors.white,
+                            inactiveColor: Colors.white.withOpacity(0.5),
+                            // Color(0xff6e00db).withOpacity(0.2),
                             // Colors.blueGrey.shade300.withOpacity(0.3),
                             value: position?.inMilliseconds?.toDouble() ?? 0.0,
                             onChanged: (double value) =>
@@ -747,7 +756,8 @@ class _StateNowPlaying extends State<NowPlaying>
                           style: TextStyle(
                               fontSize: 13.0,
                               // color: Color(0xaa373737),
-                              color: Colors.black,
+                              color: Colors.white,
+                              //  Colors.black,
                               fontWeight: FontWeight.w600,
                               letterSpacing: 1.0),
                         ),
@@ -771,7 +781,7 @@ class _StateNowPlaying extends State<NowPlaying>
                               childd: isFav == 0
                                   ? new Icon(
                                       Icons.favorite_border,
-                                      color: Colors.white,
+                                      color: Colors.white70,
                                       // blue,
                                       size: 28.0,
                                     )
@@ -881,7 +891,7 @@ class _StateNowPlaying extends State<NowPlaying>
                                     )
                                   : Icon(
                                       Icons.repeat,
-                                      color: Colors.grey,
+                                      color: Colors.white38,
                                       // blue.withOpacity(0.5),
                                       size: 28.0,
                                     ),
@@ -985,7 +995,8 @@ class PlayPauseButton extends StatelessWidget {
                 spreadRadius: 3,
                 blurRadius: 10),
             BoxShadow(
-                color: Colors.white,
+                color: Color(0xff6e00db),
+                // Colors.white,
                 offset: Offset(-3, -4),
                 spreadRadius: -2,
                 blurRadius: 20)
@@ -997,7 +1008,10 @@ class PlayPauseButton extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                    color: Color(0xff6e00db),
+                    // Color(0xff7800ee),
+                    // Color(0xff6e00db),
+                    // Color(0xffFFCE00),
+                    color: Color(0xffFFCE00),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
@@ -1015,9 +1029,10 @@ class PlayPauseButton extends StatelessWidget {
             ),
             Center(
               child: Container(
-                margin: EdgeInsets.all(12),
+                margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: _animateColor.value,
+                    color: Color(0xff7800ee),
+                    // _animateColor.value,
                     // color: Colors.pink,
                     shape: BoxShape.circle),
                 child: Center(
@@ -1025,6 +1040,9 @@ class PlayPauseButton extends StatelessWidget {
                     icon: AnimatedIcons.pause_play,
                     progress: _animateIcon,
                     color: Colors.white,
+                    // !_animateIcon.isCompleted
+                    //     ? Colors.white
+                    //     : Color(0xff7800ee),
                     size: 55,
                   ),
                 ),
@@ -1070,8 +1088,9 @@ class NavButtons extends StatelessWidget {
                 spreadRadius: 3,
                 blurRadius: 10),
             BoxShadow(
-                color: Color(0xffFFCE00),
-                //  Colors.white,
+                // color: Color(0xffFFCE00),
+                color: Color(0xff6e00db),
+                // Colors.white,
                 offset: Offset(-3, -4),
                 spreadRadius: -2,
                 blurRadius: 20)
@@ -1089,11 +1108,12 @@ class NavButtons extends StatelessWidget {
                       BoxShadow(
                           color: Color(0xff6e00db).withOpacity(0.5),
                           offset: Offset(5, 10),
-                          spreadRadius: 3,
-                          blurRadius: 10),
+                          spreadRadius: 1.5,
+                          blurRadius: 5),
                       BoxShadow(
-                          color: Color(0xffFFCE00),
-                          // Colors.white,
+                          color:
+                              //  Color(0xffFFCE00),
+                              Colors.white,
                           offset: Offset(-3, -4),
                           spreadRadius: -2,
                           blurRadius: 20)

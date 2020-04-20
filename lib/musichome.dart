@@ -170,6 +170,8 @@ class _MusicState extends State<MusicHome> {
     });
   }
 
+  int indexx = 0;
+
   Future<Null> refreshData() async {
     var db = new DatabaseClient();
     await MusicFinder.allSongs().then((songs) {
@@ -277,23 +279,23 @@ class _MusicState extends State<MusicHome> {
                     backgroundColor: Color(0xff7800ee),
                   )
                 : BodySelection(_selectedIndex, db),
-        bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Color(0xff7800ee),
-          color: Colors.yellowAccent,
-          height: 52,
-          items: <Widget>[
-            Icon(Icons.music_note),
-            Icon(Icons.favorite),
-            // Icon(Icons.album),
-            Icon(Icons.search),
-          ],
-          onTap: (i) async {
-            _onSelectItem(i + 1);
-            BodySelection(i, db).selectionPage(i);
-
-            _handlingIsSelected(i + 1);
-          },
-        ),
+        bottomNavigationBar:CurvedNavigationBar(
+                backgroundColor: Color(0xff7800ee),
+                color: Colors.yellowAccent,
+                height: 52,
+                index: _selectedIndex-1,
+                items: <Widget>[
+                  Icon(Icons.music_note),
+                  Icon(Icons.favorite),
+                  // Icon(Icons.album),
+                  Icon(Icons.search),
+                ],
+                onTap: (i) async {
+                  _onSelectItem(i + 1);
+                  BodySelection(i, db).selectionPage(i);
+                  _handlingIsSelected(i + 1);
+                },
+              ),
         // BottomAppBar(
         //   shape: CircularNotchedRectangle(),
         //   child: Container(
@@ -309,14 +311,16 @@ class _MusicState extends State<MusicHome> {
         // ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
-      onWillPop: _onWillPop, 
+      onWillPop: _onWillPop,
     );
   }
 
   Future<bool> _onWillPop() {
     if (_selectedIndex != 1) {
+
       setState(() {
-        _selectedIndex = 1;        
+
+        _selectedIndex = 1;
       });
       return null;
     } else
