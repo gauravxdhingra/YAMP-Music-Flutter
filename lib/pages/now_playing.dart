@@ -7,6 +7,8 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
 // import 'package:flutter_visualizers/visualizer.dart';
+// import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
+// import 'package:flutter_visualizers/visualizer.dart';
 // import 'package:pimp_my_button/pimp_my_button.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/util/lastplay.dart';
@@ -15,6 +17,7 @@ import 'package:test_player/database/database_client.dart';
 // import 'package:test_player/pages/artistcard.dart';
 import 'package:test_player/util/artistInfo.dart';
 import 'package:test_player/util/lastplay.dart';
+// import 'package:flutter_visualizers/flutter_visualizers.dart';
 import '../util/methodcalls.dart';
 
 class NowPlaying extends StatefulWidget {
@@ -50,6 +53,7 @@ class _StateNowPlaying extends State<NowPlaying>
   Animation<double> _animateIcon;
   Timer timer;
   bool _showArtistImage;
+  // int playerID;
 
   get durationText => duration != null
       ? duration.toString().split('.').first.substring(3, 7)
@@ -72,7 +76,7 @@ class _StateNowPlaying extends State<NowPlaying>
   // int playerID;
 
   // Future<void> initPlatformState() async {
-  //   MethodCalls.playSong();
+  //   // MethodCalls.playSong();
   //   int sessionId;
   //   // Platform messages may fail, so we use a try/catch PlatformException.
   //   try {
@@ -730,8 +734,8 @@ class _StateNowPlaying extends State<NowPlaying>
                             activeColor:
                                 // Colors.blueGrey.shade400.withOpacity(0.5),
                                 Color(0xff6e00db).withOpacity(0.8),
-                            inactiveColor:Color(0xff6e00db).withOpacity(0.2),
-                                // Colors.blueGrey.shade300.withOpacity(0.3),
+                            inactiveColor: Color(0xff6e00db).withOpacity(0.2),
+                            // Colors.blueGrey.shade300.withOpacity(0.3),
                             value: position?.inMilliseconds?.toDouble() ?? 0.0,
                             onChanged: (double value) =>
                                 player.seek((value / 1000).roundToDouble()),

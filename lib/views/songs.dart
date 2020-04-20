@@ -4,6 +4,7 @@ import 'package:draggable_scrollbar_sliver/draggable_scrollbar_sliver.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test_player/database/database_client.dart';
 import 'package:test_player/pages/now_playing.dart';
 import 'package:test_player/util/lastplay.dart';
@@ -51,7 +52,13 @@ class SongsState extends State<Songs> {
             case ConnectionState.none:
               break;
             case ConnectionState.waiting:
-              return CircularProgressIndicator();
+              return Center(
+                child: SpinKitThreeBounce(
+                  color: Colors.blueGrey,
+                  size: 20,
+                ),
+              );
+            // CircularProgressIndicator();
             case ConnectionState.active:
               break;
             case ConnectionState.done:
@@ -144,7 +151,7 @@ class SongsState extends State<Songs> {
             right: 15,
             left: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height / 1.14,
+              height: MediaQuery.of(context).size.height / 1.142,
               padding: EdgeInsets.only(top: 15),
               decoration: BoxDecoration(
                 color: Color(0xff6e00db),
@@ -202,7 +209,21 @@ class SongsState extends State<Songs> {
                         case ConnectionState.none:
                           break;
                         case ConnectionState.waiting:
-                          return CircularProgressIndicator();
+                          return Container(
+                            height: 400,
+                            child: Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 250,
+                                ),
+                                SpinKitThreeBounce(
+                                  color: Colors.blueGrey,
+                                  size: 20,
+                                ),
+                              ],
+                            ),
+                          );
+                        //  CircularProgressIndicator();
                         case ConnectionState.active:
                           break;
                         case ConnectionState.done:
@@ -217,7 +238,7 @@ class SongsState extends State<Songs> {
                             backgroundColor: Color(0xffFFCE00),
                             child: Container(
                               height:
-                                  MediaQuery.of(context).size.height / 1.445,
+                                  MediaQuery.of(context).size.height / 1.448,
                               child: FadingEdgeScrollView.fromScrollView(
                                 gradientFractionOnStart: 0.05,
                                 gradientFractionOnEnd: 0.03,

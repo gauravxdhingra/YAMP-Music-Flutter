@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 // import 'package:musicplayer/util/AAppBar.dart';
 // import 'package:musicplayer/util/lastplay.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test_player/database/database_client.dart';
 import 'package:test_player/pages/now_playing.dart';
 // import 'package:test_player/util/AAppBar.dart';
@@ -168,7 +169,11 @@ class _ListSong extends State<ListSongs> {
               ),
               child: isLoading
                   ? new Center(
-                      child: new CircularProgressIndicator(),
+                      child: SpinKitThreeBounce(
+                        color: Colors.blueGrey,
+                        size: 30,
+                      ),
+                      // child: new CircularProgressIndicator(),
                     )
                   : Column(
                       children: <Widget>[
@@ -215,8 +220,8 @@ class _ListSong extends State<ListSongs> {
                                 backgroundColor: Color(0xffFFCE00),
                                 child: Container(
                                   padding: EdgeInsets.only(top: 0),
-                                  height: MediaQuery.of(context).size.height /
-                                      1.28,
+                                  height:
+                                      MediaQuery.of(context).size.height / 1.28,
                                   child: FadingEdgeScrollView.fromScrollView(
                                     gradientFractionOnStart: 0.04,
                                     gradientFractionOnEnd: 0.05,

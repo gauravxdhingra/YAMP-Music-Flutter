@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/pages/now_playing.dart';
@@ -32,8 +33,8 @@ class BodySelection extends StatelessWidget {
 
   selectionPage(int pos) {
     switch (pos) {
-      // case 0:
-      //   return Home(db);
+      case 0:
+        return Songs(db);
       case 1:
         return Songs(db);
       // case 4:
@@ -81,7 +82,7 @@ class _MusicState extends State<MusicHome> {
 
   initBottomItems() {
     bottomItems = [
-      new BottomItem("Home", Icons.home, null, null),
+      // new BottomItem("Home", Icons.home, null, null),
       new BottomItem(
         "Songs",
         Icons.music_note,
@@ -177,14 +178,14 @@ class _MusicState extends State<MusicHome> {
     }).then((val) {
       scaffoldState.currentState.showSnackBar(new SnackBar(
         content: Text(
-          "Database Updated",
+          "Songs Updated",
         ),
         duration: Duration(milliseconds: 1500),
       ));
     }).catchError((error) {
       scaffoldState.currentState.showSnackBar(new SnackBar(
         content: Text(
-          "Failed to update database",
+          "Failed to update!",
         ),
         duration: Duration(milliseconds: 1500),
       ));
@@ -217,8 +218,10 @@ class _MusicState extends State<MusicHome> {
               var pref = await SharedPreferences.getInstance();
               var fp = pref.getBool("played");
               if (fp == null) {
-                scaffoldState.currentState.showSnackBar(
-                    new SnackBar(content: Text("Play your first song.")));
+                scaffoldState.currentState.showSnackBar(new SnackBar(
+                  content: Text("Play your first song."),
+                  duration: Duration(milliseconds: 1500),
+                ));
               } else {
                 Navigator.of(context)
                     .push(new MaterialPageRoute(builder: (context) {
@@ -256,8 +259,17 @@ class _MusicState extends State<MusicHome> {
         //       }
         //     }),
         body: isLoading
-            ? Center(child: CircularProgressIndicator())
-            : _selectedIndex == 0
+            ? Container(
+                // height: 400, width: 400,
+                child: Center(
+                    child: SpinKitDoubleBounce(
+                  color: Colors.blueGrey,
+                  size: 100,
+                )
+                    // CircularProgressIndicator()
+                    ),
+              )
+            : _selectedIndex == 1
                 ? RefreshIndicator(
                     child: BodySelection(_selectedIndex, db),
                     color: Colors.blueGrey,
@@ -297,14 +309,14 @@ class _MusicState extends State<MusicHome> {
         // ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
-      onWillPop: _onWillPop,
+      onWillPop: _onWillPop, 
     );
   }
 
   Future<bool> _onWillPop() {
-    if (_selectedIndex != 0) {
+    if (_selectedIndex != 1) {
       setState(() {
-        _selectedIndex = 0;
+        _selectedIndex = 1;        
       });
       return null;
     } else
