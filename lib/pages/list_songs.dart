@@ -147,7 +147,7 @@ class _ListSong extends State<ListSongs> {
         children: <Widget>[
           Positioned(
             top: MediaQuery.of(context).size.height / 22,
-            right: 15,
+            right: 10,
             left: 0,
             child: Container(
               height: MediaQuery.of(context).size.height / 1.14,
@@ -160,10 +160,10 @@ class _ListSong extends State<ListSongs> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 2.0,
+                    color: Colors.black26,
+                    blurRadius: 0.5,
                     spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                    offset: Offset(0.5, 0.5), // shadow direction: bottom right
                   )
                 ],
               ),

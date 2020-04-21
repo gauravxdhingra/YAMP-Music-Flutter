@@ -12,6 +12,8 @@ import 'package:floating_search_bar/floating_search_bar.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/pages/now_playing.dart';
 // import 'package:musicplayer/util/lastplay.dart';
+import 'package:persist_theme/persist_theme.dart';
+import 'package:provider/provider.dart';
 
 class Songs extends StatefulWidget {
   final DatabaseClient db;
@@ -141,6 +143,7 @@ class SongsState extends State<Songs> {
   Widget build(BuildContext context) {
     final _controller = ScrollController();
     final _controllerh = ScrollController();
+    final _theme = Provider.of<ThemeModel>(context);
     return Scaffold(
       backgroundColor: Color(0xff7800ee),
       //  Colors.transparent,
@@ -148,7 +151,7 @@ class SongsState extends State<Songs> {
         children: <Widget>[
           Positioned(
             top: MediaQuery.of(context).size.height / 22,
-            right: 15,
+            right: 10,
             left: 0,
             child: Container(
               height: MediaQuery.of(context).size.height / 1.142,
@@ -161,10 +164,10 @@ class SongsState extends State<Songs> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black38,
-                    blurRadius: 2.0,
-                    spreadRadius: 0.0,
-                    offset: Offset(2.0, 2.0), // shadow direction: bottom right
+                    color: Colors.black26,
+                    blurRadius: 0.5,
+                    spreadRadius: 0.5,
+                    offset: Offset(0.5, 0.5), // shadow direction: bottom right
                   )
                 ],
               ),

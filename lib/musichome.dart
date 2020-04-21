@@ -22,6 +22,9 @@ import 'package:test_player/views/artists.dart';
 import 'package:test_player/views/home.dart';
 import 'package:test_player/views/playlists.dart';
 import 'package:test_player/views/songs.dart';
+import 'package:persist_theme/persist_theme.dart';
+import 'package:provider/provider.dart';
+import './views/setings.dart';
 
 import 'database/database_client.dart';
 
@@ -37,11 +40,13 @@ class BodySelection extends StatelessWidget {
         return Songs(db);
       case 1:
         return Songs(db);
-      // case 4:
-      //   return Artists(db);
+      case 4:
+        return Settings(db);
       case 3:
+        // search
         return Album(db);
       case 2:
+        // fav
         return Playlist(db);
       default:
         return Text("Error");
@@ -50,6 +55,7 @@ class BodySelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Provider.of<ThemeModel>(context);
     return selectionPage(_selectedIndex);
   }
 }
@@ -97,7 +103,7 @@ class _MusicState extends State<MusicHome> {
       new BottomItem("Albums", Icons.album, () async {
         _onSelectItem(4);
       }, _handlingIsSelected(4)),
-      new BottomItem("Artists", Icons.person, () async {
+      new BottomItem("Search", Icons.person, () async {
         _onSelectItem(3);
       }, _handlingIsSelected(3)),
     ];
@@ -264,38 +270,32 @@ class _MusicState extends State<MusicHome> {
             ? Container(
                 // height: 400, width: 400,
                 child: Center(
-                    child: SpinKitDoubleBounce(
+                    child: SpinKitThreeBounce(
                   color: Colors.blueGrey,
                   size: 100,
                 )
                     // CircularProgressIndicator()
                     ),
               )
-            : _selectedIndex == 1
-                ? RefreshIndicator(
-                    child: BodySelection(_selectedIndex, db),
-                    color: Colors.blueGrey,
-                    onRefresh: refreshData,
-                    backgroundColor: Color(0xff7800ee),
-                  )
-                : BodySelection(_selectedIndex, db),
-        bottomNavigationBar:CurvedNavigationBar(
-                backgroundColor: Color(0xff7800ee),
-                color: Colors.yellowAccent,
-                height: 52,
-                index: _selectedIndex-1,
-                items: <Widget>[
-                  Icon(Icons.music_note),
-                  Icon(Icons.favorite),
-                  // Icon(Icons.album),
-                  Icon(Icons.search),
-                ],
-                onTap: (i) async {
-                  _onSelectItem(i + 1);
-                  BodySelection(i, db).selectionPage(i);
-                  _handlingIsSelected(i + 1);
-                },
-              ),
+            :  BodySelection(_selectedIndex, db),
+        bottomNavigationBar: CurvedNavigationBar(
+          backgroundColor: Color(0xff7800ee),
+          color: Colors.yellowAccent,
+          height: 52,
+          index: _selectedIndex - 1,
+          items: <Widget>[
+            Icon(Icons.music_note),
+            Icon(Icons.favorite),
+            // Icon(Icons.album),
+            Icon(Icons.search),
+            Icon(Icons.settings),
+          ],
+          onTap: (i) async {
+            _onSelectItem(i + 1);
+            BodySelection(i, db).selectionPage(i);
+            _handlingIsSelected(i + 1);
+          },
+        ),
         // BottomAppBar(
         //   shape: CircularNotchedRectangle(),
         //   child: Container(
@@ -317,9 +317,7 @@ class _MusicState extends State<MusicHome> {
 
   Future<bool> _onWillPop() {
     if (_selectedIndex != 1) {
-
       setState(() {
-
         _selectedIndex = 1;
       });
       return null;

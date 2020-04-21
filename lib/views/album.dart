@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test_player/database/database_client.dart';
 // import 'package:test_player/pages/card_detail.dart';
 import 'package:test_player/pages/now_playing.dart';
@@ -145,13 +146,16 @@ class _stateAlbum extends State<Album> {
       backgroundColor: Color(0xff7800ee),
       body: isLoading
           ? new Center(
-              child: new CircularProgressIndicator(),
+              child: SpinKitThreeBounce(
+                color: Colors.blueGrey,
+                size: 30,
+              ),
             )
           : Stack(
               children: <Widget>[
                 Positioned(
                   top: MediaQuery.of(context).size.height / 22,
-                  right: 15,
+                  right: 10,
                   left: 0,
                   child: Container(
                     height: MediaQuery.of(context).size.height / 1.14,
@@ -165,10 +169,10 @@ class _stateAlbum extends State<Album> {
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black38,
-                          blurRadius: 2.0,
-                          spreadRadius: 0.0,
+                          blurRadius: 0.5,
+                          spreadRadius: 0.5,
                           offset: Offset(
-                              2.0, 2.0), // shadow direction: bottom right
+                              0.5, 0.5), // shadow direction: bottom right
                         )
                       ],
                     ),
