@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:fancy_dialog/FancyAnimation.dart';
 import 'package:fancy_dialog/FancyGif.dart';
 import 'package:fancy_dialog/FancyTheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_brand_icons/flutter_brand_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share/share.dart';
 import 'package:flute_music_player/flute_music_player.dart';
@@ -14,6 +16,9 @@ import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info/package_info.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
+import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
+// import 'package:social_media_buttons/social_media_buttons.dart';
 
 class Settings extends StatefulWidget {
   final DatabaseClient db;
@@ -34,8 +39,12 @@ class SongsState extends State<Settings> {
 
   @override
   void initState() {
+    initInfo();
     super.initState();
-    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+  }
+
+  void initInfo() async {
+    await PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       appName = packageInfo.appName;
       packageName = packageInfo.packageName;
       version = packageInfo.version;
@@ -201,9 +210,14 @@ class SongsState extends State<Settings> {
                         builder: (BuildContext context) => FancyDialog(
                               // theme: FancyTheme.FANCY,
                               lowerpart: false,
+                              // animationType: FancyAnimation.BOTTOM_TOP,
+                              // shorttop: false,
                               gifPath: FancyGif.FUNNY_MAN,
                               descchild: Column(
                                 children: <Widget>[
+                                  SizedBox(
+                                    height: 5,
+                                  ),
                                   ListTile(
                                     leading: CircleAvatar(
                                       backgroundColor: Colors.black,
@@ -250,7 +264,7 @@ class SongsState extends State<Settings> {
                                 ],
                               ),
                               title: "Set Your Preffered Theme",
-                              descreption: "Black and Young",
+                              // descreption: "Black and Young",
                             ));
                   },
                 ),
@@ -296,13 +310,53 @@ class SongsState extends State<Settings> {
                             : Colors.white.withOpacity(0.8)),
                   ),
                   onTap: () {
-                    return showAboutDialog(
+                    showDialog(
                         context: context,
-                        applicationName: 'Yamp',
-                        applicationLegalese: 'MIT',
-                        children: <Widget>[
-                          // Text('GGG')
-                        ]);
+                        builder: (BuildContext context) => FancyDialog(
+                              // theme: FancyTheme.FANCY,
+                              // shorttop: true,
+                              lowerpart: false,
+                              gifPath: FancyGif.PLAY_MEDIA,
+                              descchild: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text(
+                                    'Yet Another Music Player',
+                                    style: GoogleFonts.montserrat(
+                                        color: Colors.black),
+                                  ),
+                                  ListTile(
+                                    leading: Icon(
+                                      BrandIcons.github,
+                                      color: Colors.black,
+                                      size: 45,
+                                    ),
+                                    title: Text(
+                                      'https://github.com/gauravxdhingra',
+                                      style: GoogleFonts.montserrat(
+                                        color: Colors.black,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onTap: () {
+                                      launch(
+                                        'https://github.com/gauravxdhingra',
+                                        forceWebView: true,
+                                      );
+                                    },
+                                  ),
+                                  Text(
+                                    'Version: $version',
+                                    style: GoogleFonts.montserrat(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              title: "YAMP MUSIC",
+                              // descreption: "Black and Young",
+                            ));
                   },
                 ),
               ),
