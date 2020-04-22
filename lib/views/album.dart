@@ -4,6 +4,8 @@ import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:persist_theme/persist_theme.dart';
+import 'package:provider/provider.dart';
 import 'package:test_player/database/database_client.dart';
 // import 'package:test_player/pages/card_detail.dart';
 import 'package:test_player/pages/now_playing.dart';
@@ -142,138 +144,111 @@ class _stateAlbum extends State<Album> {
   @override
   Widget build(BuildContext context) {
     // final Orientation orientation = MediaQuery.of(context).orientation;
-    return new Scaffold(
-      backgroundColor: Color(0xff7800ee),
-      body: isLoading
-          ? new Center(
-              child: SpinKitThreeBounce(
-                color: Colors.blueGrey,
-                size: 30,
-              ),
-            )
-          : Stack(
-              children: <Widget>[
-                Positioned(
-                  top: MediaQuery.of(context).size.height / 22,
-                  right: 10,
-                  left: 0,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height / 1.14,
-                    // padding: EdgeInsets.only(top: 15),
-                    decoration: BoxDecoration(
-                      color: Color(0xff6e00db),
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(42),
-                        bottomRight: Radius.circular(42),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black38,
-                          blurRadius: 0.5,
-                          spreadRadius: 0.5,
-                          offset: Offset(
-                              0.5, 0.5), // shadow direction: bottom right
-                        )
-                      ],
-                    ),
-                    child: Container(
-                      // color: Color(0xff7800ee),
-                      padding: EdgeInsets.only(top: 7, left: 10, right: 10),
-                      child: FloatingSearchBar.builder(
-                        inputTextStyle: TextStyle(color: Colors.black),
-                        SliverColor: Color(0xffFFCE00),
-                        //  Color(0xff7800ee),
-                        backgroundcolor: Color(0xff6e00db),
-                        pinned: true,
-                        // padding: EdgeInsets.only(top: 15),
-                        body: null,
-                        controller: tedit,
-                        itemCount: filtersongs.length,
-                        itemBuilder: (context, i) => ListTile(
-                          leading: CircleAvatar(
-                            child: Icon(Icons.music_note),
-                          ),
-                          title: Text(
-                            filtersongs[i].title,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          subtitle: Text(
-                            filtersongs[i].artist,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          onTap: () {
-                            MyQueue.songs = songs;
-                            Navigator.of(context).push(new MaterialPageRoute(
-                                builder: (context) => new NowPlaying(
-                                    widget.db,
-                                    MyQueue.songs,
-                                    returnIndex(filtersongs[i]),
-                                    0)));
-                          },
-                        ),
-                        leading: Icon(
-                          Icons.search,
-                          color: Colors.black,
-                        ),
-                        trailing: CircleAvatar(
-                          backgroundColor: Colors.transparent,
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.clear,
-                                color: Colors.black,
-                              ),
-                              onPressed: () {
-                                tedit.clear();
-                                filtersongs = [];
-                                // filtersongs = songs;
-                                setState(() {});
-                              }),
-                        ),
-                        onChanged: (String value) async {
-                          if (value == '') {
-                            filtersongs = [];
-                          } else
-                            filtersongs =
-                                await widget.db.searchSongByTitle(value);
-                          // print(filtersongs[0].title);
-                          setState(() {});
-                        },
-                        // onTap: () {
-                        //   MyQueue.songs = songs;
-                        //   Navigator.of(context).push(new MaterialPageRoute(
-                        //       builder: (context) =>
-                        //           new NowPlaying(widget.db, MyQueue.songs, 0, 0)));
-                        // },
-                        decoration: InputDecoration.collapsed(
-                            hintText: "Search Songs...",
-                            // fillColor: Colors.white,
-                            // focusColor: Colors.white,
-                            hintStyle: TextStyle(
-                              color: Colors.black,
-                            )
-                            // filled: true,
-                            ),
-                      ),
-                    ),
-                  ),
+    final _theme = Provider.of<ThemeModel>(context);
+    return isLoading
+            ? new Center(
+                child: SpinKitThreeBounce(
+                  color: Colors.blueGrey,
+                  size: 30,
                 ),
-              ],
-            ),
-      // Positioned(
-      //   top: 20,
-      //   child: Scrollbar(
-      //     child: new GridView.count(
-      //       crossAxisCount:
-      //           orientation == Orientation.portrait ? 2 : 4,
-      //       children: _buildGridCards(context),
-      //       physics: BouncingScrollPhysics(),
-      //       padding: EdgeInsets.only(left: 10.0, right: 10.0),
-      //       childAspectRatio: 8.0 / 9.5,
-      //       crossAxisSpacing: 2.0,
-      //       mainAxisSpacing: 18.0,
-      //     ),
-      //   ),
-      // ),
-    );
+              )
+            : Container(
+                // color: Color(0xff7800ee),
+                padding: EdgeInsets.only(top: 0, left: 10, right: 10),
+                child: FloatingSearchBar.builder(
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).textTheme.headline.color,
+                  ),
+                  inputTextStyle: TextStyle(
+                    color: Theme.of(context).textTheme.headline.color,
+                  ),
+                  SliverColor: Theme.of(context).bottomAppBarColor,
+                  // Color(0xffFFCE00),
+                  //  Color(0xff7800ee),
+                  backgroundcolor: Theme.of(context).accentColor,
+                  // Color(0xff6e00db),
+                  pinned: true,
+                  // padding: EdgeInsets.only(top: 15),
+                  controller: tedit,
+                  itemCount: filtersongs.length,
+                  itemBuilder: (context, i) => ListTile(
+                    leading: CircleAvatar(
+                      child: Icon(Icons.music_note),
+                    ),
+                    title: Text(
+                      filtersongs[i].title,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    subtitle: Text(
+                      filtersongs[i].artist,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    onTap: () {
+                      MyQueue.songs = songs;
+                      Navigator.of(context).push(new MaterialPageRoute(
+                          builder: (context) => new NowPlaying(widget.db,
+                              MyQueue.songs, returnIndex(filtersongs[i]), 0)));
+                    },
+                  ),
+                  leading: Icon(
+                    Icons.search,
+                    color: Theme.of(context).textTheme.headline.color,
+                  ),
+                  trailing: CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    child: IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Theme.of(context).textTheme.headline.color,
+                        ),
+                        onPressed: () {
+                          tedit.clear();
+                          filtersongs = [];
+                          // filtersongs = songs;
+                          setState(() {});
+                        }),
+                  ),
+                  onChanged: (String value) async {
+                    if (value == '') {
+                      filtersongs = [];
+                    } else
+                      filtersongs = await widget.db.searchSongByTitle(value);
+                    // print(filtersongs[0].title);
+                    setState(() {});
+                  },
+                  // onTap: () {
+                  //   MyQueue.songs = songs;
+                  //   Navigator.of(context).push(new MaterialPageRoute(
+                  //       builder: (context) =>
+                  //           new NowPlaying(widget.db, MyQueue.songs, 0, 0)));
+                  // },
+                  decoration: InputDecoration.collapsed(
+                      hintText: "Search Songs...",
+                      // fillColor: Colors.white,
+                      // focusColor: Colors.white,
+                      hintStyle: TextStyle(
+                        color: Colors.black,
+                      )
+                      // filled: true,
+                      ),
+                ),
+              )
+
+        // Positioned(
+        //   top: 20,
+        //   child: Scrollbar(
+        //     child: new GridView.count(
+        //       crossAxisCount:
+        //           orientation == Orientation.portrait ? 2 : 4,
+        //       children: _buildGridCards(context),
+        //       physics: BouncingScrollPhysics(),
+        //       padding: EdgeInsets.only(left: 10.0, right: 10.0),
+        //       childAspectRatio: 8.0 / 9.5,
+        //       crossAxisSpacing: 2.0,
+        //       mainAxisSpacing: 18.0,
+        //     ),
+        //   ),
+        // ),
+        ;
   }
 }

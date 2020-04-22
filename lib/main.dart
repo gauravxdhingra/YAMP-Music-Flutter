@@ -22,13 +22,7 @@ class MyApp extends StatelessWidget {
         builder: (context, model, child) {
           return new MaterialApp(
             debugShowCheckedModeBanner: false,
-            // theme: ThemeData(
-            //   // primarySwatch: Colors.blueGrey,
-            //   // canvasColor: Colors.transparent,
-            //   // errorColor: Colors.transparent,
-            //   fontFamily: "Google Sans"
-            // ),
-            // darkTheme: ThemeData.dark(),
+            theme: model.theme,
             home: MusicHome(),
           );
         },

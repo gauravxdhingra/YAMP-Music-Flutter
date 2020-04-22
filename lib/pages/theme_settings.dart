@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:persist_theme/persist_theme.dart';
-import 'package:persist_theme/ui/switches/dark_mode.dart';
-import 'package:persist_theme/ui/switches/true_black.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 
 class ThemeSet extends StatelessWidget {
   @override
@@ -14,7 +13,7 @@ class ThemeSet extends StatelessWidget {
         title: const Text('Persist Theme'),
       ),
       body: ListView(
-        children: MediaQuery.of(context).size.width >= 40
+        children: MediaQuery.of(context).size.width >= 400
             ? <Widget>[
                 Flex(
                   direction: Axis.horizontal,

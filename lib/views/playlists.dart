@@ -51,12 +51,12 @@ class _StatePlaylist extends State<Playlist> {
       atSecond = songs[random.nextInt(songs.length - 1)].artist;
     });
     songs = await widget.db.fetchFavSong();
-    String atThird = "No Songs in favorites";
-    setState(() {
-      atThir = songs.length != 0
-          ? "Includes ${songs[random.nextInt(songs.length - 1)].artist.toString()} and more"
-          : atThird;
-    });
+    // String atThird = "No Songs in favorites";
+    // setState(() {
+    //   atThir = songs.length != 0
+    //       ? "Includes ${songs[random.nextInt(songs.length - 1)].artist.toString()} and more"
+    //       : atThird;
+    // });
   }
 
   @override

@@ -56,7 +56,45 @@ class BodySelection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
-    return selectionPage(_selectedIndex);
+    // return selectionPage(_selectedIndex);
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      // _theme.backgroundColor,
+      // Color(0xff7800ee),
+      // Colors.black,
+      //  Colors.transparent,
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            top: MediaQuery.of(context).size.height / 22,
+            right: 10,
+            left: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height / 1.142,
+              padding: EdgeInsets.only(top: 15),
+              decoration: BoxDecoration(
+                color: Theme.of(context).accentColor,
+                // _theme.accentColor,
+                // Color(0xff6e00db),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(42),
+                  bottomRight: Radius.circular(42),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 0.5,
+                    spreadRadius: 0.0,
+                    offset: Offset(0.5, 0.5), // shadow direction: bottom right
+                  )
+                ],
+              ),
+              child: selectionPage(_selectedIndex),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -208,7 +246,8 @@ class _MusicState extends State<MusicHome> {
     initBottomItems();
     return new WillPopScope(
       child: new Scaffold(
-        backgroundColor: Color(0xff7800ee),
+        backgroundColor: Theme.of(context).backgroundColor,
+        // Color(0xff7800ee),
         key: scaffoldState,
         // appBar: _selectedIndex == 0
         //     ? null
@@ -218,10 +257,12 @@ class _MusicState extends State<MusicHome> {
         floatingActionButton: new FloatingActionButton.extended(
             label: Text(
               'Now Playing',
-              style: TextStyle(color: Colors.black),
+              style: Theme.of(context).textTheme.headline,
             ),
-            icon: Icon(MdiIcons.play, color: Colors.black),
-            backgroundColor: Colors.yellowAccent,
+            icon: Icon(MdiIcons.play,
+                color: Theme.of(context).textTheme.headline.color),
+            backgroundColor: Theme.of(context).bottomAppBarColor,
+            // Colors.yellowAccent,
             onPressed: () async {
               var pref = await SharedPreferences.getInstance();
               var fp = pref.getBool("played");
@@ -277,10 +318,12 @@ class _MusicState extends State<MusicHome> {
                     // CircularProgressIndicator()
                     ),
               )
-            :  BodySelection(_selectedIndex, db),
+            : BodySelection(_selectedIndex, db),
         bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Color(0xff7800ee),
-          color: Colors.yellowAccent,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          // Color(0xff7800ee),
+          color: Theme.of(context).bottomAppBarColor,
+          // Colors.yellowAccent,
           height: 52,
           index: _selectedIndex - 1,
           items: <Widget>[
@@ -326,13 +369,20 @@ class _MusicState extends State<MusicHome> {
             context: context,
             builder: (context) {
               return AlertDialog(
-                title: new Text('Are you sure?'),
-                content: new Text('Do you wish to quit YAMP'),
+                title: new Text(
+                  'Are you sure?',
+                  style: Theme.of(context).textTheme.headline,
+                ),
+                content: new Text(
+                  'Do you wish to quit YAMP',
+                  style: Theme.of(context).textTheme.headline,
+                ),
                 actions: <Widget>[
                   new FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
                     child: new Text(
                       'No',
+                      // style: Theme.of(context).textTheme.headline,
                     ),
                   ),
                   new FlatButton(
@@ -340,7 +390,10 @@ class _MusicState extends State<MusicHome> {
                       MyQueue.player.stop();
                       Navigator.of(context).pop(true);
                     },
-                    child: new Text('Yes'),
+                    child: new Text(
+                      'Yes',
+                      // style: Theme.of(context).textTheme.headline,
+                    ),
                   ),
                 ],
               );

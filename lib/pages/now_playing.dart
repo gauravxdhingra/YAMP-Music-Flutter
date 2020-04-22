@@ -105,10 +105,10 @@ class _StateNowPlaying extends State<NowPlaying>
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animateColor = ColorTween(
-      end: Color(0xffFFCE00),
-      // .withOpacity(0.7),
-      begin: Color(0xff6e00db),
-      // .withOpacity(0.9),
+      // end: Theme.of(context).bottomAppBarColor,
+      // // .withOpacity(0.7),
+      // begin: Theme.of(context).scaffoldBackgroundColor,
+      // // .withOpacity(0.9),
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
@@ -250,10 +250,10 @@ class _StateNowPlaying extends State<NowPlaying>
           : Center(
               child: CircularProgressIndicator(),
             ),
-      backgroundColor: Color(0xff7800ee),
-// Color(0xff6e00db),
+      backgroundColor: Theme.of(context).accentColor,
+// Theme.of(context).scaffoldBackgroundColor,
       // Colors.white,
-      //  Color(0xffFFCE00),
+      //  Theme.of(context).bottomAppBarColor,
     );
   }
 
@@ -416,93 +416,97 @@ class _StateNowPlaying extends State<NowPlaying>
                         onDoubleTap: () {
                           setFav(song);
                         },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.transparent,
-                              // borderRadius:
-                              //     BorderRadius.circular(cutRadius),
-                              image: DecorationImage(
-                                  image: FileImage(getImage(song)),
-                                  fit: BoxFit.cover)),
-                          child: Stack(
-                            children: <Widget>[
-                              _showArtistImage
-                                  ? GestureDetector(
-                                      onDoubleTap: () {
-                                        setFav(song);
-                                      },
-                                      child: Container(
-                                        width: width - 2 * width * 0.06,
-                                        height: width - width * 0.06,
-                                        child: GetArtistDetail(
-                                          artist: song.artist,
-                                          artistSong: song,
+                        child: Hero(
+                          transitionOnUserGestures: true,
+                          tag: song.id,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.transparent,
+                                // borderRadius:
+                                //     BorderRadius.circular(cutRadius),
+                                image: DecorationImage(
+                                    image: FileImage(getImage(song)),
+                                    fit: BoxFit.cover)),
+                            child: Stack(
+                              children: <Widget>[
+                                _showArtistImage
+                                    ? GestureDetector(
+                                        onDoubleTap: () {
+                                          setFav(song);
+                                        },
+                                        child: Container(
+                                          width: width - 2 * width * 0.06,
+                                          height: width - width * 0.06,
+                                          // child: GetArtistDetail(
+                                          //   artist: song.artist,
+                                          //   artistSong: song,
+                                          // ),
                                         ),
-                                      ),
-                                    )
-                                  : Container(),
-                              Positioned(
-                                bottom: 40,
-                                right: 35,
-                                child: Container(
-                                  height: 50,
-                                  width: 50,
-                                  // child: PimpedButton(
-                                  //   particle: Rectangle2DemoParticle(),
-                                  //   pimpedWidgetBuilder: (context, controller) {
-                                  //     return IconButton(
-                                  //       icon: Icon(Icons.favorite_border),
-                                  //       color: Colors.indigo,
-                                  //       onPressed: () {
-                                  //         controller.forward(from: 0.0);
-                                  //         setFav(song);
-                                  //       },
-                                  //     );
-                                  //   },
-                                  // ),
-                                  child: IconButton(
-                                      icon: isFav == 0
-                                          ? new Icon(
-                                              Icons.favorite_border,
-                                              color: Colors.red,
-                                              size: 50.0,
-                                            )
-                                          : new Icon(
-                                              Icons.favorite,
-                                              color: Colors.red,
-                                              size: 50.0,
-                                            ),
-                                      onPressed: () {
-                                        setFav(song);
-                                      }),
-                                  // decoration: ShapeDecoration(
-                                  //     color: Colors.red,
-                                  //     shape: BeveledRectangleBorder(
-                                  //         borderRadius: BorderRadius.only(
-                                  //             topLeft: Radius.circular(
-                                  //                 width * 0.15)))),
-                                  // height: width * 0.15 * 2,
-                                  // width: width * 0.15 * 2,
+                                      )
+                                    : Container(),
+                                Positioned(
+                                  bottom: 40,
+                                  right: 35,
+                                  child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    // child: PimpedButton(
+                                    //   particle: Rectangle2DemoParticle(),
+                                    //   pimpedWidgetBuilder: (context, controller) {
+                                    //     return IconButton(
+                                    //       icon: Icon(Icons.favorite_border),
+                                    //       color: Colors.indigo,
+                                    //       onPressed: () {
+                                    //         controller.forward(from: 0.0);
+                                    //         setFav(song);
+                                    //       },
+                                    //     );
+                                    //   },
+                                    // ),
+                                    child: IconButton(
+                                        icon: isFav == 0
+                                            ? new Icon(
+                                                Icons.favorite_border,
+                                                color: Colors.red,
+                                                size: 50.0,
+                                              )
+                                            : new Icon(
+                                                Icons.favorite,
+                                                color: Colors.red,
+                                                size: 50.0,
+                                              ),
+                                        onPressed: () {
+                                          setFav(song);
+                                        }),
+                                    // decoration: ShapeDecoration(
+                                    //     color: Colors.red,
+                                    //     shape: BeveledRectangleBorder(
+                                    //         borderRadius: BorderRadius.only(
+                                    //             topLeft: Radius.circular(
+                                    //                 width * 0.15)))),
+                                    // height: width * 0.15 * 2,
+                                    // width: width * 0.15 * 2,
+                                  ),
                                 ),
-                              ),
-                              // Positioned(
-                              //   bottom: 0.0,
-                              //   right: 0.0,
-                              //   child: Padding(
-                              //     padding:
-                              //         EdgeInsets.only(right: 4.0, bottom: 6.0),
-                              //     child: Text(
-                              //       durationText,
-                              //       style: TextStyle(
-                              //         color: Colors.black,
-                              //         fontWeight: FontWeight.w600,
-                              //         fontSize: 18.0,
-                              //       ),
-                              //     ),
-                              //   ),
-                              // ),
-                            ],
+                                // Positioned(
+                                //   bottom: 0.0,
+                                //   right: 0.0,
+                                //   child: Padding(
+                                //     padding:
+                                //         EdgeInsets.only(right: 4.0, bottom: 6.0),
+                                //     child: Text(
+                                //       durationText,
+                                //       style: TextStyle(
+                                //         color: Colors.black,
+                                //         fontWeight: FontWeight.w600,
+                                //         fontSize: 18.0,
+                                //       ),
+                                //     ),
+                                //   ),
+                                // ),
+                              ],
+                            ),
                           ),
                         ),
                       )
@@ -515,7 +519,7 @@ class _StateNowPlaying extends State<NowPlaying>
                         child: Container(
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            // color: Color(0xff7800ee),
+                            // color: Theme.of(context).accentColor,
                             // borderRadius:
                             //     BorderRadius.circular(cutRadius),
                           ),
@@ -535,10 +539,10 @@ class _StateNowPlaying extends State<NowPlaying>
                                       child: Container(
                                         width: width - 2 * width * 0.06,
                                         height: width - width * 0.06,
-                                        child: GetArtistDetail(
-                                          artist: song.artist,
-                                          artistSong: song,
-                                        ),
+                                        // child: GetArtistDetail(
+                                        //   artist: song.artist,
+                                        //   artistSong: song,
+                                        // ),
                                       ),
                                     )
                                   : Container(),
@@ -740,10 +744,10 @@ class _StateNowPlaying extends State<NowPlaying>
                             min: 0.0,
                             activeColor: Colors.yellow,
                             // Colors.blueGrey.shade400.withOpacity(0.5),
-                            // Color(0xff6e00db).withOpacity(0.8),
+                            // Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
                             // Colors.white,
                             inactiveColor: Colors.white.withOpacity(0.5),
-                            // Color(0xff6e00db).withOpacity(0.2),
+                            // Theme.of(context).scaffoldBackgroundColor.withOpacity(0.2),
                             // Colors.blueGrey.shade300.withOpacity(0.3),
                             value: position?.inMilliseconds?.toDouble() ?? 0.0,
                             onChanged: (double value) =>
@@ -986,16 +990,16 @@ class PlayPauseButton extends StatelessWidget {
         height: 100,
         width: 100,
         decoration: BoxDecoration(
-          color: Color(0xff7800ee),
+          color: Theme.of(context).accentColor,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: Color(0xff6e00db).withOpacity(0.5),
+                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
                 offset: Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
             BoxShadow(
-                color: Color(0xff6e00db),
+                color: Theme.of(context).scaffoldBackgroundColor,
                 // Colors.white,
                 offset: Offset(-3, -4),
                 spreadRadius: -2,
@@ -1008,14 +1012,14 @@ class PlayPauseButton extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                    // Color(0xff7800ee),
-                    // Color(0xff6e00db),
-                    // Color(0xffFFCE00),
-                    color: Color(0xffFFCE00),
+                    // Theme.of(context).accentColor,
+                    // Theme.of(context).scaffoldBackgroundColor,
+                    // Theme.of(context).bottomAppBarColor,
+                    color: Theme.of(context).bottomAppBarColor,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: Color(0xff6e00db).withOpacity(0.5),
+                          color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
                           offset: Offset(5, 10),
                           spreadRadius: 3,
                           blurRadius: 10),
@@ -1031,7 +1035,7 @@ class PlayPauseButton extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                    color: Color(0xff7800ee),
+                    color: Theme.of(context).accentColor,
                     // _animateColor.value,
                     // color: Colors.pink,
                     shape: BoxShape.circle),
@@ -1042,7 +1046,7 @@ class PlayPauseButton extends StatelessWidget {
                     color: Colors.white,
                     // !_animateIcon.isCompleted
                     //     ? Colors.white
-                    //     : Color(0xff7800ee),
+                    //     : Theme.of(context).accentColor,
                     size: 55,
                   ),
                 ),
@@ -1079,17 +1083,17 @@ class NavButtons extends StatelessWidget {
         height: 60,
         width: 60,
         decoration: BoxDecoration(
-          color: Color(0xff7800ee),
+          color: Theme.of(context).accentColor,
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: Color(0xff6e00db).withOpacity(0.5),
+                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
                 offset: Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
             BoxShadow(
-                // color: Color(0xffFFCE00),
-                color: Color(0xff6e00db),
+                // color: Theme.of(context).bottomAppBarColor,
+                color: Theme.of(context).scaffoldBackgroundColor,
                 // Colors.white,
                 offset: Offset(-3, -4),
                 spreadRadius: -2,
@@ -1102,17 +1106,17 @@ class NavButtons extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                    color: Color(0xffFFCE00),
+                    color: Theme.of(context).bottomAppBarColor,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: Color(0xff6e00db).withOpacity(0.5),
+                          color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
                           offset: Offset(5, 10),
                           spreadRadius: 1.5,
                           blurRadius: 5),
                       BoxShadow(
                           color:
-                              //  Color(0xffFFCE00),
+                              //  Theme.of(context).bottomAppBarColor,
                               Colors.white,
                           offset: Offset(-3, -4),
                           spreadRadius: -2,
@@ -1124,7 +1128,7 @@ class NavButtons extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(8.4),
                 decoration: BoxDecoration(
-                    color: Color(0xff7800ee), shape: BoxShape.circle),
+                    color: Theme.of(context).accentColor, shape: BoxShape.circle),
                 child: Center(
                   child: childd,
                   //      Icon(
@@ -1141,6 +1145,6 @@ class NavButtons extends StatelessWidget {
     );
   }
 }
-// Color(0xff7800ee),
-// Color(0xff6e00db),
-// Color(0xffFFCE00),
+// Theme.of(context).accentColor,
+// Theme.of(context).scaffoldBackgroundColor,
+// Theme.of(context).bottomAppBarColor,
