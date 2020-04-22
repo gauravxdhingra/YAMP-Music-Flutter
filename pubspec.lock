@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  fancy_dialog:
+    dependency: "direct main"
+    description:
+      name: fancy_dialog
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   floating_search_bar:
     dependency: "direct main"
     description:

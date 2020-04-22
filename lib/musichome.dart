@@ -259,9 +259,12 @@ class _MusicState extends State<MusicHome> {
   @override
   Widget build(BuildContext context) {
     initBottomItems();
+    final _theme = Provider.of<ThemeModel>(context);
     return new WillPopScope(
       child: new Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: _theme.darkMode
+            ? Theme.of(context).backgroundColor
+            : Theme.of(context).scaffoldBackgroundColor,
         // Color(0xff7800ee),
         key: scaffoldState,
         // appBar: _selectedIndex == 0

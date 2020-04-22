@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:fancy_dialog/FancyGif.dart';
+import 'package:fancy_dialog/FancyTheme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:share/share.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -10,6 +13,7 @@ import 'package:test_player/util/lastplay.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info/package_info.dart';
+import 'package:fancy_dialog/fancy_dialog.dart';
 
 class Settings extends StatefulWidget {
   final DatabaseClient db;
@@ -87,7 +91,7 @@ class SongsState extends State<Settings> {
               ),
               Text(
                 'Settings',
-                style: TextStyle(
+                style: GoogleFonts.montserrat(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
@@ -120,13 +124,15 @@ class SongsState extends State<Settings> {
                   ),
                   title: Text(
                     'Refresh Database',
+                    style: GoogleFonts.montserrat(),
                   ),
                   subtitle: Text(
                     'Your Preferences would be cleared',
-                    style: TextStyle(
-                        color: _theme.darkMode
-                            ? Colors.grey
-                            : Colors.white.withOpacity(0.8)),
+                    style: GoogleFonts.montserrat(
+                      color: _theme.darkMode
+                          ? Colors.grey
+                          : Colors.white.withOpacity(0.8),
+                    ),
                   ),
                   onTap: () {
                     return showDialog(
@@ -135,11 +141,16 @@ class SongsState extends State<Settings> {
                         return AlertDialog(
                           title: new Text(
                             'Do you wish to refresh the database?',
-                            style: Theme.of(context).textTheme.headline,
+                            style: GoogleFonts.montserrat(
+                              color: Theme.of(context).textTheme.headline.color,
+                            ),
                           ),
                           content: new Text(
                             'All your settings and favourites would be cleared!\nThis may take a few seconds.',
-                            style: Theme.of(context).textTheme.headline,
+                            style: GoogleFonts.montserrat(
+                              fontSize: 14,
+                              color: Theme.of(context).textTheme.headline.color,
+                            ),
                           ),
                           actions: <Widget>[
                             new FlatButton(
@@ -175,15 +186,72 @@ class SongsState extends State<Settings> {
                   ),
                   title: Text('Change Theme'),
                   subtitle: Text(
-                    _theme.darkMode ? 'Pitch Black' : 'Youth',
+                    _theme.darkMode ? 'Elegant Dark' : 'Youth',
                     style: TextStyle(
                         color: _theme.darkMode
                             ? Colors.grey
                             : Colors.white.withOpacity(0.8)),
                   ),
                   onTap: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ThemeSet()));
+                    // Navigator.of(context).push(
+                    //     MaterialPageRoute(builder: (context) => ThemeSet()));
+
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => FancyDialog(
+                              // theme: FancyTheme.FANCY,
+                              lowerpart: false,
+                              gifPath: FancyGif.FUNNY_MAN,
+                              descchild: Column(
+                                children: <Widget>[
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor: Colors.black,
+                                    ),
+                                    title: Text(
+                                      'Elegant Black',
+                                      style: GoogleFonts.montserrat(
+                                          color: Colors.black),
+                                    ),
+                                    trailing: _theme.darkMode
+                                        ? Icon(
+                                            Icons.check,
+                                            color: Colors.black,
+                                          )
+                                        : null,
+                                    onTap: () {
+                                      // _theme.darkMode?
+                                      _theme.changeDarkMode(true);
+                                      setState(() {});
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                      backgroundColor: Color(0xff6e00db),
+                                    ),
+                                    title: Text(
+                                      'Youth',
+                                      style: GoogleFonts.montserrat(
+                                          color: Colors.black),
+                                    ),
+                                    trailing: !_theme.darkMode
+                                        ? Icon(
+                                            Icons.check,
+                                            color: Colors.black,
+                                          )
+                                        : null,
+                                    onTap: () {
+                                      _theme.changeDarkMode(false);
+                                      setState(() {});
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                ],
+                              ),
+                              title: "Set Your Preffered Theme",
+                              descreption: "Black and Young",
+                            ));
                   },
                 ),
               ),

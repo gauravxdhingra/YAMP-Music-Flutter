@@ -266,7 +266,7 @@ class SongsState extends State<Songs> {
                   // alwaysVisibleScrollThumb: true,
                   scrollbarTimeToFade: Duration(seconds: 2),
                   controller: _controller,
-                  heightScrollThumb: 45,
+                  heightScrollThumb: 55,
                   backgroundColor: Theme.of(context).backgroundColor,
                   // Color(0xffFFCE00),
                   child: Container(
