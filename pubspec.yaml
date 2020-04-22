@@ -51,6 +51,8 @@ dependencies:
   flutter_spinkit: ^4.1.2+1
   persist_theme: ^1.6.1+1
   scoped_model: ^1.0.1
+  package_info: ^0.4.0+17
+  share: ^0.6.4
 
 dev_dependencies:
   flutter_test:

@@ -200,7 +200,9 @@ class _ListSong extends State<ListSongs> {
                           scrollbarTimeToFade: Duration(milliseconds: 300),
                           controller: _controller1,
                           heightScrollThumb: 40,
-                          backgroundColor: Color(0xffFFCE00),
+                          // backgroundColor: Theme.of(context).accentColor,
+                          // Theme.of(context).scaffoldBackgroundColor,
+                          // Color(0xffFFCE00),
                           child: Container(
                             padding: EdgeInsets.only(top: 0),
                             height: MediaQuery.of(context).size.height / 1.38,
