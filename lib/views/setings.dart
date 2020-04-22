@@ -7,7 +7,6 @@ import 'package:flutter_brand_icons/flutter_brand_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:share/share.dart';
 import 'package:flute_music_player/flute_music_player.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test_player/database/database_client.dart';
 import 'package:test_player/pages/now_playing.dart';
 import 'package:test_player/pages/theme_settings.dart';
@@ -22,8 +21,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatefulWidget {
   final DatabaseClient db;
-
-  Settings(this.db);
+  final GlobalKey scaffoldState;
+  Settings(this.db, this.scaffoldState);
 
   @override
   State<StatefulWidget> createState() {
@@ -44,6 +43,7 @@ class SongsState extends State<Settings> {
   }
 
   void initInfo() async {
+    scaffoldState = widget.scaffoldState;
     await PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       appName = packageInfo.appName;
       packageName = packageInfo.packageName;
@@ -52,29 +52,27 @@ class SongsState extends State<Settings> {
     });
   }
 
-  GlobalKey<ScaffoldState> scaffoldState = new GlobalKey();
-
+  GlobalKey<ScaffoldState> scaffoldState;
   Future<Null> refreshData() async {
     var db = new DatabaseClient();
     await MusicFinder.allSongs().then((songs) {
       List<Song> newSongs = List.from(songs);
       for (Song song in newSongs) db.insertOrUpdateSong(song);
+    }).then((val) {
+      scaffoldState.currentState.showSnackBar(new SnackBar(
+        content: Text(
+          "Songs Updated",
+        ),
+        duration: Duration(milliseconds: 1500),
+      ));
+    }).catchError((error) {
+      scaffoldState.currentState.showSnackBar(new SnackBar(
+        content: Text(
+          "Failed to update!",
+        ),
+        duration: Duration(milliseconds: 1500),
+      ));
     });
-    // .then((val) {
-    //   scaffoldState.currentState.showSnackBar(new SnackBar(
-    //     content: Text(
-    //       "Songs Updated",
-    //     ),
-    //     duration: Duration(milliseconds: 1500),
-    //   ));
-    // }).catchError((error) {
-    //   scaffoldState.currentState.showSnackBar(new SnackBar(
-    //     content: Text(
-    //       "Failed to update!",
-    //     ),
-    //     duration: Duration(milliseconds: 1500),
-    //   ));
-    // });
   }
 
   @override
@@ -171,6 +169,13 @@ class SongsState extends State<Settings> {
                             new FlatButton(
                               color: Colors.red,
                               onPressed: () async {
+                                scaffoldState.currentState
+                                    .showSnackBar(new SnackBar(
+                                  content: Text(
+                                    "Updating Songs",
+                                  ),
+                                  duration: Duration(milliseconds: 500),
+                                ));
                                 Navigator.of(context).pop(true);
                                 await refreshData();
                               },

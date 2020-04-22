@@ -151,7 +151,9 @@ class _stateAlbum extends State<Album> {
     return isLoading
             ? new Center(
                 child: SpinKitThreeBounce(
-                  color: Colors.blueGrey,
+                  color: _theme.darkMode
+                      ? Colors.blueGrey
+                      : Theme.of(context).bottomAppBarColor,
                   size: 30,
                 ),
               )

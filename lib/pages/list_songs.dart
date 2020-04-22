@@ -152,7 +152,9 @@ class _ListSong extends State<ListSongs> {
     return isLoading
             ? new Center(
                 child: SpinKitThreeBounce(
-                  color: Colors.blueGrey,
+                  color: _theme.darkMode
+                      ? Colors.blueGrey
+                      : Theme.of(context).bottomAppBarColor,
                   size: 30,
                 ),
                 // child: new CircularProgressIndicator(),

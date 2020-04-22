@@ -42,7 +42,7 @@ class BodySelection extends StatelessWidget {
       case 1:
         return Songs(db);
       case 4:
-        return Settings(db);
+        return Settings(db, scaffoldState);
       case 3:
         // search
         return Album(db);
@@ -54,11 +54,14 @@ class BodySelection extends StatelessWidget {
     }
   }
 
+  GlobalKey<ScaffoldState> scaffoldState = new GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     final _theme = Provider.of<ThemeModel>(context);
     // return selectionPage(_selectedIndex);
     return Scaffold(
+      key: scaffoldState,
       backgroundColor:
           // Colors.black.withAlpha(200),
           Theme.of(context).scaffoldBackgroundColor,
@@ -336,7 +339,9 @@ class _MusicState extends State<MusicHome> {
                 // height: 400, width: 400,
                 child: Center(
                     child: SpinKitThreeBounce(
-                  color: Colors.blueGrey,
+                  color: _theme.darkMode
+                      ? Colors.blueGrey
+                      : Theme.of(context).bottomAppBarColor,
                   size: 60,
                 )
                     // CircularProgressIndicator()

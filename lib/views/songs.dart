@@ -57,7 +57,9 @@ class SongsState extends State<Songs> {
             case ConnectionState.waiting:
               return Center(
                 child: SpinKitThreeBounce(
-                  color: Colors.blueGrey,
+                  color: _theme.darkMode
+                      ? Colors.blueGrey
+                      : Theme.of(context).bottomAppBarColor,
                   size: 20,
                 ),
               );
@@ -250,7 +252,9 @@ class SongsState extends State<Songs> {
                         height: 250,
                       ),
                       SpinKitThreeBounce(
-                        color: Colors.blueGrey,
+                        color: _theme.darkMode
+                            ? Colors.blueGrey
+                            : Theme.of(context).bottomAppBarColor,
                         size: 20,
                       ),
                     ],
