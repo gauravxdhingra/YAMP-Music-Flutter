@@ -271,7 +271,9 @@ class _MusicState extends State<MusicHome> {
         floatingActionButton: new FloatingActionButton.extended(
             label: Text(
               'Now Playing',
-              style: Theme.of(context).textTheme.headline,
+              style: TextStyle(
+                color: Theme.of(context).textTheme.headline.color,
+              ),
             ),
             icon: Icon(MdiIcons.play,
                 color: Theme.of(context).textTheme.headline.color),

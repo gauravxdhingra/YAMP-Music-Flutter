@@ -204,7 +204,10 @@ class SongsState extends State<Settings> {
                             : Colors.white.withOpacity(0.8)),
                   ),
                   onTap: () {
-                    Share.share('Hey! Check out this cool music app https://play.google.com/store/apps/details?id=$packageName');
+                    if (packageName != null)
+                      Share.share(
+                          'Hey! Check out this cool music app https://play.google.com/store/apps/details?id=$packageName');
+                    else {}
                   },
                 ),
               ),
@@ -218,7 +221,7 @@ class SongsState extends State<Settings> {
                   ),
                   title: Text('About'),
                   subtitle: Text(
-                    '$version',
+                    version == null ? '' : '$version',
                     style: TextStyle(
                         color: _theme.darkMode
                             ? Colors.grey

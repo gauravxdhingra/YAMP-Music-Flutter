@@ -159,7 +159,8 @@ class _stateAlbum extends State<Album> {
                 padding: EdgeInsets.only(top: 0, left: 10, right: 10),
                 child: FloatingSearchBar.builder(
                   hintStyle: TextStyle(
-                    color: Theme.of(context).textTheme.headline.color,
+                    color: _theme.darkMode ? Colors.white : Colors.black,
+                    // Theme.of(context).textTheme.headline.color,
                   ),
                   inputTextStyle: TextStyle(
                     color: Theme.of(context).textTheme.headline.color,
@@ -229,7 +230,7 @@ class _stateAlbum extends State<Album> {
                       // fillColor: Colors.white,
                       // focusColor: Colors.white,
                       hintStyle: TextStyle(
-                        color: Colors.black,
+                        color: _theme.darkMode ? Colors.white : Colors.black,
                       )
                       // filled: true,
                       ),
