@@ -1148,3 +1148,6 @@ class NavButtons extends StatelessWidget {
 // Theme.of(context).accentColor,
 // Theme.of(context).scaffoldBackgroundColor,
 // Theme.of(context).bottomAppBarColor,
+// _theme.darkMode
+//                           ? Theme.of(context).textTheme.headline.color
+//                           : Color(0xff6e00db),

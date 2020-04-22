@@ -58,13 +58,24 @@ class SongsState extends State<Settings> {
             horizontal: 20,
             vertical: 10,
           ),
-          child: Text(
-            'Settings',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 25,
-            ),
+          child: Row(
+            children: <Widget>[
+              Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              SizedBox(
+                width: 30,
+              ),
+              Text(
+                'Settings',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                ),
+              ),
+            ],
           ),
         ),
         Padding(

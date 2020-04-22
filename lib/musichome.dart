@@ -58,7 +58,9 @@ class BodySelection extends StatelessWidget {
     final _theme = Provider.of<ThemeModel>(context);
     // return selectionPage(_selectedIndex);
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor:
+          // Colors.black.withAlpha(200),
+          Theme.of(context).scaffoldBackgroundColor,
       // _theme.backgroundColor,
       // Color(0xff7800ee),
       // Colors.black,
@@ -82,7 +84,19 @@ class BodySelection extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black26,
+                    color: _theme.darkMode
+                        ? Theme.of(context)
+                            .textTheme
+                            .headline
+                            .color
+                            .withOpacity(0.0)
+                        : Theme.of(context)
+                            .textTheme
+                            .headline
+                            .color
+                            .withOpacity(0.20),
+                    // Colors.white,
+                    // black26,
                     blurRadius: 0.5,
                     spreadRadius: 0.0,
                     offset: Offset(0.5, 0.5), // shadow direction: bottom right
@@ -320,7 +334,9 @@ class _MusicState extends State<MusicHome> {
               )
             : BodySelection(_selectedIndex, db),
         bottomNavigationBar: CurvedNavigationBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor:
+              // Colors.black.withAlpha(200),
+              Theme.of(context).scaffoldBackgroundColor,
           // Color(0xff7800ee),
           color: Theme.of(context).bottomAppBarColor,
           // Colors.yellowAccent,
