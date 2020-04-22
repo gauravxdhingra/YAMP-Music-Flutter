@@ -6,6 +6,7 @@ import 'package:floating_search_bar/floating_search_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:test_player/database/database_client.dart';
@@ -158,13 +159,14 @@ class _stateAlbum extends State<Album> {
                 // color: Color(0xff7800ee),
                 padding: EdgeInsets.only(top: 0, left: 10, right: 10),
                 child: FloatingSearchBar.builder(
-                  hintStyle: TextStyle(
+                  hintStyle: GoogleFonts.montserrat(
                     color: _theme.darkMode ? Colors.white : Colors.black,
-                    // Theme.of(context).textTheme.headline.color,
                   ),
-                  inputTextStyle: TextStyle(
+
+                  inputTextStyle: GoogleFonts.montserrat(
                     color: Theme.of(context).textTheme.headline.color,
                   ),
+
                   SliverColor: Theme.of(context).bottomAppBarColor,
                   // Color(0xffFFCE00),
                   //  Color(0xff7800ee),
@@ -174,17 +176,23 @@ class _stateAlbum extends State<Album> {
                   // padding: EdgeInsets.only(top: 15),
                   controller: tedit,
                   itemCount: filtersongs.length,
+                  // padding: EdgeInsets.all(0),
                   itemBuilder: (context, i) => ListTile(
                     leading: CircleAvatar(
+                      backgroundColor: _theme.darkMode
+                          ? Theme.of(context).bottomAppBarColor
+                          : Theme.of(context).scaffoldBackgroundColor,
                       child: Icon(Icons.music_note),
                     ),
                     title: Text(
                       filtersongs[i].title,
-                      style: TextStyle(color: Colors.white),
+                      style: GoogleFonts.montserrat(
+                          color: Colors.white, fontSize: 15),
                     ),
                     subtitle: Text(
                       filtersongs[i].artist,
-                      style: TextStyle(color: Colors.white),
+                      style: GoogleFonts.montserrat(
+                          color: Colors.white, fontSize: 12),
                     ),
                     onTap: () {
                       MyQueue.songs = songs;
@@ -226,14 +234,15 @@ class _stateAlbum extends State<Album> {
                   //           new NowPlaying(widget.db, MyQueue.songs, 0, 0)));
                   // },
                   decoration: InputDecoration.collapsed(
-                      hintText: "Search Songs...",
-                      // fillColor: Colors.white,
-                      // focusColor: Colors.white,
-                      hintStyle: TextStyle(
-                        color: _theme.darkMode ? Colors.white : Colors.black,
-                      )
-                      // filled: true,
-                      ),
+                    hintText: "Search Songs...",
+                    // fillColor: Colors.white,
+                    // focusColor: Colors.white,
+                    hintStyle: GoogleFonts.montserrat(
+                      color: _theme.darkMode ? Colors.white : Colors.black,
+                    ),
+
+                    // filled: true,
+                  ),
                 ),
               )
 

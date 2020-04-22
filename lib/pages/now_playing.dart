@@ -5,6 +5,8 @@ import 'dart:ui' as ui;
 // import 'package:musicplayer/util/artistInfo.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
+import 'package:persist_theme/persist_theme.dart';
+import 'package:provider/provider.dart';
 // import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
 // import 'package:flutter_visualizers/visualizer.dart';
 // import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
@@ -105,11 +107,12 @@ class _StateNowPlaying extends State<NowPlaying>
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _animateColor = ColorTween(
-      // end: Theme.of(context).bottomAppBarColor,
-      // // .withOpacity(0.7),
-      // begin: Theme.of(context).scaffoldBackgroundColor,
-      // // .withOpacity(0.9),
-    ).animate(CurvedAnimation(
+            // end: Theme.of(context).bottomAppBarColor,
+            // // .withOpacity(0.7),
+            // begin: Theme.of(context).scaffoldBackgroundColor,
+            // // .withOpacity(0.9),
+            )
+        .animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
         0.00,
@@ -242,11 +245,12 @@ class _StateNowPlaying extends State<NowPlaying>
 
   @override
   Widget build(BuildContext context) {
+    final _theme = Provider.of<ThemeModel>(context);
     orientation = MediaQuery.of(context).orientation;
     return new Scaffold(
       key: scaffoldState,
       body: song != null
-          ? portrait()
+          ? portrait(_theme)
           : Center(
               child: CircularProgressIndicator(),
             ),
@@ -341,7 +345,7 @@ class _StateNowPlaying extends State<NowPlaying>
         });
   }
 
-  Widget portrait() {
+  Widget portrait(_theme) {
     double width = MediaQuery.of(context).size.width;
     widthX = width;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
@@ -742,7 +746,10 @@ class _StateNowPlaying extends State<NowPlaying>
                         Expanded(
                           child: Slider(
                             min: 0.0,
-                            activeColor: Colors.yellow,
+                            activeColor: _theme.darkMode
+                                ? Colors.white
+                                : Theme.of(context).bottomAppBarColor,
+                            // Colors.yellow,
                             // Colors.blueGrey.shade400.withOpacity(0.5),
                             // Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
                             // Colors.white,
@@ -994,7 +1001,8 @@ class PlayPauseButton extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                color:
+                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
                 offset: Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
@@ -1019,7 +1027,9 @@ class PlayPauseButton extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .scaffoldBackgroundColor
+                              .withOpacity(0.5),
                           offset: Offset(5, 10),
                           spreadRadius: 3,
                           blurRadius: 10),
@@ -1087,7 +1097,8 @@ class NavButtons extends StatelessWidget {
           shape: BoxShape.circle,
           boxShadow: [
             BoxShadow(
-                color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                color:
+                    Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
                 offset: Offset(5, 10),
                 spreadRadius: 3,
                 blurRadius: 10),
@@ -1110,7 +1121,9 @@ class NavButtons extends StatelessWidget {
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.5),
+                          color: Theme.of(context)
+                              .scaffoldBackgroundColor
+                              .withOpacity(0.5),
                           offset: Offset(5, 10),
                           spreadRadius: 1.5,
                           blurRadius: 5),
@@ -1128,7 +1141,8 @@ class NavButtons extends StatelessWidget {
               child: Container(
                 margin: EdgeInsets.all(8.4),
                 decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor, shape: BoxShape.circle),
+                    color: Theme.of(context).accentColor,
+                    shape: BoxShape.circle),
                 child: Center(
                   child: childd,
                   //      Icon(

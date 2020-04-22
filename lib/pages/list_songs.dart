@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 // import 'package:musicplayer/util/lastplay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:test_player/database/database_client.dart';
@@ -173,11 +174,16 @@ class _ListSong extends State<ListSongs> {
                         ),
                         Text(
                           'Favourites',
-                          style: TextStyle(
+                          style: GoogleFonts.montserrat(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontSize: 25,
                           ),
+                          // TextStyle(
+                          //   color: Colors.white,
+                          //   fontWeight: FontWeight.bold,
+                          //   fontSize: 25,
+                          // ),
                         ),
                       ],
                     ),
@@ -204,8 +210,7 @@ class _ListSong extends State<ListSongs> {
                           // Theme.of(context).scaffoldBackgroundColor,
                           // Color(0xffFFCE00),
                           child: Container(
-                            padding: EdgeInsets.only(top: 0),
-                            height: MediaQuery.of(context).size.height / 1.38,
+                            height: MediaQuery.of(context).size.height / 1.3,
                             child: FadingEdgeScrollView.fromScrollView(
                               gradientFractionOnStart: 0.04,
                               gradientFractionOnEnd: 0.05,
@@ -237,25 +242,42 @@ class _ListSong extends State<ListSongs> {
                                                   ),
                                                 )
                                               : CircleAvatar(
+                                                  backgroundColor: _theme
+                                                          .darkMode
+                                                      ? Theme.of(context)
+                                                          .bottomAppBarColor
+                                                      : Theme.of(context)
+                                                          .scaffoldBackgroundColor,
                                                   child: Center(
                                                     child: Text(songs[i]
                                                         .title[0]
                                                         .toUpperCase()),
                                                   ),
                                                 ),
-                                          title: new Text(songs[i].title,
-                                              maxLines: 1,
-                                              style: new TextStyle(
-                                                  fontSize: 16.0,
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w500)),
-                                          subtitle: new Text(
-                                            songs[i].artist,
+                                          title: new Text(
+                                            songs[i].title,
                                             maxLines: 1,
-                                            style: new TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.white),
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 15.0,
+                                              color: Colors.white,
+                                              // fontWeight: FontWeight.w500
+                                            ),
                                           ),
+
+                                          //  TextStyle(
+                                          //     fontSize: 16.0,
+                                          //     color: Colors.white,
+                                          //     fontWeight: FontWeight.w500)),
+                                          subtitle: new Text(songs[i].artist,
+                                              maxLines: 1,
+                                              style: GoogleFonts.montserrat(
+                                                  fontSize: 12.0,
+                                                  color: Colors.white)
+
+                                              // TextStyle(
+                                              //     fontSize: 12.0,
+                                              //     color: Colors.white),
+                                              ),
                                           trailing: widget.mode == 2
                                               ? new Text(
                                                   (i + 1).toString(),
@@ -271,9 +293,16 @@ class _ListSong extends State<ListSongs> {
                                                       .split('.')
                                                       .first
                                                       .substring(3, 7),
-                                                  style: new TextStyle(
-                                                      fontSize: 12.0,
-                                                      color: Colors.white)),
+                                                  style: GoogleFonts.montserrat(
+                                                    fontSize: 12.0,
+                                                    color: Colors.white,
+                                                  ),
+
+                                                  //  TextStyle(
+                                                  //   fontSize: 12.0,
+                                                  //   color: Colors.white,
+                                                  // ),
+                                                ),
                                           onTap: () {
                                             MyQueue.songs = songs;
                                             Navigator.of(context).push(
@@ -313,15 +342,19 @@ class _ListSong extends State<ListSongs> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                    "No Favourites Yet!",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                  ),
+                                  Text("No Favourites Yet!",
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                      )
+                                      // TextStyle(
+                                      //   fontSize: 20.0,
+                                      //   fontWeight: FontWeight.w600,
+                                      //   color: Colors.white,
+                                      // ),
+                                      ),
                                   // Padding(
                                   //     padding:
                                   //         EdgeInsets.symmetric(vertical: 10.0)),
@@ -333,11 +366,17 @@ class _ListSong extends State<ListSongs> {
                                   Text(
                                     "Start Adding Some",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.montserrat(
                                       fontSize: 15.0,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white,
                                     ),
+
+                                    // TextStyle(
+                                    //   fontSize: 15.0,
+                                    //   fontWeight: FontWeight.w600,
+                                    //   color: Colors.white,
+                                    // ),
                                   ),
                                   // OutlineButton(
                                   //   child: Text(

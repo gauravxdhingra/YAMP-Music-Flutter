@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/pages/now_playing.dart';
@@ -260,7 +261,7 @@ class _MusicState extends State<MusicHome> {
     initBottomItems();
     return new WillPopScope(
       child: new Scaffold(
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         // Color(0xff7800ee),
         key: scaffoldState,
         // appBar: _selectedIndex == 0
@@ -269,12 +270,16 @@ class _MusicState extends State<MusicHome> {
         //         title: title[_selectedIndex].toLowerCase(),
         //       ),
         floatingActionButton: new FloatingActionButton.extended(
-            label: Text(
-              'Now Playing',
-              style: TextStyle(
-                color: Theme.of(context).textTheme.headline.color,
-              ),
-            ),
+            label: Text('Now Playing',
+                style: GoogleFonts.montserrat(
+                  color: Theme.of(context).textTheme.headline.color,
+                  fontWeight: FontWeight.w500,
+                )
+
+                // TextStyle(
+                //   color: Theme.of(context).textTheme.headline.color,
+                // ),
+                ),
             icon: Icon(MdiIcons.play,
                 color: Theme.of(context).textTheme.headline.color),
             backgroundColor: Theme.of(context).bottomAppBarColor,
@@ -329,7 +334,7 @@ class _MusicState extends State<MusicHome> {
                 child: Center(
                     child: SpinKitThreeBounce(
                   color: Colors.blueGrey,
-                  size: 100,
+                  size: 60,
                 )
                     // CircularProgressIndicator()
                     ),
@@ -389,17 +394,28 @@ class _MusicState extends State<MusicHome> {
               return AlertDialog(
                 title: new Text(
                   'Are you sure?',
-                  style: Theme.of(context).textTheme.headline,
+                  style: GoogleFonts.montserrat(
+                    color: Theme.of(context).textTheme.headline.color,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  // style: Theme.of(context).textTheme.headline,
                 ),
                 content: new Text(
-                  'Do you wish to quit YAMP',
-                  style: Theme.of(context).textTheme.headline,
+                  'Do you wish to quit YAMP Music',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 14,
+                    color: Theme.of(context).textTheme.headline.color,
+                  ),
+                  // style: Theme.of(context).textTheme.headline,
                 ),
                 actions: <Widget>[
                   new FlatButton(
                     onPressed: () => Navigator.of(context).pop(false),
                     child: new Text(
                       'No',
+                      style: GoogleFonts.montserrat(
+                        color: Theme.of(context).textTheme.headline.color,
+                      ),
                       // style: Theme.of(context).textTheme.headline,
                     ),
                   ),
@@ -410,6 +426,10 @@ class _MusicState extends State<MusicHome> {
                     },
                     child: new Text(
                       'Yes',
+                      style: GoogleFonts.montserrat(
+                        // fontSize: 14,
+                        color: Theme.of(context).textTheme.headline.color,
+                      ),
                       // style: Theme.of(context).textTheme.headline,
                     ),
                   ),

@@ -5,6 +5,7 @@ import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:test_player/database/database_client.dart';
 import 'package:test_player/pages/now_playing.dart';
 import 'package:test_player/util/lastplay.dart';
@@ -43,7 +44,7 @@ class SongsState extends State<Songs> {
     super.initState();
   }
 
-  Widget recentW(_controllerh) {
+  Widget recentW(_controllerh, _theme) {
     return new Container(
       height: 70,
       padding: EdgeInsets.symmetric(horizontal: 10),
@@ -106,27 +107,40 @@ class SongsState extends State<Songs> {
                                 ),
                               )
                             : CircleAvatar(
+                                backgroundColor: _theme.darkMode
+                                    ? Theme.of(context).bottomAppBarColor
+                                    : Theme.of(context).scaffoldBackgroundColor,
                                 child: Center(
-                                  child:
-                                      Text(recents[i].title[0].toUpperCase()),
+                                  child: Text(
+                                    recents[i].title[0].toUpperCase(),
+                                    style: GoogleFonts.montserrat(),
+                                  ),
                                 ),
                               ),
                         title: Hero(
                           tag: recents[i].id,
                           child: Text(
                             recents[i].title,
-                            style: new TextStyle(
+                            style: GoogleFonts.montserrat(
                               color: Colors.white,
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w500,
+                              fontSize: 15.0,
+                              // fontWeight: FontWeight.w500,
                             ),
+                            // TextStyle(
+                            //   color: Colors.white,
+                            //   fontSize: 16.0,
+                            //   fontWeight: FontWeight.w500,
+                            // ),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                           ),
                         ),
                         subtitle: Text(
                           recents[i].artist,
-                          style: TextStyle(fontSize: 12.0, color: Colors.white),
+                          style: GoogleFonts.montserrat(
+                              fontSize: 12.0, color: Colors.white),
+
+                          // TextStyle(fontSize: 12.0, color: Colors.white),
                           maxLines: 1,
                         ),
                       ),
@@ -164,18 +178,25 @@ class SongsState extends State<Songs> {
                 width: 10,
               ),
               Text(
-                'Recents',
-                style: TextStyle(
-                  fontSize: 20,
+                'RECENTS',
+
+                style: GoogleFonts.montserrat(
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  letterSpacing: 1.2,
+                  // letterSpacing: 1.2,
                 ),
+                //  TextStyle(
+                //   fontSize: 20,
+                //   fontWeight: FontWeight.bold,
+                //   color: Colors.white,
+                //   letterSpacing: 1.2,
+                // ),
               ),
             ],
           ),
         ),
-        recentW(_controllerh),
+        recentW(_controllerh, _theme),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Divider(
@@ -183,7 +204,7 @@ class SongsState extends State<Songs> {
                 ? Theme.of(context).textTheme.headline.color
                 : Color(0xff6e00db),
             // Color(0xff7800ee),
-            thickness: _theme.darkMode ? 0.5 : 2.5,
+            thickness: _theme.darkMode ? 0.3 : 2.5,
           ),
         ),
         Padding(
@@ -197,15 +218,20 @@ class SongsState extends State<Songs> {
               SizedBox(
                 width: 10,
               ),
-              Text(
-                'My Music',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.2,
-                ),
-              ),
+              Text('MY MUSIC',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    // letterSpacing: 1.2,
+                  )
+                  // TextStyle(
+                  //   fontSize: 20,
+                  //   fontWeight: FontWeight.bold,
+                  //   color: Colors.white,
+                  //   letterSpacing: 1.2,
+                  // ),
+                  ),
             ],
           ),
         ),
@@ -244,7 +270,7 @@ class SongsState extends State<Songs> {
                   backgroundColor: Theme.of(context).backgroundColor,
                   // Color(0xffFFCE00),
                   child: Container(
-                    height: MediaQuery.of(context).size.height / 1.455,
+                    height: MediaQuery.of(context).size.height / 1.467,
                     child: FadingEdgeScrollView.fromScrollView(
                       gradientFractionOnStart: 0.05,
                       gradientFractionOnEnd: 0.03,
@@ -290,26 +316,41 @@ class SongsState extends State<Songs> {
                                   transitionOnUserGestures: true,
                                   child: Text(songs[i].title,
                                       maxLines: 1,
-                                      style: new TextStyle(
+                                      style: GoogleFonts.montserrat(
                                         color: Colors.white,
-                                        fontSize: 16.0,
-                                      )),
+                                        fontSize: 15.0,
+                                      )
+
+                                      // new TextStyle(
+                                      //   color: Colors.white,
+                                      //   fontSize: 16.0,
+                                      // )
+                                      ),
                                 ),
                                 subtitle: new Text(
                                   songs[i].artist,
                                   maxLines: 1,
-                                  style: new TextStyle(
-                                      fontSize: 12.0, color: Colors.white),
+                                  style: GoogleFonts.montserrat(
+                                    fontSize: 12.0,
+                                    color: Colors.white,
+                                  ),
+
+                                  // new TextStyle(
+                                  //   fontSize: 12.0,
+                                  //   color: Colors.white,
+                                  // ),
                                 ),
                                 trailing: new Text(
-                                    new Duration(
-                                            milliseconds: songs[i].duration)
-                                        .toString()
-                                        .split('.')
-                                        .first
-                                        .substring(3, 7),
-                                    style: new TextStyle(
-                                        fontSize: 12.0, color: Colors.white)),
+                                  new Duration(milliseconds: songs[i].duration)
+                                      .toString()
+                                      .split('.')
+                                      .first
+                                      .substring(3, 7),
+                                  style: GoogleFonts.montserrat(
+                                      fontSize: 12.0, color: Colors.white),
+                                ),
+                                // TextStyle(
+                                //     fontSize: 12.0, color: Colors.white)),
                                 onTap: () {
                                   MyQueue.songs = songs;
                                   Navigator.of(context).push(
