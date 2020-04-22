@@ -7,6 +7,7 @@ import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
 // import 'package:flutter_visualizers/visualizer.dart';
 // import 'package:flutter_visualizers/Visualizers/LineVisualizer.dart';
@@ -15,6 +16,7 @@ import 'package:provider/provider.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/util/lastplay.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test_player/database/database_client.dart';
 // import 'package:test_player/pages/artistcard.dart';
 import 'package:test_player/util/artistInfo.dart';
@@ -252,9 +254,14 @@ class _StateNowPlaying extends State<NowPlaying>
       body: song != null
           ? portrait(_theme)
           : Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitThreeBounce(
+                color: _theme.darkMode
+                    ? Colors.blueGrey
+                    : Theme.of(context).bottomAppBarColor,
+                size: 30,
+              ),
             ),
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
 // Theme.of(context).scaffoldBackgroundColor,
       // Colors.white,
       //  Theme.of(context).bottomAppBarColor,
@@ -263,15 +270,20 @@ class _StateNowPlaying extends State<NowPlaying>
 
   void _showBottomSheet() {
     showModalBottomSheet(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         context: context,
         builder: (builder) {
+          final _theme = Provider.of<ThemeModel>(context);
           return new Container(
               decoration: ShapeDecoration(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(6.0),
-                          topRight: Radius.circular(6.0))),
-                  color: Color(0xFFFAFAFA)),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(6.0),
+                        topRight: Radius.circular(6.0))),
+                color: _theme.darkMode
+                    ? Theme.of(context).bottomAppBarColor
+                    : Theme.of(context).scaffoldBackgroundColor,
+              ),
               height: MediaQuery.of(context).size.height * 0.7,
               child: Scrollbar(
                 child: new ListView.builder(
@@ -296,38 +308,52 @@ class _StateNowPlaying extends State<NowPlaying>
                               //       )
                               : null,
                           child: getImage(widget.songs[i]) == null
-                              ? Text(widget.songs[i].title[0].toUpperCase())
+                              ? Text(
+                                  widget.songs[i].title[0].toUpperCase(),
+                                  style: GoogleFonts.montserrat(),
+                                )
                               : null,
                         ),
-                        title: new Text(widget.songs[i].title,
-                            maxLines: 1, style: new TextStyle(fontSize: 16.0)),
+                        title: new Text(
+                          widget.songs[i].title,
+                          maxLines: 1,
+                          style: GoogleFonts.montserrat(fontSize: 14),
+                        ),
                         subtitle: Row(
                           children: <Widget>[
                             new Text(
                               widget.songs[i].artist,
                               maxLines: 1,
-                              style: new TextStyle(
-                                  fontSize: 12.0, color: Colors.black54),
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 12.0,
+                                  color: Colors.white.withOpacity(0.8)),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                              child: Text("-"),
+                              child: Text(
+                                "-",
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 12.0,
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
                             ),
                             Text(
-                                new Duration(
-                                        milliseconds: widget.songs[i].duration)
-                                    .toString()
-                                    .split('.')
-                                    .first
-                                    .substring(3, 7),
-                                style: new TextStyle(
-                                    fontSize: 11.0, color: Colors.black54))
+                              new Duration(
+                                      milliseconds: widget.songs[i].duration)
+                                  .toString()
+                                  .split('.')
+                                  .first
+                                  .substring(3, 7),
+                              style: GoogleFonts.montserrat(
+                                  fontSize: 11.0,
+                                  color: Colors.white.withOpacity(0.8)),
+                            ),
                           ],
                         ),
                         trailing: widget.songs[i].id ==
                                 MyQueue.songs[MyQueue.index].id
                             ? new Icon(Icons.play_circle_filled,
-                                color: Colors.blue[700])
+                                color: Colors.white)
                             : null,
                         onTap: () {
                           setState(() {
@@ -929,14 +955,15 @@ class _StateNowPlaying extends State<NowPlaying>
                   ),
                   Container(
                     width: width,
-                    color: Colors.white,
+                    color: Theme.of(context).bottomAppBarColor,
                     child: FlatButton(
                       onPressed: _showBottomSheet,
-                      highlightColor: Colors.blue[200].withOpacity(0.1),
+
+                      // highlightColor: Colors.blue[200].withOpacity(0.1),
                       child: Text(
                         "UP NEXT",
-                        style: TextStyle(
-                            color: Colors.black.withOpacity(0.8),
+                        style: GoogleFonts.montserrat(
+                            color: Theme.of(context).textTheme.headline.color,
                             letterSpacing: 2.0,
                             fontWeight: FontWeight.bold),
                       ),

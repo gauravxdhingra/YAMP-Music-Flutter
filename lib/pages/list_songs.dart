@@ -336,9 +336,9 @@ class _ListSong extends State<ListSongs> {
                             color: Colors.white,
                             highlightedBorderColor: Color(0xFF373737),
                             borderSide:
-                                BorderSide(width: 2.0, color: Colors.white),
+                                BorderSide(width: 1 , color: Colors.white),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0)),
+                                borderRadius: BorderRadius.circular(16.0)),
                             onPressed: () {},
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
