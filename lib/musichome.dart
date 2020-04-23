@@ -21,6 +21,7 @@ import 'package:test_player/util/lastplay.dart';
 import 'package:test_player/views/album.dart';
 import 'package:test_player/views/artists.dart';
 import 'package:test_player/views/home.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:test_player/views/playlists.dart';
 import 'package:test_player/views/songs.dart';
 import 'package:persist_theme/persist_theme.dart';
@@ -189,7 +190,27 @@ class _MusicState extends State<MusicHome> {
   @override
   void initState() {
     super.initState();
+    permissionHandler();
     initPlayer();
+  }
+
+  void permissionHandler() async {
+    var status = await Permission.storage.status;
+    if (status.isUndetermined) {
+      // We didn't ask for permission yet.
+      Permission.storage.request();
+    }
+
+    if (status.isDenied) {
+      // We didn't ask for permission yet.
+      Permission.storage.request();
+    }
+
+    // You can can also directly ask the permission about its status.
+    if (await Permission.storage.isDenied) {
+      Permission.storage.request();
+      // The OS restricts access, for example because of parental controls.
+    }
   }
 
   void initPlayer() async {
