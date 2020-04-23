@@ -315,19 +315,32 @@ class _StateNowPlaying extends State<NowPlaying>
                                 )
                               : null,
                         ),
-                        title: new Text(
-                          widget.songs[i].title,
-                          maxLines: 1,
-                          style: GoogleFonts.montserrat(fontSize: 14),
+                        title: Container(
+                          width: widthX * 0.5,
+                          child: new Text(
+                            widget.songs[i].title,
+                            maxLines: 1,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            style: GoogleFonts.montserrat(fontSize: 14),
+                          ),
                         ),
                         subtitle: Row(
                           children: <Widget>[
-                            new Text(
-                              widget.songs[i].artist,
-                              maxLines: 1,
-                              style: GoogleFonts.montserrat(
-                                  fontSize: 12.0,
-                                  color: Colors.white.withOpacity(0.8)),
+                            Container(
+                              width: widget.songs[i].id ==
+                                      MyQueue.songs[MyQueue.index].id
+                                  ? widthX * 0.5
+                                  : widthX * 0.60,
+                              child: new Text(
+                                widget.songs[i].artist,
+                                maxLines: 1,
+                                softWrap: true,
+                                overflow: TextOverflow.ellipsis,
+                                style: GoogleFonts.montserrat(
+                                    fontSize: 12.0,
+                                    color: Colors.white.withOpacity(0.8)),
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsets.only(left: 5.0, right: 5.0),
@@ -435,10 +448,15 @@ class _StateNowPlaying extends State<NowPlaying>
         Align(
           alignment: Alignment.topCenter,
           child: Padding(
-            padding: EdgeInsets.only(top: width * 0.06 * 2),
+            padding: MediaQuery.of(context).size.height > 650
+                ? EdgeInsets.only(top: width * 0.06 * 2.5)
+                : EdgeInsets.only(top: width * 0.06 * 2),
             child: Container(
-              width: width - 2 * width * 0.06,
-              height: width - width * 0.06,
+              // width: width - 2 * width * 0.06,
+              // height: width - width * 0.06,
+              height: MediaQuery.of(context).size.height > 650
+                  ? width - width * 0.06
+                  : MediaQuery.of(context).size.height * 0.45,
               child: AspectRatio(
                 aspectRatio: 15 / 15,
                 child: getImage(song) != null
@@ -477,8 +495,14 @@ class _StateNowPlaying extends State<NowPlaying>
                                       )
                                     : Container(),
                                 Positioned(
-                                  bottom: 40,
-                                  right: 35,
+                                  bottom:
+                                      MediaQuery.of(context).size.height > 650
+                                          ? 40
+                                          : 30,
+                                  right:
+                                      MediaQuery.of(context).size.height > 650
+                                          ? 35
+                                          : 25,
                                   child: Container(
                                     height: 50,
                                     width: 50,
@@ -497,11 +521,7 @@ class _StateNowPlaying extends State<NowPlaying>
                                     // ),
                                     child: IconButton(
                                         icon: isFav == 0
-                                            ? new Icon(
-                                                Icons.favorite_border,
-                                                color: Colors.red,
-                                                size: 50.0,
-                                              )
+                                            ? Container()
                                             : new Icon(
                                                 Icons.favorite,
                                                 color: Colors.red,
@@ -578,18 +598,20 @@ class _StateNowPlaying extends State<NowPlaying>
                                     )
                                   : Container(),
                               Positioned(
-                                bottom: 40,
-                                right: 35,
+                                bottom: MediaQuery.of(context).size.height > 650
+                                    ? 40
+                                    : 30,
+                                right: MediaQuery.of(context).size.height > 650
+                                    ? 35
+                                    : 25,
+                                // bottom: 40,
+                                // right: 35,
                                 child: Container(
                                   height: 50,
                                   width: 50,
                                   child: IconButton(
                                       icon: isFav == 0
-                                          ? new Icon(
-                                              Icons.favorite_border,
-                                              color: Colors.red,
-                                              size: 50.0,
-                                            )
+                                          ? Container()
                                           : new Icon(
                                               Icons.favorite,
                                               color: Colors.red,
@@ -707,11 +729,14 @@ class _StateNowPlaying extends State<NowPlaying>
         Align(
           alignment: Alignment.topCenter,
           child: Padding(
-            padding: EdgeInsets.only(top: width * 1.11),
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height > 650
+                    ? width * 1.0
+                    : width * 0.97),
             child: Container(
               height: MediaQuery.of(context).size.height - width * 1.11,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Expanded(
@@ -720,8 +745,12 @@ class _StateNowPlaying extends State<NowPlaying>
                         child: Column(
                           children: <Widget>[
                             Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 10.0, right: 10.0, top: 5),
+                              padding: EdgeInsets.only(
+                                  left: 10.0,
+                                  right: 10.0,
+                                  top: MediaQuery.of(context).size.height > 650
+                                      ? 55
+                                      : 25),
                               child: new Text(
                                 '${song.title}\n',
                                 style: new TextStyle(
@@ -821,7 +850,9 @@ class _StateNowPlaying extends State<NowPlaying>
                   Expanded(
                     child: Container(
                       child: Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
+                        padding: MediaQuery.of(context).size.height > 650
+                            ? const EdgeInsets.only(bottom: 1.0)
+                            : const EdgeInsets.only(bottom: 15.0),
                         child: new Row(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -970,27 +1001,30 @@ class _StateNowPlaying extends State<NowPlaying>
                       ),
                     ),
                   ),
-                  Container(
-                    width: width,
-                    color: Theme.of(context).bottomAppBarColor,
-                    child: FlatButton(
-                      onPressed: _showBottomSheet,
-                      // highlightColor: Colors.blue[200].withOpacity(0.1),
-                      child: Text(
-                        "UP NEXT",
-                        style: GoogleFonts.montserrat(
-                            color: Theme.of(context).textTheme.headline.color,
-                            letterSpacing: 2.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      splashColor: Colors.blue[200].withOpacity(0.1),
-                    ),
-                  )
                 ],
               ),
             ),
           ),
-        )
+        ),
+        Positioned(
+          bottom: 0,
+          child: Container(
+            width: width,
+            color: Theme.of(context).bottomAppBarColor,
+            child: FlatButton(
+              onPressed: _showBottomSheet,
+              // highlightColor: Colors.blue[200].withOpacity(0.1),
+              child: Text(
+                "UP NEXT",
+                style: GoogleFonts.montserrat(
+                    color: Theme.of(context).textTheme.headline.color,
+                    letterSpacing: 2.0,
+                    fontWeight: FontWeight.bold),
+              ),
+              splashColor: Colors.blue[200].withOpacity(0.1),
+            ),
+          ),
+        ),
       ],
     );
   }
