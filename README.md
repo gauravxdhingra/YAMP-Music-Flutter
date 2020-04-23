@@ -1,17 +1,84 @@
-# music_player
+# YAMP Music - Yet Another Music Player
 
-A new Flutter project.
 
-## Getting Started
+A Beautiful, Light Weight and Powerful Cross-Platform Music Player 🎵
+Developed using Flutter for Cross-Platform Deployment (Android and iOS)
 
-This project is a starting point for a Flutter application.
+**Download Now!**	(Available on Google Play, iOS to be added soon)
+```
+ https://play.google.com/store/apps/details?id=com.gauravxdhingra.yampmusic
+```
 
-A few resources to get you started if this is your first Flutter project:
+# Screenshots
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+![Screenshot_2020-04-24-01-33-08-910_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160294-e0e27380-85ea-11ea-8092-29c713d3a3b8.png)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-# Music-Player-Flutter-Prod
+![Screenshot_2020-04-24-01-34-52-734_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160297-e17b0a00-85ea-11ea-8ea9-ef56b13240eb.png)
+
+![Screenshot_2020-04-24-01-30-02-006_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160286-dde78300-85ea-11ea-8aed-5ccc5befcd0f.png)
+
+![Screenshot_2020-04-24-01-26-08-396_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160285-dcb65600-85ea-11ea-9792-5141fd4082c3.png)
+
+![Screenshot_2020-04-24-01-30-59-383_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160289-df18b000-85ea-11ea-8e15-1fb9185b26ca.png)
+![Screenshot_2020-04-24-01-31-20-784_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160290-e049dd00-85ea-11ea-93dc-be14f06e22a7.png)
+![Screenshot_2020-04-24-01-32-28-097_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160291-e049dd00-85ea-11ea-87cd-df7746a15610.png)
+
+![Screenshot_2020-04-24-01-12-28-651_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160279-daec9280-85ea-11ea-97c8-51b6e45b60e1.png)
+
+
+
+
+
+## Features
+
+- Cross-Platform
+- Breathtaking User Interface and Delightful User Experience
+- Simplicity - Less is More
+- Double tap album art in Now Playing to add a track to Favorites! 
+- Based on a Local Database, promising blazing performance
+- Support for Queue - UP NEXT
+- Easy access to Recent Tracks
+- Tracks can be added to Favorites
+- Extremely powerful search
+- Saves your Preferences
+- Support for Dark Theme
+- Switch themes on the fly
+- Beautiful Animations at 60 fps
+- Optimized for all screen sizes
+- All Basic Music Functionalities - Play, Pause, Seek, Prev, Next, Shuffle, Background Play...
+- Extremely Powerful Sound Engine
+- Supports Android 4.1+
+- Database can be reset from Settings
+- No Ads
+
+And a lot of amazing features coming soon!
+
+## Upcoming Features
+
+- Online Radio from stations based Worldwide
+- Fetching and displaying Lyrics from Musixmatch
+- Lock Screen Controls and Permanent(Persistent) Notification Bar Control  
+- Circular Volume Slider on Now Playing Screen
+- Music Visualizer with custom bars
+- 5-Band Equalizer Support
+- Auto-fetching Album Art from Last.fm(Known to create issues sometimes) 
+
+## Uses Permissions:
+
+- Read External Storage
+- Write External Storage
+
+
+
+
+## Reporting an issue
+
+Click on the issues tab from the repository and open an issue, reporting a bug, a request for a feature or enhancement
+
+## Contribution
+
+Pull Requests are welcomed!
+Kindly notify me through email or communicate the improvement / functionality or the quirks you wish to add. I'll try my best to cater you.
+
+
+
