@@ -116,8 +116,8 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.black,
       body: Center(
           child: Container(
-        height: 50,
-        width: 50,
+        height: 80,
+        width: 80,
         child: Image.asset(
           "assets/icon/icon.png",
           fit: BoxFit.cover,

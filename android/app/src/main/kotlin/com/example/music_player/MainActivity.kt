@@ -1,4 +1,4 @@
-package com.example.music_player
+package com.gauravxdhingra.yampmusic
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

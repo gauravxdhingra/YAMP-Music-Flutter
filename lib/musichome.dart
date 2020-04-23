@@ -351,14 +351,21 @@ class _MusicState extends State<MusicHome> {
             ? Container(
                 // height: 400, width: 400,
                 child: Center(
-                    child: SpinKitThreeBounce(
-                  color: _theme.darkMode
-                      ? Colors.blueGrey
-                      : Theme.of(context).bottomAppBarColor,
-                  size: 25,
-                )
-                    // CircularProgressIndicator()
-                    ),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 100,
+                      ),
+                      SpinKitThreeBounce(
+                        color: _theme.darkMode
+                            ? Colors.blueGrey
+                            : Theme.of(context).bottomAppBarColor,
+                        size: 25,
+                      ),
+                    ],
+                  ),
+                  // CircularProgressIndicator()
+                ),
               )
             : BodySelection(_selectedIndex, db),
         bottomNavigationBar: CurvedNavigationBar(
