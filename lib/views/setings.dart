@@ -131,7 +131,9 @@ class SongsState extends State<Settings> {
                   ),
                   title: Text(
                     'Refresh Database',
-                    style: GoogleFonts.montserrat(),
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                    ),
                   ),
                   subtitle: Text(
                     'Your Preferences would be cleared',
@@ -198,7 +200,12 @@ class SongsState extends State<Settings> {
                     Icons.color_lens,
                     color: Colors.white,
                   ),
-                  title: Text('Change Theme'),
+                  title: Text(
+                    'Change Theme',
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                    ),
+                  ),
                   subtitle: Text(_theme.darkMode ? 'Elegant Dark' : 'Youth',
                       style: GoogleFonts.montserrat(
                           color: _theme.darkMode
@@ -431,7 +438,9 @@ class SongsState extends State<Settings> {
                   ),
                   title: Text(
                     'Share This App',
-                    style: GoogleFonts.montserrat(),
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                    ),
                   ),
                   subtitle: Text('Support us by sharing this app',
                       style: GoogleFonts.montserrat(
@@ -456,7 +465,9 @@ class SongsState extends State<Settings> {
                   ),
                   title: Text(
                     'About',
-                    style: GoogleFonts.montserrat(),
+                    style: GoogleFonts.montserrat(
+                      color: Colors.white,
+                    ),
                   ),
                   subtitle: Text(
                     version == null ? '' : '$version',

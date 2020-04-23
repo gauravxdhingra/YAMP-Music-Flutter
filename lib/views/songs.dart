@@ -310,10 +310,14 @@ class SongsState extends State<Songs> {
                                           // fit: BoxFit.cover,
                                           // width: 55.0,
                                           // height: 55.0,
-                                          // TODO :  Check here
                                         ),
                                       )
                                     : CircleAvatar(
+                                        backgroundColor: _theme.darkMode
+                                            ? Theme.of(context)
+                                                .bottomAppBarColor
+                                            : Theme.of(context)
+                                                .scaffoldBackgroundColor,
                                         child: Center(
                                           child: Text(
                                               songs[i].title[0].toUpperCase()),

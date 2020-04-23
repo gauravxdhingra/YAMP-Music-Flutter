@@ -5,23 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-// import 'package:musicplayer/database/database_client.dart';
-// import 'package:musicplayer/pages/now_playing.dart';
-// import 'package:musicplayer/util/AAppBar.dart';
-// import 'package:musicplayer/util/lastplay.dart';
-// import 'package:musicplayer/views/album.dart';
-// import 'package:musicplayer/views/artists.dart';
-// import 'package:musicplayer/views/home.dart';
-// import 'package:musicplayer/views/playlists.dart';
-// import 'package:musicplayer/views/songs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:test_player/pages/now_playing.dart';
-// import 'package:test_player/util/AAppBar.dart';
 import 'package:test_player/util/lastplay.dart';
 import 'package:test_player/views/album.dart';
-import 'package:test_player/views/artists.dart';
-import 'package:test_player/views/home.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 import 'package:test_player/views/playlists.dart';
 import 'package:test_player/views/songs.dart';
 import 'package:persist_theme/persist_theme.dart';
@@ -77,7 +65,9 @@ class BodySelection extends StatelessWidget {
             right: 10,
             left: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height>650?  MediaQuery.of(context).size.height / 1.142: MediaQuery.of(context).size.height/1.18,
+              height: MediaQuery.of(context).size.height > 650
+                  ? MediaQuery.of(context).size.height / 1.142
+                  : MediaQuery.of(context).size.height / 1.18,
               padding: EdgeInsets.only(top: 15),
               decoration: BoxDecoration(
                 color: Theme.of(context).accentColor,
@@ -189,29 +179,29 @@ class _MusicState extends State<MusicHome> {
 
   @override
   void initState() {
-    super.initState();
-    permissionHandler();
+    // permissionHandler();
     initPlayer();
+    super.initState();
   }
 
-  void permissionHandler() async {
-    var status = await Permission.storage.status;
-    if (status.isUndetermined) {
-      // We didn't ask for permission yet.
-      Permission.storage.request();
-    }
+  // void permissionHandler() async {
+  //   var status = await Permission.storage.status;
+  //   // if (status.isUndetermined) {
+  //   //   // We didn't ask for permission yet.
+  //   //   Permission.storage.request();
+  //   // }
+  //   print(status);
+  //   // if (status.isDenied) {
+  //   //   // We didn't ask for permission yet.
+  //   //   Permission.storage.request();
+  //   // }
 
-    if (status.isDenied) {
-      // We didn't ask for permission yet.
-      Permission.storage.request();
-    }
-
-    // You can can also directly ask the permission about its status.
-    if (await Permission.storage.isDenied) {
-      Permission.storage.request();
-      // The OS restricts access, for example because of parental controls.
-    }
-  }
+  //   // You can can also directly ask the permission about its status.
+  //   // if (await Permission.storage.isDenied) {
+  //   //   Permission.storage.request();
+  //   //   // The OS restricts access, for example because of parental controls.
+  //   // }
+  // }
 
   void initPlayer() async {
     db = new DatabaseClient();
@@ -287,7 +277,9 @@ class _MusicState extends State<MusicHome> {
     return new WillPopScope(
       child: new Scaffold(
         backgroundColor: _theme.darkMode
-            ? Theme.of(context).backgroundColor
+            ? isLoading
+                ? Theme.of(context).accentColor
+                : Theme.of(context).backgroundColor
             : Theme.of(context).scaffoldBackgroundColor,
         // Color(0xff7800ee),
         key: scaffoldState,
@@ -363,7 +355,7 @@ class _MusicState extends State<MusicHome> {
                   color: _theme.darkMode
                       ? Colors.blueGrey
                       : Theme.of(context).bottomAppBarColor,
-                  size: 40,
+                  size: 25,
                 )
                     // CircularProgressIndicator()
                     ),
