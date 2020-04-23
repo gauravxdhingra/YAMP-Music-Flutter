@@ -277,7 +277,7 @@ class SongsState extends State<Songs> {
                   // Color(0xffFFCE00),
                   child: Container(
                     height: MediaQuery.of(context).size.height > 650
-                        ? MediaQuery.of(context).size.height / 1.467
+                        ? MediaQuery.of(context).size.height / 1.495
                         : MediaQuery.of(context).size.height / 1.73,
                     child: FadingEdgeScrollView.fromScrollView(
                       gradientFractionOnStart: 0.05,

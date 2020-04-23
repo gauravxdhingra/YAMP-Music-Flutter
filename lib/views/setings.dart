@@ -218,89 +218,28 @@ class SongsState extends State<Settings> {
                               gifPath: FancyGif.FUNNY_MAN,
                               descchild: MediaQuery.of(context).size.height >
                                       650
-                                  ? Column(
-                                      children: <Widget>[
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        ListTile(
-                                          contentPadding: null,
-                                          leading: CircleAvatar(
-                                            backgroundColor: Colors.black,
-                                          ),
-                                          title: Text(
-                                            'Elegant Black',
-                                            style: GoogleFonts.montserrat(
-                                                color: Colors.black),
-                                          ),
-                                          trailing: _theme.darkMode
-                                              ? Icon(
-                                                  Icons.check,
-                                                  color: Colors.black,
-                                                )
-                                              : null,
-                                          onTap: () {
-                                            // _theme.darkMode?
-                                            _theme.changeDarkMode(true);
-                                            setState(() {});
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: Color(0xff6e00db),
-                                          ),
-                                          title: Text(
-                                            'Youth',
-                                            style: GoogleFonts.montserrat(
-                                                color: Colors.black),
-                                          ),
-                                          trailing: !_theme.darkMode
-                                              ? Icon(
-                                                  Icons.check,
-                                                  color: Colors.black,
-                                                )
-                                              : null,
-                                          onTap: () {
-                                            _theme.changeDarkMode(false);
-                                            setState(() {});
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                      ],
-                                    )
-                                  : Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 10,
-                                      ),
+                                  ? SingleChildScrollView(
                                       child: Column(
                                         children: <Widget>[
-                                          InkWell(
-                                            child: Row(
-                                              children: <Widget>[
-                                                CircleAvatar(
-                                                  backgroundColor: Colors.black,
-                                                  radius: 17,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(
-                                                  'Elegant Black',
-                                                  style: GoogleFonts.montserrat(
-                                                      color: Colors.black),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                _theme.darkMode
-                                                    ? Icon(
-                                                        Icons.check,
-                                                        color: Colors.black,
-                                                      )
-                                                    : Container(),
-                                              ],
+                                          // SizedBox(
+                                          //   height: 2,
+                                          // ),
+                                          ListTile(
+                                            contentPadding: null,
+                                            leading: CircleAvatar(
+                                              backgroundColor: Colors.black,
                                             ),
+                                            title: Text(
+                                              'Elegant Black',
+                                              style: GoogleFonts.montserrat(
+                                                  color: Colors.black),
+                                            ),
+                                            trailing: _theme.darkMode
+                                                ? Icon(
+                                                    Icons.check,
+                                                    color: Colors.black,
+                                                  )
+                                                : null,
                                             onTap: () {
                                               // _theme.darkMode?
                                               _theme.changeDarkMode(true);
@@ -308,99 +247,170 @@ class SongsState extends State<Settings> {
                                               Navigator.of(context).pop();
                                             },
                                           ),
-                                          SizedBox(
-                                            height: 8,
-                                          ),
-                                          InkWell(
-                                            child: Row(
-                                              children: <Widget>[
-                                                CircleAvatar(
-                                                  backgroundColor:
-                                                      Color(0xff6e00db),
-                                                  radius: 17,
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                                Text(
-                                                  'Youth',
-                                                  style: GoogleFonts.montserrat(
-                                                      color: Colors.black),
-                                                ),
-                                                SizedBox(
-                                                  width: 20,
-                                                ),
-                                                !_theme.darkMode
-                                                    ? Icon(
-                                                        Icons.check,
-                                                        color: Colors.black,
-                                                      )
-                                                    : Container(),
-                                              ],
+                                          ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xff6e00db),
                                             ),
+                                            title: Text(
+                                              'Youth',
+                                              style: GoogleFonts.montserrat(
+                                                  color: Colors.black),
+                                            ),
+                                            trailing: !_theme.darkMode
+                                                ? Icon(
+                                                    Icons.check,
+                                                    color: Colors.black,
+                                                  )
+                                                : null,
                                             onTap: () {
                                               _theme.changeDarkMode(false);
                                               setState(() {});
                                               Navigator.of(context).pop();
                                             },
                                           ),
-                                          // ListTile(
-                                          //   contentPadding: null,
-                                          //   leading: CircleAvatar(
-                                          //     backgroundColor: Colors.black,
-                                          //   ),
-                                          //   title: Text(
-                                          //     'Elegant Black',
-                                          //     style: GoogleFonts.montserrat(
-                                          //         fontSize: MediaQuery.of(context)
-                                          //                     .size
-                                          //                     .height <
-                                          //                 650
-                                          //             ? 12
-                                          //             : 15,
-                                          //         color: Colors.black),
-                                          //   ),
-                                          //   trailing: _theme.darkMode
-                                          //       ? Icon(
-                                          //           Icons.check,
-                                          //           color: Colors.black,
-                                          //         )
-                                          //       : null,
-                                          //   onTap: () {
-                                          //     // _theme.darkMode?
-                                          //     _theme.changeDarkMode(true);
-                                          //     setState(() {});
-                                          //     Navigator.of(context).pop();
-                                          //   },
-                                          // ),
-                                          // ListTile(
-                                          //   leading: CircleAvatar(
-                                          //     backgroundColor: Color(0xff6e00db),
-                                          //   ),
-                                          //   title: Text(
-                                          //     'Youth',
-                                          //     style: GoogleFonts.montserrat(
-                                          //         fontSize: MediaQuery.of(context)
-                                          //                     .size
-                                          //                     .height <
-                                          //                 650
-                                          //             ? 10
-                                          //             : 15,
-                                          //         color: Colors.black),
-                                          //   ),
-                                          //   trailing: !_theme.darkMode
-                                          //       ? Icon(
-                                          //           Icons.check,
-                                          //           color: Colors.black,
-                                          //         )
-                                          //       : null,
-                                          //   onTap: () {
-                                          //     _theme.changeDarkMode(false);
-                                          //     setState(() {});
-                                          //     Navigator.of(context).pop();
-                                          //   },
-                                          // ),
                                         ],
+                                      ),
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                      ),
+                                      child: SingleChildScrollView(
+                                        child: Column(
+                                          children: <Widget>[
+                                            InkWell(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.black,
+                                                    radius: 17,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                    'Elegant Black',
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            color:
+                                                                Colors.black),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  _theme.darkMode
+                                                      ? Icon(
+                                                          Icons.check,
+                                                          color: Colors.black,
+                                                        )
+                                                      : Container(),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                // _theme.darkMode?
+                                                _theme.changeDarkMode(true);
+                                                setState(() {});
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            SizedBox(
+                                              height: 8,
+                                            ),
+                                            InkWell(
+                                              child: Row(
+                                                children: <Widget>[
+                                                  CircleAvatar(
+                                                    backgroundColor:
+                                                        Color(0xff6e00db),
+                                                    radius: 17,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Text(
+                                                    'Youth',
+                                                    style:
+                                                        GoogleFonts.montserrat(
+                                                            color:
+                                                                Colors.black),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  !_theme.darkMode
+                                                      ? Icon(
+                                                          Icons.check,
+                                                          color: Colors.black,
+                                                        )
+                                                      : Container(),
+                                                ],
+                                              ),
+                                              onTap: () {
+                                                _theme.changeDarkMode(false);
+                                                setState(() {});
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            // ListTile(
+                                            //   contentPadding: null,
+                                            //   leading: CircleAvatar(
+                                            //     backgroundColor: Colors.black,
+                                            //   ),
+                                            //   title: Text(
+                                            //     'Elegant Black',
+                                            //     style: GoogleFonts.montserrat(
+                                            //         fontSize: MediaQuery.of(context)
+                                            //                     .size
+                                            //                     .height <
+                                            //                 650
+                                            //             ? 12
+                                            //             : 15,
+                                            //         color: Colors.black),
+                                            //   ),
+                                            //   trailing: _theme.darkMode
+                                            //       ? Icon(
+                                            //           Icons.check,
+                                            //           color: Colors.black,
+                                            //         )
+                                            //       : null,
+                                            //   onTap: () {
+                                            //     // _theme.darkMode?
+                                            //     _theme.changeDarkMode(true);
+                                            //     setState(() {});
+                                            //     Navigator.of(context).pop();
+                                            //   },
+                                            // ),
+                                            // ListTile(
+                                            //   leading: CircleAvatar(
+                                            //     backgroundColor: Color(0xff6e00db),
+                                            //   ),
+                                            //   title: Text(
+                                            //     'Youth',
+                                            //     style: GoogleFonts.montserrat(
+                                            //         fontSize: MediaQuery.of(context)
+                                            //                     .size
+                                            //                     .height <
+                                            //                 650
+                                            //             ? 10
+                                            //             : 15,
+                                            //         color: Colors.black),
+                                            //   ),
+                                            //   trailing: !_theme.darkMode
+                                            //       ? Icon(
+                                            //           Icons.check,
+                                            //           color: Colors.black,
+                                            //         )
+                                            //       : null,
+                                            //   onTap: () {
+                                            //     _theme.changeDarkMode(false);
+                                            //     setState(() {});
+                                            //     Navigator.of(context).pop();
+                                            //   },
+                                            // ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                               title: MediaQuery.of(context).size.height > 650
