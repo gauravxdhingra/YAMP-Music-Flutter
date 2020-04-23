@@ -13,7 +13,6 @@ import 'package:test_player/database/database_client.dart';
 // import 'package:test_player/pages/card_detail.dart';
 import 'package:test_player/pages/now_playing.dart';
 import 'package:test_player/util/lastplay.dart';
-import 'package:test_player/util/utility.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/pages/card_detail.dart';
 // import 'package:musicplayer/util/utility.dart';

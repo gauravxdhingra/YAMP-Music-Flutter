@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:persist_theme/data/models/theme_model.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart';
 
 class ThemeSet extends StatelessWidget {
   @override

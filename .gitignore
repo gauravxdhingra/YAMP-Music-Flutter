@@ -14,6 +14,8 @@
 *.ipr
 *.iws
 .idea/
+**/android/key.properties
+**/android/app/key.jks
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -29,6 +31,7 @@
 .pub-cache/
 .pub/
 /build/
+
 
 # Web related
 lib/generated_plugin_registrant.dart

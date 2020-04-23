@@ -20,10 +20,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:test_player/database/database_client.dart';
 // import 'package:test_player/pages/artistcard.dart';
-import 'package:test_player/util/artistInfo.dart';
 import 'package:test_player/util/lastplay.dart';
 // import 'package:flutter_visualizers/flutter_visualizers.dart';
-import '../util/methodcalls.dart';
+// import '../util/methodcalls.dart';
 
 class NowPlaying extends StatefulWidget {
   final int mode;

@@ -9,7 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:test_player/database/database_client.dart';
 import 'package:test_player/pages/now_playing.dart';
 import 'package:test_player/util/lastplay.dart';
-import 'package:floating_search_bar/floating_search_bar.dart';
 // import 'package:musicplayer/database/database_client.dart';
 // import 'package:musicplayer/pages/now_playing.dart';
 // import 'package:musicplayer/util/lastplay.dart';

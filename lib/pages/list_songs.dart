@@ -1,15 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:draggable_scrollbar_sliver/draggable_scrollbar_sliver.dart';
 import 'package:fading_edge_scrollview/fading_edge_scrollview.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:flutter/material.dart';
-// import 'package:musicplayer/database/database_client.dart';
-// import 'package:musicplayer/pages/now_playing.dart';
-// import 'package:musicplayer/util/AAppBar.dart';
-// import 'package:musicplayer/util/lastplay.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +12,6 @@ import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:test_player/database/database_client.dart';
 import 'package:test_player/pages/now_playing.dart';
-// import 'package:test_player/util/AAppBar.dart';
 import 'package:test_player/util/lastplay.dart';
 
 class ListSongs extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'dart:io';
+
 import 'package:fancy_dialog/FancyAnimation.dart';
 import 'package:fancy_dialog/FancyGif.dart';
 import 'package:fancy_dialog/FancyTheme.dart';
@@ -8,14 +8,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:share/share.dart';
 import 'package:flute_music_player/flute_music_player.dart';
 import 'package:test_player/database/database_client.dart';
-import 'package:test_player/pages/now_playing.dart';
-import 'package:test_player/pages/theme_settings.dart';
-import 'package:test_player/util/lastplay.dart';
+// import 'package:test_player/pages/now_playing.dart';
+// import 'package:test_player/pages/theme_settings.dart';
+// import 'package:test_player/util/lastplay.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:package_info/package_info.dart';
 import 'package:fancy_dialog/fancy_dialog.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 // import 'package:social_media_buttons/social_media_buttons.dart';
 
