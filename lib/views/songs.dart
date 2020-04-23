@@ -182,7 +182,6 @@ class SongsState extends State<Songs> {
               ),
               Text(
                 'RECENTS',
-
                 style: GoogleFonts.montserrat(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -246,11 +245,13 @@ class SongsState extends State<Songs> {
                 break;
               case ConnectionState.waiting:
                 return Container(
-                  height: 400,
+                  height: MediaQuery.of(context).size.height > 650 ? 400 : 300,
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 250,
+                        height: MediaQuery.of(context).size.height > 650
+                            ? 250
+                            : 170,
                       ),
                       SpinKitThreeBounce(
                         color: _theme.darkMode
@@ -275,7 +276,9 @@ class SongsState extends State<Songs> {
                   backgroundColor: Theme.of(context).backgroundColor,
                   // Color(0xffFFCE00),
                   child: Container(
-                    height: MediaQuery.of(context).size.height / 1.467,
+                    height: MediaQuery.of(context).size.height > 650
+                        ? MediaQuery.of(context).size.height / 1.467
+                        : MediaQuery.of(context).size.height / 1.73,
                     child: FadingEdgeScrollView.fromScrollView(
                       gradientFractionOnStart: 0.05,
                       gradientFractionOnEnd: 0.03,

@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 // import 'package:musicplayer/pages/artistcard.dart';
 // import 'package:musicplayer/util/artistInfo.dart';
 import 'package:flute_music_player/flute_music_player.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persist_theme/persist_theme.dart';
 import 'package:provider/provider.dart';
@@ -770,6 +771,22 @@ class _StateNowPlaying extends State<NowPlaying>
                               letterSpacing: 1.0),
                         ),
                         Expanded(
+                          // child: CupertinoSlider(
+                          //   value: position?.inMilliseconds?.toDouble() ?? 0.0,
+                          //   onChanged: (double value) =>
+                          //       player.seek((value / 1000).roundToDouble()),
+                          //   min: 0.0,
+                          //   activeColor: _theme.darkMode
+                          //       ? Colors.white
+                          //       : Theme.of(context).bottomAppBarColor,
+                          //   max: song.duration.toDouble() + 1000,
+                          //   thumbColor: _theme.darkMode
+                          //       ? Colors.white
+                          //       : Theme.of(context).bottomAppBarColor,
+
+                          //   // inactiveColor: Colors.white.withOpacity(0.5),
+                          // ),
+
                           child: Slider(
                             min: 0.0,
                             activeColor: _theme.darkMode
@@ -958,7 +975,6 @@ class _StateNowPlaying extends State<NowPlaying>
                     color: Theme.of(context).bottomAppBarColor,
                     child: FlatButton(
                       onPressed: _showBottomSheet,
-
                       // highlightColor: Colors.blue[200].withOpacity(0.1),
                       child: Text(
                         "UP NEXT",

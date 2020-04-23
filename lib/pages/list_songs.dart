@@ -145,6 +145,9 @@ class _ListSong extends State<ListSongs> {
 
   @override
   Widget build(BuildContext context) {
+    // print(MediaQuery.of(context).size.height);
+
+    // print(MediaQuery.of(context).size.width);
     final _theme = Provider.of<ThemeModel>(context);
     // initSongs();
     // songs.sort((so));
@@ -214,7 +217,7 @@ class _ListSong extends State<ListSongs> {
                           // Theme.of(context).scaffoldBackgroundColor,
                           // Color(0xffFFCE00),
                           child: Container(
-                            height: MediaQuery.of(context).size.height / 1.3,
+                            height:MediaQuery.of(context).size.height>650?  MediaQuery.of(context).size.height / 1.3: MediaQuery.of(context).size.height/1.4,
                             child: FadingEdgeScrollView.fromScrollView(
                               gradientFractionOnStart: 0.04,
                               gradientFractionOnEnd: 0.05,
@@ -336,7 +339,7 @@ class _ListSong extends State<ListSongs> {
                             color: Colors.white,
                             highlightedBorderColor: Color(0xFF373737),
                             borderSide:
-                                BorderSide(width: 1 , color: Colors.white),
+                                BorderSide(width: 1, color: Colors.white),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16.0)),
                             onPressed: () {},

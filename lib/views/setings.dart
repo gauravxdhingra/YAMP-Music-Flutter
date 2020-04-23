@@ -199,13 +199,11 @@ class SongsState extends State<Settings> {
                     color: Colors.white,
                   ),
                   title: Text('Change Theme'),
-                  subtitle: Text(
-                    _theme.darkMode ? 'Elegant Dark' : 'Youth',
-                    style: TextStyle(
-                        color: _theme.darkMode
-                            ? Colors.grey
-                            : Colors.white.withOpacity(0.8)),
-                  ),
+                  subtitle: Text(_theme.darkMode ? 'Elegant Dark' : 'Youth',
+                      style: GoogleFonts.montserrat(
+                          color: _theme.darkMode
+                              ? Colors.grey
+                              : Colors.white.withOpacity(0.8))),
                   onTap: () {
                     // Navigator.of(context).push(
                     //     MaterialPageRoute(builder: (context) => ThemeSet()));
@@ -218,57 +216,196 @@ class SongsState extends State<Settings> {
                               // animationType: FancyAnimation.BOTTOM_TOP,
                               // shorttop: false,
                               gifPath: FancyGif.FUNNY_MAN,
-                              descchild: Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundColor: Colors.black,
+                              descchild: MediaQuery.of(context).size.height >
+                                      650
+                                  ? Column(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        ListTile(
+                                          contentPadding: null,
+                                          leading: CircleAvatar(
+                                            backgroundColor: Colors.black,
+                                          ),
+                                          title: Text(
+                                            'Elegant Black',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.black),
+                                          ),
+                                          trailing: _theme.darkMode
+                                              ? Icon(
+                                                  Icons.check,
+                                                  color: Colors.black,
+                                                )
+                                              : null,
+                                          onTap: () {
+                                            // _theme.darkMode?
+                                            _theme.changeDarkMode(true);
+                                            setState(() {});
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: Color(0xff6e00db),
+                                          ),
+                                          title: Text(
+                                            'Youth',
+                                            style: GoogleFonts.montserrat(
+                                                color: Colors.black),
+                                          ),
+                                          trailing: !_theme.darkMode
+                                              ? Icon(
+                                                  Icons.check,
+                                                  color: Colors.black,
+                                                )
+                                              : null,
+                                          onTap: () {
+                                            _theme.changeDarkMode(false);
+                                            setState(() {});
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  : Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                      ),
+                                      child: Column(
+                                        children: <Widget>[
+                                          InkWell(
+                                            child: Row(
+                                              children: <Widget>[
+                                                CircleAvatar(
+                                                  backgroundColor: Colors.black,
+                                                  radius: 17,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  'Elegant Black',
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Colors.black),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                _theme.darkMode
+                                                    ? Icon(
+                                                        Icons.check,
+                                                        color: Colors.black,
+                                                      )
+                                                    : Container(),
+                                              ],
+                                            ),
+                                            onTap: () {
+                                              // _theme.darkMode?
+                                              _theme.changeDarkMode(true);
+                                              setState(() {});
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 8,
+                                          ),
+                                          InkWell(
+                                            child: Row(
+                                              children: <Widget>[
+                                                CircleAvatar(
+                                                  backgroundColor:
+                                                      Color(0xff6e00db),
+                                                  radius: 17,
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  'Youth',
+                                                  style: GoogleFonts.montserrat(
+                                                      color: Colors.black),
+                                                ),
+                                                SizedBox(
+                                                  width: 20,
+                                                ),
+                                                !_theme.darkMode
+                                                    ? Icon(
+                                                        Icons.check,
+                                                        color: Colors.black,
+                                                      )
+                                                    : Container(),
+                                              ],
+                                            ),
+                                            onTap: () {
+                                              _theme.changeDarkMode(false);
+                                              setState(() {});
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                          // ListTile(
+                                          //   contentPadding: null,
+                                          //   leading: CircleAvatar(
+                                          //     backgroundColor: Colors.black,
+                                          //   ),
+                                          //   title: Text(
+                                          //     'Elegant Black',
+                                          //     style: GoogleFonts.montserrat(
+                                          //         fontSize: MediaQuery.of(context)
+                                          //                     .size
+                                          //                     .height <
+                                          //                 650
+                                          //             ? 12
+                                          //             : 15,
+                                          //         color: Colors.black),
+                                          //   ),
+                                          //   trailing: _theme.darkMode
+                                          //       ? Icon(
+                                          //           Icons.check,
+                                          //           color: Colors.black,
+                                          //         )
+                                          //       : null,
+                                          //   onTap: () {
+                                          //     // _theme.darkMode?
+                                          //     _theme.changeDarkMode(true);
+                                          //     setState(() {});
+                                          //     Navigator.of(context).pop();
+                                          //   },
+                                          // ),
+                                          // ListTile(
+                                          //   leading: CircleAvatar(
+                                          //     backgroundColor: Color(0xff6e00db),
+                                          //   ),
+                                          //   title: Text(
+                                          //     'Youth',
+                                          //     style: GoogleFonts.montserrat(
+                                          //         fontSize: MediaQuery.of(context)
+                                          //                     .size
+                                          //                     .height <
+                                          //                 650
+                                          //             ? 10
+                                          //             : 15,
+                                          //         color: Colors.black),
+                                          //   ),
+                                          //   trailing: !_theme.darkMode
+                                          //       ? Icon(
+                                          //           Icons.check,
+                                          //           color: Colors.black,
+                                          //         )
+                                          //       : null,
+                                          //   onTap: () {
+                                          //     _theme.changeDarkMode(false);
+                                          //     setState(() {});
+                                          //     Navigator.of(context).pop();
+                                          //   },
+                                          // ),
+                                        ],
+                                      ),
                                     ),
-                                    title: Text(
-                                      'Elegant Black',
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.black),
-                                    ),
-                                    trailing: _theme.darkMode
-                                        ? Icon(
-                                            Icons.check,
-                                            color: Colors.black,
-                                          )
-                                        : null,
-                                    onTap: () {
-                                      // _theme.darkMode?
-                                      _theme.changeDarkMode(true);
-                                      setState(() {});
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundColor: Color(0xff6e00db),
-                                    ),
-                                    title: Text(
-                                      'Youth',
-                                      style: GoogleFonts.montserrat(
-                                          color: Colors.black),
-                                    ),
-                                    trailing: !_theme.darkMode
-                                        ? Icon(
-                                            Icons.check,
-                                            color: Colors.black,
-                                          )
-                                        : null,
-                                    onTap: () {
-                                      _theme.changeDarkMode(false);
-                                      setState(() {});
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              ),
-                              title: "Set Your Preffered Theme",
+                              title: MediaQuery.of(context).size.height > 650
+                                  ? "Set Your Preffered Theme"
+                                  : 'Theme',
                               // descreption: "Black and Young",
                             ));
                   },
@@ -282,14 +419,15 @@ class SongsState extends State<Settings> {
                     Icons.share,
                     color: Colors.white,
                   ),
-                  title: Text('Share This App'),
-                  subtitle: Text(
-                    'Support us by sharing this app',
-                    style: TextStyle(
-                        color: _theme.darkMode
-                            ? Colors.grey
-                            : Colors.white.withOpacity(0.8)),
+                  title: Text(
+                    'Share This App',
+                    style: GoogleFonts.montserrat(),
                   ),
+                  subtitle: Text('Support us by sharing this app',
+                      style: GoogleFonts.montserrat(
+                          color: _theme.darkMode
+                              ? Colors.grey
+                              : Colors.white.withOpacity(0.8))),
                   onTap: () {
                     if (packageName != null)
                       Share.share(
@@ -306,13 +444,17 @@ class SongsState extends State<Settings> {
                     Icons.info_outline,
                     color: Colors.white,
                   ),
-                  title: Text('About'),
+                  title: Text(
+                    'About',
+                    style: GoogleFonts.montserrat(),
+                  ),
                   subtitle: Text(
                     version == null ? '' : '$version',
-                    style: TextStyle(
-                        color: _theme.darkMode
-                            ? Colors.grey
-                            : Colors.white.withOpacity(0.8)),
+                    style: GoogleFonts.montserrat(
+                      color: _theme.darkMode
+                          ? Colors.grey
+                          : Colors.white.withOpacity(0.8),
+                    ),
                   ),
                   onTap: () {
                     showDialog(
@@ -329,17 +471,30 @@ class SongsState extends State<Settings> {
                                   Text(
                                     'Yet Another Music Player',
                                     style: GoogleFonts.montserrat(
+                                        fontSize:
+                                            MediaQuery.of(context).size.height >
+                                                    650
+                                                ? 15
+                                                : 12,
                                         color: Colors.black),
                                   ),
                                   ListTile(
                                     leading: Icon(
                                       BrandIcons.github,
                                       color: Colors.black,
-                                      size: 45,
+                                      size: MediaQuery.of(context).size.height >
+                                              650
+                                          ? 45
+                                          : 30,
                                     ),
                                     title: Text(
                                       'https://github.com/gauravxdhingra',
                                       style: GoogleFonts.montserrat(
+                                        fontSize:
+                                            MediaQuery.of(context).size.height >
+                                                    650
+                                                ? 15
+                                                : 12,
                                         color: Colors.black,
                                       ),
                                       textAlign: TextAlign.center,
@@ -354,6 +509,11 @@ class SongsState extends State<Settings> {
                                   Text(
                                     'Version: $version',
                                     style: GoogleFonts.montserrat(
+                                      fontSize:
+                                          MediaQuery.of(context).size.height >
+                                                  650
+                                              ? 15
+                                              : 12,
                                       color: Colors.black,
                                     ),
                                   ),

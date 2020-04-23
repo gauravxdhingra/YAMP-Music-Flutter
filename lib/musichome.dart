@@ -77,7 +77,7 @@ class BodySelection extends StatelessWidget {
             right: 10,
             left: 0,
             child: Container(
-              height: MediaQuery.of(context).size.height / 1.142,
+              height: MediaQuery.of(context).size.height>650?  MediaQuery.of(context).size.height / 1.142: MediaQuery.of(context).size.height/1.18,
               padding: EdgeInsets.only(top: 15),
               decoration: BoxDecoration(
                 color: Theme.of(context).accentColor,
@@ -363,7 +363,7 @@ class _MusicState extends State<MusicHome> {
                   color: _theme.darkMode
                       ? Colors.blueGrey
                       : Theme.of(context).bottomAppBarColor,
-                  size: 60,
+                  size: 40,
                 )
                     // CircularProgressIndicator()
                     ),
