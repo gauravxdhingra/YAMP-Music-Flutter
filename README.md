@@ -11,19 +11,21 @@ Developed using Flutter for Cross-Platform Deployment (Android and iOS)
 
 # Screenshots
 
-![Screenshot_2020-04-24-01-33-08-910_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160294-e0e27380-85ea-11ea-8092-29c713d3a3b8.png)
+![Music Home Page - Dark Theme](https://user-images.githubusercontent.com/44085104/80160294-e0e27380-85ea-11ea-8092-29c713d3a3b8.png = 500x )
 
-![Screenshot_2020-04-24-01-34-52-734_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160297-e17b0a00-85ea-11ea-8ea9-ef56b13240eb.png)
+![Music Home Page - Youth](https://user-images.githubusercontent.com/44085104/80160297-e17b0a00-85ea-11ea-8ea9-ef56b13240eb.png = 500x)
 
-![Screenshot_2020-04-24-01-30-02-006_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160286-dde78300-85ea-11ea-8aed-5ccc5befcd0f.png)
+![Now Playing - Dark Theme](https://user-images.githubusercontent.com/44085104/80160286-dde78300-85ea-11ea-8aed-5ccc5befcd0f.png = 500x)
 
-![Screenshot_2020-04-24-01-26-08-396_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160285-dcb65600-85ea-11ea-9792-5141fd4082c3.png)
+![Now Playing - Youth](https://user-images.githubusercontent.com/44085104/80160285-dcb65600-85ea-11ea-9792-5141fd4082c3.png = 500x)
 
-![Screenshot_2020-04-24-01-30-59-383_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160289-df18b000-85ea-11ea-8e15-1fb9185b26ca.png)
-![Screenshot_2020-04-24-01-31-20-784_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160290-e049dd00-85ea-11ea-93dc-be14f06e22a7.png)
-![Screenshot_2020-04-24-01-32-28-097_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160291-e049dd00-85ea-11ea-87cd-df7746a15610.png)
+![Now Playing - UP NEXT](https://user-images.githubusercontent.com/44085104/80160289-df18b000-85ea-11ea-8e15-1fb9185b26ca.png = 500x)
 
-![Screenshot_2020-04-24-01-12-28-651_com gauravxdhingra yampmusic_iphonexspacegrey_portrait](https://user-images.githubusercontent.com/44085104/80160279-daec9280-85ea-11ea-97c8-51b6e45b60e1.png)
+![Search](https://user-images.githubusercontent.com/44085104/80160290-e049dd00-85ea-11ea-93dc-be14f06e22a7.png = 500x)
+
+![Settings](https://user-images.githubusercontent.com/44085104/80160291-e049dd00-85ea-11ea-87cd-df7746a15610.png = 500x)
+
+![Switching Themes](https://user-images.githubusercontent.com/44085104/80160279-daec9280-85ea-11ea-97c8-51b6e45b60e1.png = 500x)
 
 
 
