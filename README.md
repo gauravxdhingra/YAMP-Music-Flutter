@@ -10,14 +10,14 @@ Developed using Flutter for Cross-Platform Deployment (Android and iOS)
 ```
 
 # Screenshots
-<img src="https://user-images.githubusercontent.com/44085104/80160294-e0e27380-85ea-11ea-8092-29c713d3a3b8.png" width="700">
-<img src="https://user-images.githubusercontent.com/44085104/80160297-e17b0a00-85ea-11ea-8ea9-ef56b13240eb.png" width="700">
-<img src="https://user-images.githubusercontent.com/44085104/80160286-dde78300-85ea-11ea-8aed-5ccc5befcd0f.png" width="700">
-<img src="https://user-images.githubusercontent.com/44085104/80160285-dcb65600-85ea-11ea-9792-5141fd4082c3.png" width="700">
-<img src="https://user-images.githubusercontent.com/44085104/80160289-df18b000-85ea-11ea-8e15-1fb9185b26ca.png" width="700">
-<img src="(https://user-images.githubusercontent.com/44085104/80160290-e049dd00-85ea-11ea-93dc-be14f06e22a7.png" width="700">
-<img src="https://user-images.githubusercontent.com/44085104/80160291-e049dd00-85ea-11ea-87cd-df7746a15610.png" width="700">
-<img src="https://user-images.githubusercontent.com/44085104/80160279-daec9280-85ea-11ea-97c8-51b6e45b60e1.png" width="700">
+<img src="https://user-images.githubusercontent.com/44085104/80160294-e0e27380-85ea-11ea-8092-29c713d3a3b8.png" width="400">
+<img src="https://user-images.githubusercontent.com/44085104/80160297-e17b0a00-85ea-11ea-8ea9-ef56b13240eb.png" width="400">
+<img src="https://user-images.githubusercontent.com/44085104/80160286-dde78300-85ea-11ea-8aed-5ccc5befcd0f.png" width="400">
+<img src="https://user-images.githubusercontent.com/44085104/80160285-dcb65600-85ea-11ea-9792-5141fd4082c3.png" width="400">
+<img src="https://user-images.githubusercontent.com/44085104/80160289-df18b000-85ea-11ea-8e15-1fb9185b26ca.png" width="400">
+<img src="(https://user-images.githubusercontent.com/44085104/80160290-e049dd00-85ea-11ea-93dc-be14f06e22a7.png" width="400">
+<img src="https://user-images.githubusercontent.com/44085104/80160291-e049dd00-85ea-11ea-87cd-df7746a15610.png" width="400">
+<img src="https://user-images.githubusercontent.com/44085104/80160279-daec9280-85ea-11ea-97c8-51b6e45b60e1.png" width="400">
 
 
 <!-- 
