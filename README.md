@@ -2,6 +2,7 @@
 
 
 A Beautiful, Light Weight and Powerful Cross-Platform Music Player 🎵
+
 Developed using Flutter for Cross-Platform Deployment (Android and iOS)
 
 **Download Now!**	(Available on Google Play, iOS to be added soon)
