@@ -11,14 +11,15 @@ Developed using Flutter for Cross-Platform Deployment (Android and iOS)
 ```
 
 # Screenshots
-<img src="https://user-images.githubusercontent.com/44085104/80160294-e0e27380-85ea-11ea-8092-29c713d3a3b8.png" width="400">
-<img src="https://user-images.githubusercontent.com/44085104/80160297-e17b0a00-85ea-11ea-8ea9-ef56b13240eb.png" width="400">
-<img src="https://user-images.githubusercontent.com/44085104/80160286-dde78300-85ea-11ea-8aed-5ccc5befcd0f.png" width="400">
-<img src="https://user-images.githubusercontent.com/44085104/80160285-dcb65600-85ea-11ea-9792-5141fd4082c3.png" width="400">
-<img src="https://user-images.githubusercontent.com/44085104/80160289-df18b000-85ea-11ea-8e15-1fb9185b26ca.png" width="400">
-<img src="(https://user-images.githubusercontent.com/44085104/80160290-e049dd00-85ea-11ea-93dc-be14f06e22a7.png" width="400">
-<img src="https://user-images.githubusercontent.com/44085104/80160291-e049dd00-85ea-11ea-87cd-df7746a15610.png" width="400">
-<img src="https://user-images.githubusercontent.com/44085104/80160279-daec9280-85ea-11ea-97c8-51b6e45b60e1.png" width="400">
+<img src="https://user-images.githubusercontent.com/44085104/80377081-60f12d80-88b8-11ea-90d0-7d705bbd8659.png" width="700">
+<img src="https://user-images.githubusercontent.com/44085104/80377047-56cf2f00-88b8-11ea-8633-9eeb99121502.png" width="200">
+<img src="https://user-images.githubusercontent.com/44085104/80377061-5afb4c80-88b8-11ea-909c-85713da7fa7b.png" width="200">
+<img src="https://user-images.githubusercontent.com/44085104/80377057-59ca1f80-88b8-11ea-9726-0a5170e08815.png" width="200">
+<img src="https://user-images.githubusercontent.com/44085104/80377054-59318900-88b8-11ea-9f9b-c580501b7def.png" width="200">
+<img src="https://user-images.githubusercontent.com/44085104/80377066-5c2c7980-88b8-11ea-916d-c6df843691a0.png" width="200">
+<img src="(https://user-images.githubusercontent.com/44085104/80377071-5cc51000-88b8-11ea-9c06-77aff46f28f6.png" width="200">
+<img src="https://user-images.githubusercontent.com/44085104/80377064-5b93e300-88b8-11ea-88a4-cd59c64d2926.png" width="200">
+<img src="https://user-images.githubusercontent.com/44085104/80377060-5a62b600-88b8-11ea-9f15-44c7041ad36a.png" width="200">
 
 
 <!-- 
